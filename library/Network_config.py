@@ -3,11 +3,11 @@ import serial
 from serial import SerialException
 import datetime, time
 
-
 class Gps_time():
     def __init__(self):
         self.set_date = ""
         self.set_time = ""
+
     def get_time(self):
         try:
             self.gps = serial.Serial('/tty/USB0', 4800, timeout=1)
@@ -24,10 +24,11 @@ class Gps_time():
             if (response.split(',')[0] == "$GPGGA"):
                 now = datetime.datetime.strptime(response.split(',')[1].split('.')[0], '%I%M%S')
 #                print("Now", now.hour+ 8, now.minute, now.second)
-                self.set_time = str(now.hour+ 8) + ":" + str(now.minute) + ":" + str(now.second)
+                self.set_time = str(now.hour + 8) + ":" + str(now.minute) + ":" + str(now.second)
 #                print(set_time)
             if (self.set_time != "" and self.set_date != ""):
 #               print("set GPS time")
+                os.system("sudo timedatectl set-ntp 0")
                 command = 'sudo date -s "' + self.set_date + ' ' + self.set_time + '"'
                 os.system(command)
                 break
@@ -46,23 +47,43 @@ class Time_config():
     def __init__(self):
         pass
 
+    def get_now(self):
+        now = datetime.datetime.now()
+        year = str(now.year)
+        if (int(now.month) < 10): month = "0" + str(now.month)
+        else: month = str(now.month)
+        if (int(now.day) < 10): day = "0" + str(now.day)
+        else: day = str(now.day)
+        if (int(now.hour) < 10): hour = "0" + str(now.hour)
+        else: hour = str(now.hour)
+        if (int(now.minute) < 10): minute = "0" + str(now.minute)
+        else: minute = str(now.minute)
+        if (int(now.second) < 10): second = "0" + str(now.second)
+        else: second = str(now.second)
+        response = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
+        return response
+   
     def date_set(self, year, month, date):
+        os.system("sudo timedatectl set-ntp 0")
         now = datetime.datetime.now()
         self.date_command = 'sudo date -s "' + year + '-' + month + '-' + date + " " + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second) + '"'
 #        print(self.date_command)
         os.system(self.date_command)
+        return "OK"
     
     def time_set(self, hour, minute, second):
+        os.system("sudo timedatectl set-ntp 0")
         now = datetime.datetime.now()
         self.time_command = 'sudo date -s "' + str(now.year) + '-' + str(now.month) + '-' + str(now.day) + " " + hour + ':' + minute + ':' + second + '"'
 #        print(self.time_command)
         os.system(self.time_command)
+        return "OK"
 
 class Ntp_config():
     def __init__(self):
 #       need install ntpdate By 'sudo apt-get install ntpdate'
         os.system('timedatectl set-timezone "Asia/Taipei"')
-        os.system('sudo /etc/init.d/ntp stop >/tmp/ntp_stop.log')
+#        os.system('sudo /etc/init.d/ntp stop >/dev/null 2>&1')
         try:
             f = open('/etc/network/ntp.log', 'r')
             f.close()
@@ -70,11 +91,29 @@ class Ntp_config():
             os.system('cp ./library/ntp.log /etc/network/ntp.log')
 
     def ntp_set(self, ntp_host):
-        self.ntp_command = 'sudo ntpdate ' + ntp_host
+        os.system("sudo timedatectl set-ntp 0")
+        self.ntp_command = 'sudo ntpdate ' + ntp_host + ' >/dev/null 2>&1'
         self.f = open('/etc/network/ntp.log', 'w')
         self.f.write(ntp_host)
         self.f.close()
-        os.system(self.ntp_command)
+        connect = os.system(self.ntp_command)
+        now = datetime.datetime.now()
+        year = str(now.year)
+        if (int(now.month) < 10): month = "0" + str(now.month)
+        else: month = str(now.month)
+        if (int(now.day) < 10): day = "0" + str(now.day)
+        else: day = str(now.day)
+        if (int(now.hour) < 10): hour = "0" + str(now.hour)
+        else: hour = str(now.hour)
+        if (int(now.minute) < 10): minute = "0" + str(now.minute)
+        else: minute = str(now.minute)
+        if (int(now.second) < 10): second = "0" + str(now.second)
+        else: second = str(now.second)
+        response = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
+        if (connect == 0):
+            return "OK", response
+        else:
+            return "ERROR", response
 
 class Net_config():
     def __init__(self):
