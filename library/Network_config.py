@@ -3,6 +3,77 @@ import serial
 from serial import SerialException
 import datetime, time
 
+class Reboot_system():
+    def __init__(self):
+       self.command = "sudo init 6"
+
+    def reboot(self):
+       os.system(self.command)
+
+class Watchdog_config():
+    def __init__(self):
+        self.cpu_short_load = "24"
+        self.cpu_middle_load = "20"
+        self.cpu_long_load = "18"
+        self.cpu_temperature = "40"
+
+    def watchdog_status(self):
+        file = open('/etc/watchdog.conf', 'r') 
+        for x in range (1, 36):
+            line = file.readline()
+#            print(line)
+            if (x == 10): 
+                self.cpu_short_load = line.split(" ")[2].split("\n")[0]
+            if (x == 11): 
+                self.cpu_middle_load = line.split(" ")[2].split("\n")[0]
+            if (x == 12): 
+                self.cpu_long_load = line.split(" ")[2].split("\n")[0]
+            if (x == 35): 
+                self.cpu_temperature = line.split(" ")[2].split("\n")[0]
+#        print(self.cpu_short_load)
+#        print(self.cpu_middle_load)
+#        print(self.cpu_long_load)
+#        print(self.cpu_temperature)
+        return self.cpu_short_load, self.cpu_middle_load , self.cpu_long_load, self.cpu_temperature
+
+    def set_cpu_load_short(self, percent):
+        command = "sudo sed -i '10c max-load-1 = " + percent + "' /etc/watchdog.conf"
+        status = os.system(command)
+        return status
+
+    def set_cpu_load_middle(self, percent):
+        command = "sudo sed -i '11c max-load-5 = " + percent + "' /etc/watchdog.conf"
+        status = os.system(command)
+        return status
+
+    def set_cpu_load_long(self, percent):
+        command = "sudo sed -i '12c max-load-15 = " + percent + "' /etc/watchdog.conf"
+        status = os.system(command)
+        return status
+
+    def set_cpu_temperature(self, temperature):
+        command = "sudo sed -i '35c max-temperature = " + temperature + "' /etc/watchdog.conf"
+        status = os.system(command)
+        return status
+
+    def remove_cpu_load_short(self):
+        command = "sudo sed -i '10c \#max-load-1 = " +  self.cpu_long_load  + "' /etc/watchdog.conf"
+        status = os.system(command)
+        return status
+
+    def remove_cpu_load_middle(self):
+        command = "sudo sed -i '11c \#max-load-5 = " +  self.cpu_middle_load  + "' /etc/watchdog.conf"
+        status = os.system(command)
+        return status
+
+    def remove_cpu_load_long(self):
+        command = "sudo sed -i '12c \#max-load-15 = " + self.cpu_long_load + "' /etc/watchdog.conf"
+        status = os.system(command)
+        return status
+
+
+
+
 class Gps_time():
     def __init__(self):
         self.set_date = ""
