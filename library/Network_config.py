@@ -71,9 +71,6 @@ class Watchdog_config():
         status = os.system(command)
         return status
 
-
-
-
 class Gps_time():
     def __init__(self):
         self.set_date = ""
@@ -85,7 +82,7 @@ class Gps_time():
         except:
             return "ERROR"    
         while(1):
-            response = self.gps.readline().decode('ascii')     							# read up to return data 30 bytes (timeout)
+            response = self.gps.readline().decode('ascii')
 #            print(response)
             if (response.split(',')[0] == "$GPRMC"):
                 date = datetime.datetime.strptime(response.split(',')[9], '%d%m%y')
@@ -111,15 +108,8 @@ class File_search():
         pass
 
     def ini_list(self):
-<<<<<<< HEAD
-        self.ini_table = os.listdir(
-            '/Users/liwensheng/Documents/python/flask_dds/ini/file')
-        return self.ini_table
-
-=======
         self.ini_table = os.listdir('/home/pi/ini/')
         return  self.ini_table
->>>>>>> 2d303577e6b2999a8d361f52947a1e3ef49e10de
 
 class Time_config():
     def __init__(self):
