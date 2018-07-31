@@ -37,13 +37,7 @@
             <a href="ipSetting">IP 設定</a>
           </li>
           <li>
-            <a href="iniUpdate">ini 上傳</a>
-          </li>
-          <li>
-            <a href="iniSelect">ini 選擇</a>
-          </li>
-          <li>
-            <a href="iniBuild">ini 檔產生</a>
+            <a href="iniUpdate">ini 設定</a>
           </li>
           <li>
             <a href="ping">網路診斷</a>
@@ -76,11 +70,48 @@
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
         <h1 class="page-header">ini</h1>
         <h3>ini上傳</h3>
-        <form action="/iniUpdate" method="post" enctype="multipart/form-data">
+        <form action="/upload" method="post" enctype="multipart/form-data">
           <input type="file" name="file" multiple>
           <input type="submit" value="Upload">
         </form>
         <h3>ini選擇</h3>
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">操作說明</div>
+          <div class="panel-body">
+            <p>選擇要做為設定openDDS的ini檔</p>
+            <p>（1）找到已上傳的檔</p>
+            <p>（2）點選檔案設定欄位的設定按鈕，將其設為使用檔案</p>
+            <p>（3）查看設定結果</p>（4）目前選擇的檔案：
+            <h>上未選擇</h>
+          </div>
+
+          <!-- Table -->
+          <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th>檔案名稱</th>
+                  <th>檔案格式</th>
+                  <th>檔案大小</th>
+                  <th>更新時間</th>
+                  <th>設定</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for key in fileList %}
+                <tr>
+                  <td>{{key.num}}</td>
+                  <td>{{key.name}}</td>
+                  <td>{{key.format}}</td>
+                  <td>{{key.size}}</td>
+                  <td>{{key.time}}</td>
+                  <td><input type="button" value="選擇"></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

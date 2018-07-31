@@ -1,4 +1,5 @@
-from flask import Flask,request,render_template
+from flask import Flask,request,render_template,redirect,url_for
+from werkzeug.utils import secure_filename
 import subprocess
 import json
 
@@ -12,13 +13,16 @@ def home():
 def ipSetting():
     return render_template('ipSetting.html');
 
-@app.route("/iniUpdate/")
-@app.route("/iniUpdate",methods=['GET','POST'])
+@app.route("/iniUpdate")
+def iniUpdate():
+    data = [{'num':1,'name':'apple','format':'jpg','size':123456,'time':'20180730'},{'num':2,'name':'apple','format':'png','size':123456,'time':'20180731'}];
+    return render_template('iniUpdate.html',fileList = data);
+
+@app.route("/upload",methods=['POST'])
 def upload():
-    if request.method == 'POST':
-        f = request.files['file']
-        f.save('/home/titan/Titan/github/python/flask/fileUpload/file/'+ secure_filename(f.filename))
-    return render_template('iniUpdate.html');
+    f = request.files['file']
+    f.save('/home/titan/Titan/github/imac-iot/flask_dds/fileUpload/file/'+ secure_filename(f.filename))
+    return redirect(url_for('iniUpdate'));
 
 @app.route('/iniSelect')
 def iniSelect():
@@ -32,7 +36,7 @@ def iniBuild():
 def ping():
     return render_template('ping.html');
 
-@app.route('/pings',methods=['POST'])
+@app.route('/ping',methods=['POST'])
 def pings():
     ip = request.form.get('ip')
     try:
