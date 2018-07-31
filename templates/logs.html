@@ -14,6 +14,9 @@
   <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
   <link href="/static/css/dashboard.css" rel="stylesheet">
   <script src="/static/js/ie-emulation-modes-warning.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+  <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="http://www.pureexample.com/js/flot/excanvas.min.js"></script><![endif]-->
 </head>
 
 <body>
@@ -69,21 +72,86 @@
       </div>
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
         <h1 class="page-header">流量統計紀錄分析</h1>
-
-        <div class="row placeholders">
+        <h3 style="text-align: center;letter-spacing: 3px;color: transparent;background-color : blue;text-shadow : rgba(255,255,255,0.5) 0 5px 6px, rgba(255,255,255,0.2) 1px 3px 3px;-webkit-background-clip : text;">內建網卡</h3>
+        <div class="row">
+          <div id="flot-placeholder1" style="width: auto; height: 300px;"></div>
+        </div>
+        <br>
+        <h3 style="text-align: center;letter-spacing: 3px;color: transparent;background-color : blue;text-shadow : rgba(255,255,255,0.5) 0 5px 6px, rgba(255,255,255,0.2) 1px 3px 3px;-webkit-background-clip : text;">外接網卡</h3>
+        <div class="row">
+          <div id="flot-placeholder2" style="width: auto; height: 300px;"></div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Bootstrap core JavaScript
-    ================================================== -->
+          ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')</script>
   <script src="/static/js/bootstrap.min.js"></script>
   <script src="/static/js/holder.min.js"></script>
   <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="http://static.pureexample.com/js/flot/excanvas.min.js"></script>
+  <script src="http://static.pureexample.com/js/flot/jquery.flot.min.js"></script>
+  <script type="text/javascript">
+    var data1 = [];
+    var data2 = [];
+
+    function DoSeries2() {
+      let data = [];
+      let start = 1354586000000;
+
+      for (i = 1; i <= 50; i++) {
+        data.push([start, Math.random()*1000]);
+        start += 100000
+      }
+
+      return data;
+    }
+    $(document).ready(function () {
+      data1 = DoSeries2();
+      data2 = DoSeries2();
+      $.plot($("#flot-placeholder1"),
+        [
+          {
+            data: data1,
+            points: { show: true },
+            lines: { show: true }
+          }
+        ],
+        {
+          grid: {
+            backgroundColor: { colors: ["#B0D5FF", "#5CA8FF"] }
+          },
+          xaxis: {
+            mode: "time",
+            timeformat: "%0m/%0d %0H:%0M"
+          }
+        }
+      );
+      $.plot($("#flot-placeholder2"),
+        [
+          {
+            data: data2,
+            points: { show: true },
+            lines: { show: true }
+          }
+        ],
+        {
+          grid: {
+            backgroundColor: { colors: ["#B0D5FF", "#5CA8FF"] }
+          },
+          xaxis: {
+            mode: "time",
+            timeformat: "%0m/%0d %0H:%0M"
+          }
+        }
+      );
+    });
+  </script>
 </body>
 
 </html>
