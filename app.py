@@ -9,9 +9,13 @@ app = Flask(__name__)
 def home():
     return render_template('index.html');
 
-@app.route('/ipSetting')
+@app.route('/ipSettingMain')
 def ipSetting():
-    return render_template('ipSetting.html');
+    return render_template('ipSettingMain.html');
+
+@app.route('/ipSettingSecond')
+def ipSettingSecond():
+    return render_template('ipSettingSecond.html');
 
 @app.route("/iniUpdate")
 def iniUpdate():

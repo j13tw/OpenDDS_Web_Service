@@ -37,7 +37,10 @@
             </a>
           </li>
           <li>
-            <a href="ipSetting">IP 設定</a>
+            <a href="ipSettingMain">IP 設定(內建網卡）</a>
+          </li>
+          <li>
+            <a href="ipSettingSecond">IP 設定(外接網卡）</a>
           </li>
           <li>
             <a href="iniUpdate">ini 設定</a>
@@ -105,7 +108,7 @@
       let start = 1354586000000;
 
       for (i = 1; i <= 50; i++) {
-        data.push([start, Math.random()*1000]);
+        data.push([start, Math.random() * 1000]);
         start += 100000
       }
 
