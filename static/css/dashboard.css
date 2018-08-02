@@ -90,14 +90,19 @@ body {
  */
 
 .placeholders {
-  margin-bottom: 30px;
+  position: relative;
   text-align: center;
+  width: auto;
+  left: 0px;
+  right: 10px;
+  background-color: brown;
 }
 .placeholders h4 {
   margin-bottom: 0;
 }
 .placeholder {
   margin-bottom: 20px;
+  background-color: brown;
 }
 .placeholder img {
   display: inline-block;
