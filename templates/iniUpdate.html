@@ -2,114 +2,116 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="/static/img/favicon.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/img/favicon.ico">
 
-  <title>Dashboard Template for Bootstrap</title>
-  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-  <link href="/static/css/dashboard.css" rel="stylesheet">
-  <script src="/static/js/ie-emulation-modes-warning.js"></script>
+    <title>Dashboard Template for Bootstrap</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="/static/css/iniUpdate.css" rel="stylesheet">
+    <script src="/static/js/ie-emulation-modes-warning.js"></script>
 </head>
 
 <body>
 
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">DDS</a>
-    </div>
-  </nav>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">DDS</a>
+        </div>
+    </nav>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-3 col-md-2 col-sm-2 col-xs-4 sidebar">
-        <ul class="nav nav-sidebar">
-          <li class="active">
-            <a href="#">系統設定
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-sm-2 col-xs-4 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active">
+                        <a href="#">系統設定
               <span class="sr-only">(current)</span>
             </a>
-          </li>
-          <li>
-            <a href="ipSettingMain">IP 設定(內建網卡）</a>
-          </li>
-          <li>
-            <a href="ipSettingSecond">IP 設定(外接網卡）</a>
-          </li>
-          <li>
-            <a href="iniUpdate">ini 設定</a>
-          </li>
-          <li>
-            <a href="ping">網路診斷</a>
-          </li>
-          <li>
-            <a href="logs">流量統計紀錄分析</a>
-          </li>
-          <li>
-            <a href="sentTest">傳輸測試</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
-        <h1 class="page-header">ini</h1>
-        <h3>ini上傳</h3>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-          <input type="file" name="file" multiple>
-          <input type="submit" value="Upload">
-        </form>
-        <h3>ini選擇</h3>
-        <div class="panel panel-default">
-          <!-- Default panel contents -->
-          <div class="panel-heading">操作說明</div>
-          <div class="panel-body">
-            <p>選擇要做為設定openDDS的ini檔</p>
-            <p>（1）找到已上傳的檔</p>
-            <p>（2）點選檔案設定欄位的設定按鈕，將其設為使用檔案</p>
-            <p>（3）查看設定結果</p>（4）目前選擇的檔案：
-            <h>上未選擇</h>
-          </div>
+                    </li>
+                    <li>
+                        <a href="ipSettingMain">IP 設定(內建網卡）</a>
+                    </li>
+                    <li>
+                        <a href="ipSettingSecond">IP 設定(外接網卡）</a>
+                    </li>
+                    <li>
+                        <a href="iniUpdate">ini 設定</a>
+                    </li>
+                    <li>
+                        <a href="ping">網路診斷</a>
+                    </li>
+                    <li>
+                        <a href="logs">流量統計紀錄分析</a>
+                    </li>
+                    <li>
+                        <a href="sentTest">傳輸測試</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
+                <h1 class="page-header">ini</h1>
+                <h3>ini上傳</h3>
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" multiple>
+                    <input type="submit" value="Upload">
+                </form>
+                <h3>ini選擇</h3>
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">操作說明</div>
+                    <div class="panel-body">
+                        <p>選擇要做為設定openDDS的ini檔</p>
+                        <p>（1）找到已上傳的檔</p>
+                        <p>（2）點選檔案設定欄位的設定按鈕，將其設為使用檔案</p>
+                        <p>（3）查看設定結果</p>（4）目前選擇的檔案：
+                        <h>上未選擇</h>
+                    </div>
 
-          <!-- Table -->
-          <table class="table table-striped">
-            <thead>
-                <tr>
-                  <th>#</th>
-                  <th>檔案名稱</th>
-                  <th>檔案格式</th>
-                  <th>檔案大小</th>
-                  <th>更新時間</th>
-                  <th>設定</th>
-                </tr>
-            </thead>
-            <tbody>
-              {% for key in fileList %}
-                <tr>
-                  <td>{{key.num}}</td>
-                  <td>{{key.name}}</td>
-                  <td>{{key.format}}</td>
-                  <td>{{key.size}}</td>
-                  <td>{{key.time}}</td>
-                  <td><input type="button" value="選擇"></td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+                    <!-- Table -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>檔案名稱</th>
+                                <th>檔案格式</th>
+                                <th>檔案大小</th>
+                                <th>更新時間</th>
+                                <th>設定</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key in fileList %}
+                            <tr>
+                                <td>{{key.num}}</td>
+                                <td>{{key.name}}</td>
+                                <td>{{key.format}}</td>
+                                <td>{{key.size}}</td>
+                                <td>{{key.time}}</td>
+                                <td><input type="button" value="選擇"></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript
+    <!-- Bootstrap core JavaScript
     ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')</script>
-  <script src="/static/js/bootstrap.min.js"></script>
-  <script src="/static/js/holder.min.js"></script>
-  <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/holder.min.js"></script>
+    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 
 </html>
