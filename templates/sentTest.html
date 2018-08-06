@@ -2,165 +2,190 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="/static/img/favicon.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/img/favicon.ico">
 
-  <title>Dashboard Template for Bootstrap</title>
-  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-  <link href="/static/css/dashboard.css" rel="stylesheet">
-  <script src="/static/js/ie-emulation-modes-warning.js"></script>
-  <script>
-      window.onload = function () {
-        let listA = document.getElementById("listA");
-        listA.scrollTop = listA.scrollHeight;
-        let listB = document.getElementById("listB");
-        listB.scrollTop = listB.scrollHeight;
-      }
+    <title>Dashboard Template for Bootstrap</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="/static/css/sentTest.css" rel="stylesheet">
+    <script src="/static/js/ie-emulation-modes-warning.js"></script>
+    <script>
+        window.onload = function() {
+            let listA = document.getElementById("listA");
+            listA.scrollTop = listA.scrollHeight;
+            let listB = document.getElementById("listB");
+            listB.scrollTop = listB.scrollHeight;
+        }
     </script>
 </head>
 
 <body>
 
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">DDS</a>
-    </div>
-  </nav>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">DDS</a>
+        </div>
+    </nav>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-3 col-md-2 col-sm-2 col-xs-4 sidebar">
-        <ul class="nav nav-sidebar">
-          <li class="active">
-            <a href="#">系統設定
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-sm-2 col-xs-4 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active">
+                        <a href="#">系統設定
               <span class="sr-only">(current)</span>
             </a>
-          </li>
-          <li>
-            <a href="ipSettingMain">IP 設定(內建網卡）</a>
-          </li>
-          <li>
-            <a href="ipSettingSecond">IP 設定(外接網卡）</a>
-          </li>
-          <li>
-            <a href="iniUpdate">ini 設定</a>
-          </li>
-          <li>
-            <a href="ping">網路診斷</a>
-          </li>
-          <li>
-            <a href="logs">流量統計紀錄分析</a>
-          </li>
-          <li>
-            <a href="sentTest">傳輸測試</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
-        <h1 class="page-header">傳輸測試</h1>
-        <form action="#">
-          <h3 style="display: inline;">通訊Ａ端通道設定：</h3>
-          <input type="text" style="display: inline;">
-          <input type="submit" value="送出" style="display: inline;">
-        </form>
-        <form action="#">
-          <h3 style="display: inline;">通訊Ｂ端通道設定：</h3>
-          <input type="text" style="display: inline;">
-          <input type="submit" value="送出" style="display: inline;">
-        </form>
-        <div class="row">
-          <div class="col-sm-5 col-md-5 col-sm-5 col-xs-5" style="position: relative;top: 16px;height: 600px;">
-            <div style="border-radius: 10px 10px 0px 0px; background-color: rgb(44, 37, 107);position: absolute;top: 0;left: 0;right: 0; height: 40px">
-              <p style="text-align: center;font-size: 16px;line-height:40px;color: white">通訊A端</p>
+                    </li>
+                    <li>
+                        <a href="ipSettingMain">IP 設定(內建網卡）</a>
+                    </li>
+                    <li>
+                        <a href="ipSettingSecond">IP 設定(外接網卡）</a>
+                    </li>
+                    <li>
+                        <a href="iniUpdate">ini 設定</a>
+                    </li>
+                    <li>
+                        <a href="ping">網路診斷</a>
+                    </li>
+                    <li>
+                        <a href="logs">流量統計紀錄分析</a>
+                    </li>
+                    <li>
+                        <a href="sentTest">傳輸測試</a>
+                    </li>
+                </ul>
             </div>
-            <div style="position: absolute;top:40px;bottom: 40px;right: 0;left: 0;">
-              <ul id="listA" style="background-color: rgba(96, 165, 223, 0.829);overflow: scroll;list-style: none;margin: auto;height: 100%;">
-                <li><div style="background-color: blueviolet">123456</div></li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-              </ul>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
+                <h1 class="page-header">傳輸測試</h1>
+                <form action="#">
+                    <h3>通訊Ａ端通道設定：</h3>
+                    <input class="inline" type="text">
+                    <input class="inline" type="submit" value="送出">
+                </form>
+                <form action="#">
+                    <h3>通訊Ｂ端通道設定：</h3>
+                    <input class="inline" type="text">
+                    <input class="inline" type="submit" value="送出">
+                </form>
+                <div class="row">
+                    <div class="col-sm-5 col-md-5 col-sm-5 col-xs-5 message">
+                        <div class="message-title">
+                            <p>通訊A端</p>
+                        </div>
+                        <div class="message-list">
+                            <ul class="message-list-sty" id="listA">
+                                <li>
+                                    <div style="background-color: blueviolet">123456</div>
+                                </li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                            </ul>
+                        </div>
+                        <div class="send">
+                            <div class="send-input-text">
+                                <input class="send-input-text-sty" type="text">
+                            </div>
+                            <div class="send-input-btn">
+                                <input class="send-input-btn-sty" type="button" value="送出">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-xs-5 col-xs-offset-2 message">
+                        <div class="message-title">
+                            <p>通訊B端</p>
+                        </div>
+                        <div class="message-list">
+                            <ul class="message-list-sty" id="listB">
+                                <li>
+                                    <div style="background-color: blueviolet">123456</div>
+                                </li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                                <li>123</li>
+                            </ul>
+                        </div>
+                        <div class="send">
+                            <div class="send-input-text">
+                                <input class="send-input-text-sty" type="text">
+                            </div>
+                            <div class="send-input-btn">
+                                <input class="send-input-btn-sty" type="button" value="送出">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="background-color: rgb(247, 212, 146);position: absolute;bottom: 0;height: 40px;right: 0;left: 0;">
-              <div style="position: absolute;left: 10px;top: 3px; bottom: 3px;right: 60px;">
-                <input type="text" style="width: 100%;height: 100%; border-radius: 5px;">
-              </div>
-              <div style="position: absolute;width: 40px; top: 3px; bottom: 3px;right: 10px;">
-                <input type="button" style="width: 100%;height: 100%; border-radius: 10px;" value="送出">
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-xs-5 col-xs-offset-2" style="position: relative;top: 16px;height: 600px;">
-            <div style="border-radius: 10px 10px 0px 0px; background-color: rgb(44, 37, 107);position: absolute;top: 0;left: 0;right: 0; height: 40px">
-              <p style="text-align: center;font-size: 16px;line-height:40px;color: white">通訊B端</p>
-            </div>
-            <div style="position: absolute;top:40px;bottom: 40px;right: 0;left: 0;">
-                <ul id="listB" style="background-color: rgba(96, 165, 223, 0.829);overflow: scroll;list-style: none;margin: auto;height: 100%;">
-                    <li><div style="background-color: blueviolet">123456</div></li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                    <li>123</li>
-                  </ul>
-            </div>
-            <div style="background-color: rgb(247, 212, 146);position: absolute;bottom: 0;height: 40px;right: 0;left: 0;">
-              <div style="position: absolute;left: 10px;top: 3px; bottom: 3px;right: 60px;">
-                <input type="text" style="width: 100%;height: 100%; border-radius: 5px;">
-              </div>
-              <div style="position: absolute;width: 40px; top: 3px; bottom: 3px;right: 10px;">
-                <input type="button" style="width: 100%;height: 100%; border-radius: 10px;" value="送出">
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript
+    <!-- Bootstrap core JavaScript
     ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')</script>
-  <script src="/static/js/bootstrap.min.js"></script>
-  <script src="/static/js/holder.min.js"></script>
-  <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/holder.min.js"></script>
+    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 
 </html>
