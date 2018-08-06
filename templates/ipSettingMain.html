@@ -12,22 +12,22 @@
     <title>Dashboard Template for Bootstrap</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="/static/css/dashboard.css" rel="stylesheet">
+    <link href="/static/css/ipSettingMain.css" rel="stylesheet">
     <script src="/static/js/ie-emulation-modes-warning.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#dhcp').click(function () {
+        $(document).ready(function() {
+            $('#dhcp').click(function() {
                 $('#static').attr('checked', false);
             })
-            $('#static').click(function () {
+            $('#static').click(function() {
                 $('#dhcp').attr('checked', false);
             })
-            $('#autoDNS').click(function () {
+            $('#autoDNS').click(function() {
                 $('#staticDNS').attr('checked', false);
             })
-            $('#staticDNS').click(function () {
+            $('#staticDNS').click(function() {
                 $('#autoDNS').attr('checked', false);
             })
         })
@@ -47,7 +47,7 @@
             <div class="col-sm-3 col-md-2 col-sm-2 col-xs-4 sidebar">
                 <ul class="nav nav-sidebar">
                     <li class="active">
-                        <a href="#">網頁
+                        <a href="#">系統設定
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -69,23 +69,6 @@
                     <li>
                         <a href="sentTest">傳輸測試</a>
                     </li>
-                    <li class="active">
-                        <a href="#">系統
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">DDS 傳輸</a>
-                    </li>
-                    <li>
-                        <a href="#">watchdog</a>
-                    </li>
-                    <li>
-                        <a href="#">開機重啟</a>
-                    </li>
-                    <li>
-                        <a href="#">程式重啟</a>
-                    </li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
@@ -96,12 +79,12 @@
                     <h3>如過您的網路支援這項功能，您可以取得自動指派的IP設定，否則，您必須詢問網路系統管理員正確的IP設定</h3>
                 </div>
                 <div class="row">
-                    <form>
-                        <div class="row" style="margin-left: 0px">
+                    <form method="POST" action="/setIpMain">
+                        <div class="row radio-sty">
                             <input type=radio value="dhcp" name="dhcp" id="dhcp" checked> 自動取得IP位址
                         </div>
-                        <div class="row" style="border:3px solid;border-radius:10px;height:auto;margin-top: 16px;">
-                            <span style="position:relative;top:-15px;text-align:center;background: white;margin-left: 12px">
+                        <div class="row div-static-ip">
+                            <span class="span-radio">
                                 <input type=radio value="staticIP" name="static" id="static"> 使用下列IP位址
                             </span>
                             <br>
@@ -138,12 +121,12 @@
                 </div>
                 <br>
                 <div class="row">
-                    <form>
-                        <div class="row" style="margin-left: 0px">
+                    <form method="POST" action="/dnsMain">
+                        <div class="row radio-sty">
                             <input type=radio value="dhcp" name="autoDNS" id="autoDNS" checked> 自動取得DNS伺服器位址
                         </div>
-                        <div class="row" style="border:3px solid;border-radius:10px;height:auto;margin-top: 16px;">
-                            <span style="position:relative;top:-15px;text-align:center;background: white;margin-left: 12px">
+                        <div class="row  div-static-ip">
+                            <span class="span-radio">
                                 <input type=radio value="staticIP" name="staticDNS" id="staticDNS"> 使用下列DNS伺服器位址
                             </span>
                             <br>
@@ -177,7 +160,9 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')</script>
+    <script>
+        window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')
+    </script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/holder.min.js"></script>
     <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
