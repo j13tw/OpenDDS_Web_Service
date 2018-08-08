@@ -32,7 +32,7 @@ def setIpMain():
 def dnsMain():
     print(request.form)
     if request.form['DNS'] == 'autoDNS':
-        Net_config().eth0_dns('8.8.8.8')
+        Net_config().eth0_auto_dns()
         print('autoDNS')
     elif request.form['DNS'] == 'staticDNS':
         defaultDNS = request.form['defaultDNS']
@@ -66,7 +66,7 @@ def setIpSecond():
 def dnsSecond():
     print(request.form)
     if request.form['DNS'] == 'autoDNS':
-        Net_config().eth1_dns('8.8.8.8')
+        Net_config().eth1_auto_dns()
         print('autoDNS')
     elif request.form['DNS'] == 'staticDNS':
         defaultDNS = request.form['defaultDNS']
@@ -86,7 +86,7 @@ def iniUpdate():
 @app.route("/upload",methods=['POST'])
 def upload():
     f = request.files['file']
-    f.save('/home/titan/Titan/github/imac-iot/flask_dds/fileUpload/file/'+ secure_filename(f.filename))
+    f.save('/etc/network/'+ secure_filename(f.filename))
     return redirect(url_for('iniUpdate'));
 
 @app.route('/iniSelect')
