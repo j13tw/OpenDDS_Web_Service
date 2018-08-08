@@ -52,24 +52,31 @@ def ipSettingSecond():
 def setIpSecond():
     print(request.form)
     if request.form['ipMethod'] == 'dhcpIP':
-        print(123)
+        print('dhcp')
+        Net_config().eth1_dhcp()
     elif request.form['ipMethod'] == 'staticIP':
         staticIP = request.form['staticIP']
         staticMask = request.form['staticMask']
         staticGateway = request.form['staticGateway']
         print(staticIP,staticMask,staticGateway)
-    return redirect('/ipSettingMain')
+        Net_config().eth1_static(staticIP, staticMask, staticGateway)
+    return redirect('/ipSettingSecond')
 
 @app.route('/dnsSecond', methods=['POST'])
 def dnsSecond():
     print(request.form)
     if request.form['DNS'] == 'autoDNS':
+        Net_config().eth1_dns('8.8.8.8')
         print('autoDNS')
     elif request.form['DNS'] == 'staticDNS':
         defaultDNS = request.form['defaultDNS']
         otherDNS = request.form['otherDNS']
+        if otherDNS == '' :
+            Net_config().eth1_dns(defaultDNS)
+        else :
+            Net_config().eth1_dual_dns(defaultDNS,otherDNS)
         print(defaultDNS,otherDNS)
-    return redirect('/ipSettingMain')
+    return redirect('/ipSettingSecond')
 
 @app.route("/iniUpdate")
 def iniUpdate():
