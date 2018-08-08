@@ -19,7 +19,7 @@ def setIpMain():
     print(request.form)
     if request.form['ipMethod'] == 'dhcpIP':
         print('dhcp')
-        Net_config.eth0_dhcp()
+        Net_config.eth0_dhcp('')
     elif request.form['ipMethod'] == 'staticIP':
         staticIP = request.form['staticIP']
         staticMac = request.form['staticMac']
