@@ -137,14 +137,14 @@ class Net_config():
         self.usb_id = open('/tmp/usb.txt')
         self.usb_reset = 'sudo python /etc/network/Restusb.py -d ' + self.usb_id.read()
 
-    def eth0_auto_dns(self, dns, sub_dns):
+    def eth0_auto_dns(self):
         command = "sudo sed -i '7c dns-nameserver 8.8.8.8' /etc/network/interfaces"
         os.system(command)
         os.system("sudo sed -i '8c \\ ' /etc/network/interfaces")
         os.system('sudo ifdown eth0')
         os.system('sudo ifup eth0')
     
-    def eth1_auto_dns(self, dns, sub_dns):
+    def eth1_auto_dns(self):
         command = "sudo sed -i '16c dns-nameserver 8.8.8.8' /etc/network/interfaces"
         os.system(command)
         os.system("sudo sed -i '17c \\ ' /etc/network/interfaces")
