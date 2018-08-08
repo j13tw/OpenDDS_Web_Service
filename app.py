@@ -32,15 +32,15 @@ def setIpMain():
 def dnsMain():
     print(request.form)
     if request.form['DNS'] == 'autoDNS':
-        Net_config.eth0_dns('8.8.8.8')
+        Net_config().eth0_dns('8.8.8.8')
         print('autoDNS')
     elif request.form['DNS'] == 'staticDNS':
         defaultDNS = request.form['defaultDNS']
         otherDNS = request.form['otherDNS']
         if otherDNS == '' :
-            Net_config.eth0_dns(defaultDNS)
+            Net_config().eth0_dns(defaultDNS)
         else :
-            Net_config.eth0_dual_dns(defaultDNS,otherDNS)
+            Net_config().eth0_dual_dns(defaultDNS,otherDNS)
         print(defaultDNS,otherDNS)
     return redirect('/ipSettingMain')
 
