@@ -31,11 +31,105 @@
                 $('#autoDNS').attr('checked', false);
             })
         })
+
+        function checkIP() {
+            let radio = $('input[name=ipMethod]:checked').val();
+            let staticIP = $('input[name=staticIP]').val();
+            let staticMac = $('input[name=staticMac]').val();
+            let staticGateway = $('input[name=staticGateway]').val();
+            if (radio == 'staticIP' && (staticIP == '' || staticMac == '' || staticGateway == '')) {
+                alert("輸入框皆需輸入數值");
+                return false;
+            } else if (radio == 'staticIP') {
+                let staticIpCheck = staticIP.split('.');
+                if (staticIpCheck.length == 4) {
+                    for (let i = 0; i < 4; i++) {
+                        let TheNum = Number(staticIpCheck[i]);
+                        if (TheNum >= 0 && TheNum <= 255) {} else {
+                            alert("IP位址格式錯誤");
+                            return false;
+                        }
+                    }
+                } else {
+                    alert("IP位址格式錯誤");
+                    return false;
+                }
+
+                let staticMacCheck = staticMac.split('.');
+                if (staticMacCheck.length == 4) {
+                    for (let i = 0; i < 4; i++) {
+                        let TheNum = Number(staticMacCheck[i]);
+                        if (TheNum >= 0 && TheNum <= 255) {} else {
+                            alert("子網路遮罩格式錯誤");
+                            return false;
+                        }
+                    }
+                } else {
+                    alert("子網路遮罩格式錯誤");
+                    return false;
+                }
+
+                let staticGatewayCheck = staticGateway.split('.');
+                if (staticGatewayCheck.length == 4) {
+                    for (let i = 0; i < 4; i++) {
+                        let TheNum = Number(staticGatewayCheck[i]);
+                        if (TheNum >= 0 && TheNum <= 255) {} else {
+                            alert("預設閘道格式錯誤");
+                            return false;
+                        }
+                    }
+                } else {
+                    alert("預設閘道格式錯誤");
+                    return false;
+                }
+                return true;
+            }
+            return true;
+        }
+
+        function checkDNS() {
+            let radio = $('input[name=DNS]:checked').val();
+            let defaultDNS = $('input[name=defaultDNS]').val();
+            let otherDNS = $('input[name=otherDNS]').val();
+            if (radio == 'staticDNS') {
+                let defaultDNSCheck = defaultDNS.split('.');
+                if (defaultDNSCheck.length == 4) {
+                    for (let i = 0; i < 4; i++) {
+                        let TheNum = Number(defaultDNSCheck[i]);
+                        if (TheNum >= 0 && TheNum <= 255) {} else {
+                            alert("慣用DNS伺服器格式錯誤");
+                            return false;
+                        }
+                    }
+                } else {
+                    alert("慣用DNS伺服器格式錯誤");
+                    return false;
+                }
+
+                if (otherDNS != '') {
+                    let otherDNSCheck = otherDNS.split('.');
+                    if (otherDNSCheck.length == 4) {
+                        for (let i = 0; i < 4; i++) {
+                            let TheNum = Number(otherDNSCheck[i]);
+                            if (TheNum >= 0 && TheNum <= 255) {} else {
+                                alert("其他DNS伺服器格式錯誤");
+                                return false;
+                            }
+                        }
+                    } else {
+                        alert("其他DNS伺服器格式錯誤");
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            return true;
+        }
     </script>
 </head>
 
 <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">DDS</a>
@@ -79,13 +173,13 @@
                     <h3>如過您的網路支援這項功能，您可以取得自動指派的IP設定，否則，您必須詢問網路系統管理員正確的IP設定</h3>
                 </div>
                 <div class="row">
-                    <form method="POST" action="/setIpMain">
+                    <form method="POST" action="/setIpMain" onsubmit="return checkIP()">
                         <div class="row radio-sty">
-                            <input type=radio value="dhcp" name="dhcp" id="dhcp" checked> 自動取得IP位址
+                            <input type=radio value="dhcpIP" name="ipMethod" id="dhcp" checked> 自動取得IP位址
                         </div>
                         <div class="row div-static-ip">
                             <span class="span-radio">
-                                <input type=radio value="staticIP" name="static" id="static"> 使用下列IP位址
+                                <input type=radio value="staticIP" name="ipMethod" id="static"> 使用下列IP位址
                             </span>
                             <br>
                             <div class="row">
@@ -121,13 +215,13 @@
                 </div>
                 <br>
                 <div class="row">
-                    <form method="POST" action="/dnsMain">
+                    <form method="POST" action="/dnsMain" onsubmit="return checkDNS()">
                         <div class="row radio-sty">
-                            <input type=radio value="dhcp" name="autoDNS" id="autoDNS" checked> 自動取得DNS伺服器位址
+                            <input type=radio value="autoDNS" name="DNS" id="autoDNS" checked> 自動取得DNS伺服器位址
                         </div>
                         <div class="row  div-static-ip">
                             <span class="span-radio">
-                                <input type=radio value="staticIP" name="staticDNS" id="staticDNS"> 使用下列DNS伺服器位址
+                                <input type=radio value="staticDNS" name="DNS" id="staticDNS"> 使用下列DNS伺服器位址
                             </span>
                             <br>
                             <div class="row">
@@ -135,7 +229,7 @@
                                     <span>慣用DNS伺服器:</span>
                                 </div>
                                 <div class="col-sm-9 col-md-2 col-sm-2 col-xs-4">
-                                    <input type=text placeholder='xxx.xxx.xxx.xxx' name="staticIP">
+                                    <input type=text placeholder='xxx.xxx.xxx.xxx' name="defaultDNS">
                                 </div>
                             </div>
                             <br>
@@ -144,7 +238,7 @@
                                     <span>其他DNS伺服器:</span>
                                 </div>
                                 <div class="col-sm-9 col-md-2 col-sm-2 col-xs-4">
-                                    <input type=text placeholder='xxx.xxx.xxx.xxx' name="staticMac">
+                                    <input type=text placeholder='xxx.xxx.xxx.xxx' name="otherDNS">
                                 </div>
                                 <input type="submit" value="更新" class="btn btn-update">
                             </div>

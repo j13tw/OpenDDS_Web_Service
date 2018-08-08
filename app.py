@@ -1,6 +1,6 @@
 from flask import Flask,request,render_template,redirect,url_for
 from werkzeug.utils import secure_filename
-# from ./library/Network_config import  Net_config
+from library.Network_config import  Net_config
 import subprocess
 import json
 
@@ -11,12 +11,66 @@ def home():
     return render_template('index.html');
 
 @app.route('/ipSettingMain')
-def ipSetting():
+def ipSettingMain():
     return render_template('ipSettingMain.html');
+
+@app.route('/setIpMain', methods=['POST'])
+def setIpMain():
+    print(request.form)
+    if request.form['ipMethod'] == 'dhcpIP':
+        print('dhcp')
+        Net_config.eth0_dhcp()
+    elif request.form['ipMethod'] == 'staticIP':
+        staticIP = request.form['staticIP']
+        staticMac = request.form['staticMac']
+        staticGateway = request.form['staticGateway']
+        print(staticIP,staticMac,staticGateway)
+        Net_config.eth0_static(staticIP, staticMac, staticGateway)
+    return redirect('/ipSettingMain')
+
+@app.route('/dnsMain', methods=['POST'])
+def dnsMain():
+    print(request.form)
+    if request.form['DNS'] == 'autoDNS':
+        Net_config.eth0_dns('8.8.8.8')
+        print('autoDNS')
+    elif request.form['DNS'] == 'staticDNS':
+        defaultDNS = request.form['defaultDNS']
+        otherDNS = request.form['otherDNS']
+        if(otherDNS == ''){
+            Net_config.eth0_dns(defaultDNS)
+        }else{
+            Net_config.eth0_dual_dns(defaultDNS,otherDNS)
+        }
+        print(defaultDNS,otherDNS)
+    return redirect('/ipSettingMain')
 
 @app.route('/ipSettingSecond')
 def ipSettingSecond():
     return render_template('ipSettingSecond.html');
+
+@app.route('/setIpSecond', methods=['POST'])
+def setIpSecond():
+    print(request.form)
+    if request.form['ipMethod'] == 'dhcpIP':
+        print(123)
+    elif request.form['ipMethod'] == 'staticIP':
+        staticIP = request.form['staticIP']
+        staticMac = request.form['staticMac']
+        staticGateway = request.form['staticGateway']
+        print(staticIP,staticMac,staticGateway)
+    return redirect('/ipSettingMain')
+
+@app.route('/dnsSecond', methods=['POST'])
+def dnsMain():
+    print(request.form)
+    if request.form['DNS'] == 'autoDNS':
+        print(123)
+    elif request.form['DNS'] == 'staticDNS':
+        defaultDNS = request.form['defaultDNS']
+        otherDNS = request.form['otherDNS']
+        print(defaultDNS,otherDNS)
+    return redirect('/ipSettingMain')
 
 @app.route("/iniUpdate")
 def iniUpdate():
