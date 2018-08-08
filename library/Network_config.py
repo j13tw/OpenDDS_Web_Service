@@ -32,7 +32,7 @@ class Ntp_config():
             f = open('/etc/network/ntp.log', 'r')
             f.close()
         except:
-            os.system('cp ./ntp.log /etc/network/ntp.log')
+            os.system('cp ./library/ntp.log /etc/network/ntp.log')
 
     def ntp_set(self, ntp_host):
         self.ntp_command = 'sudo ntpdate ' + ntp_host
@@ -47,12 +47,12 @@ class Net_config():
             f = open('/etc/network/interfaces.bak')
             f.close()
         except:
-            os.system('sudo cp ./interfaces.bak /etc/network/interfaces')
+            os.system('sudo cp ./library/interfaces.bak /etc/network/interfaces')
         try:
             f = open('/etc/network/Restusb.py')
             f.close()
         except:
-            os.system('sudo cp ./Restusb.py /etc/network/Restusb.py')
+            os.system('sudo cp ./library/Restusb.py /etc/network/Restusb.py')
 
     def eth0_dhcp(self):
         os.system("sudo sed -i '3c iface eth0 inet dhcp' /etc/network/interfaces")
@@ -61,7 +61,7 @@ class Net_config():
         os.system("sudo sed -i '6c \\ ' /etc/network/interfaces")
         os.system('sudo ifdown eth0')
         os.system('sudo ifup eth0')
-        os.system('sudo cp /etc/network/interfaces ./interfaces.bak')
+        os.system('sudo cp /etc/network/interfaces ./library/interfaces.bak')
 
     def eth1_dhcp(self):
         os.system("sudo sed -i '12c iface eth1 inet dhcp' /etc/network/interfaces")
