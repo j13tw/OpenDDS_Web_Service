@@ -61,10 +61,10 @@ def setIpSecond():
     return redirect('/ipSettingMain')
 
 @app.route('/dnsSecond', methods=['POST'])
-def dnsMain():
+def dnsSecond():
     print(request.form)
     if request.form['DNS'] == 'autoDNS':
-        print(123)
+        print('autoDNS')
     elif request.form['DNS'] == 'staticDNS':
         defaultDNS = request.form['defaultDNS']
         otherDNS = request.form['otherDNS']
