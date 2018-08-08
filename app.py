@@ -22,10 +22,10 @@ def setIpMain():
         Net_config().eth0_dhcp()
     elif request.form['ipMethod'] == 'staticIP':
         staticIP = request.form['staticIP']
-        staticMac = request.form['staticMac']
+        staticMask = request.form['staticMask']
         staticGateway = request.form['staticGateway']
-        print(staticIP,staticMac,staticGateway)
-        Net_config().eth0_static(staticIP, staticMac, staticGateway)
+        print(staticIP,staticMask,staticGateway)
+        Net_config().eth0_static(staticIP, staticMask, staticGateway)
     return redirect('/ipSettingMain')
 
 @app.route('/dnsMain', methods=['POST'])
@@ -55,9 +55,9 @@ def setIpSecond():
         print(123)
     elif request.form['ipMethod'] == 'staticIP':
         staticIP = request.form['staticIP']
-        staticMac = request.form['staticMac']
+        staticMask = request.form['staticMask']
         staticGateway = request.form['staticGateway']
-        print(staticIP,staticMac,staticGateway)
+        print(staticIP,staticMask,staticGateway)
     return redirect('/ipSettingMain')
 
 @app.route('/dnsSecond', methods=['POST'])
