@@ -37,11 +37,10 @@ def dnsMain():
     elif request.form['DNS'] == 'staticDNS':
         defaultDNS = request.form['defaultDNS']
         otherDNS = request.form['otherDNS']
-        if(otherDNS == ''){
+        if otherDNS == '' :
             Net_config.eth0_dns(defaultDNS)
-        }else{
+        else :
             Net_config.eth0_dual_dns(defaultDNS,otherDNS)
-        }
         print(defaultDNS,otherDNS)
     return redirect('/ipSettingMain')
 
