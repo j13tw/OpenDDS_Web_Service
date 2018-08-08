@@ -19,13 +19,13 @@ def setIpMain():
     print(request.form)
     if request.form['ipMethod'] == 'dhcpIP':
         print('dhcp')
-        Net_config.eth0_dhcp('')
+        Net_config().eth0_dhcp()
     elif request.form['ipMethod'] == 'staticIP':
         staticIP = request.form['staticIP']
         staticMac = request.form['staticMac']
         staticGateway = request.form['staticGateway']
         print(staticIP,staticMac,staticGateway)
-        Net_config.eth0_static(staticIP, staticMac, staticGateway)
+        Net_config().eth0_static(staticIP, staticMac, staticGateway)
     return redirect('/ipSettingMain')
 
 @app.route('/dnsMain', methods=['POST'])
