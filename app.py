@@ -81,7 +81,7 @@ def dnsSecond():
 @app.route("/iniUpdate")
 def iniUpdate():
     file = File_search().ini_list()
-    for i in range(len(data)):
+    for i in range(len(file)):
         fileList[i] = {
             'num':i,
             'name':file[i].split('.')[0],
