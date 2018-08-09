@@ -1,14 +1,11 @@
 import os, sys
-import glob
 
 class File_search():
     def __init__(self):
         pass
 
     def ini_list(self):
-        self.ini_table = glob.glob('/etc/network/*')
-        for x in range(0, len(self.ini_table)):
-            self.ini_table[x] = self.ini_table[x].split('/')[3]
+        self.ini_table = os.listdir('/home/pi/ini/')
         return  self.ini_table
 
 class Time_config():
