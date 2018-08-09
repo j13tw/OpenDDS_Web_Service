@@ -15,8 +15,11 @@
     <link href="/static/css/iniUpdate.css" rel="stylesheet">
     <script src="/static/js/ie-emulation-modes-warning.js"></script>
     <script>
-        function select(val) {
-            console.log(val);
+        function selectFun(val) {
+            var data = JSON.parse('{{fileList|tojson|safe}}');
+            let file = (data[Number(val)].format != '') ? data[Number(val)].name + '.' + data[Number(val)].format : data[Number(val)].name + '/（路徑)';
+            $("#selectFileName").text(file);
+            alert('選擇的是' + file);
         }
     </script>
 </head>
@@ -74,7 +77,7 @@
                         <p>（1）找到已上傳的檔</p>
                         <p>（2）點選檔案設定欄位的設定按鈕，將其設為使用檔案</p>
                         <p>（3）查看設定結果</p>（4）目前選擇的檔案：
-                        <h>上未選擇</h>
+                        <h id="selectFileName">上未選擇</h>
                     </div>
 
                     <!-- Table -->
@@ -93,7 +96,7 @@
                                 <td>{{key.num}}</td>
                                 <td>{{key.name}}</td>
                                 <td>{{key.format}}</td>
-                                <td><input type="button" value="選擇" onclick="select('{{key.num}}')"></td>
+                                <td><input type="button" value="選擇" onclick="selectFun('{{key.num}}');"></td>
                             </tr>
                             {% endfor %}
                         </tbody>
