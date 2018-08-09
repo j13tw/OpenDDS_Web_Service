@@ -1,6 +1,6 @@
 from flask import Flask,request,render_template,redirect,url_for
 from werkzeug.utils import secure_filename
-from library.Network_config import  Net_config
+from library.Network_config import  Net_config,File_search
 import subprocess
 import json
 
@@ -80,8 +80,15 @@ def dnsSecond():
 
 @app.route("/iniUpdate")
 def iniUpdate():
-    data = [{'num':1,'name':'apple','format':'jpg','size':123456,'time':'20180730'},{'num':2,'name':'apple','format':'png','size':123456,'time':'20180731'}];
-    return render_template('iniUpdate.html',fileList = data);
+    file = File_search().ini_list()
+    for i in range(len(data)):
+        fileList[i] = {
+            'num':i,
+            'name':file[i].split('.')[0],
+            'format':file[i].split('.')[1]
+        }
+    # fileList = [{'num':1,'name':'apple','format':'jpg','size':123456,'time':'20180730'},{'num':2,'name':'apple','format':'png','size':123456,'time':'20180731'}];
+    return render_template('iniUpdate.html',fileList = fileList);
 
 @app.route("/upload",methods=['POST'])
 def upload():
