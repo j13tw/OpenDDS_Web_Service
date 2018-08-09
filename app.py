@@ -1,8 +1,9 @@
-from flask import Flask,request,render_template,redirect,url_for
+from flask import Flask,request,render_template,redirect,url_for,abort
 from werkzeug.utils import secure_filename
 from library.Network_config import  Net_config,File_search
 import subprocess
 import json
+import os
 
 app = Flask(__name__)
 
@@ -85,8 +86,8 @@ def iniUpdate():
     for i in range(len(file)):
         fileList.append({
             'num':i,
-            'name':file[i].split('.')[0],
-            'format':(len(file[i].split('.'))==2) and file[i].split('.')[1] or ''
+            'name':(file[i].split('.')[0]!='') and file[i].split('.')[0] or '.'+file[i].split('.')[1],
+            'format':(len(file[i].split('.'))==2) and ((file[i].split('.')[0]!='') and file[i].split('.')[1] or '特殊檔案') or ''
         })
     return render_template('iniUpdate.html',fileList = fileList)
 
@@ -95,6 +96,15 @@ def upload():
     f = request.files['file']
     f.save('/home/pi/ini/'+ secure_filename(f.filename))
     return redirect(url_for('iniUpdate'))
+
+@app.route("/selectFile",methods=['POST'])
+def selectFile():
+    if not request.json:
+        abort(400)
+    print(request.json['filename'])
+    os.system('echo '+os.getcwd()+'/'+request.json['filename']+'> ./db/selectIniPath.txt' )
+    return redirect(url_for('iniUpdate'))
+    # return json.dumps(request.json)
 
 @app.route('/iniSelect')
 def iniSelect():

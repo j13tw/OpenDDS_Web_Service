@@ -17,8 +17,23 @@
     <script>
         function selectFun(val) {
             var data = JSON.parse('{{fileList|tojson|safe}}');
-            let file = (data[Number(val)].format != '') ? data[Number(val)].name + '.' + data[Number(val)].format : data[Number(val)].name + '/（路徑)';
+            let file = (data[Number(val)].format != '' && data[Number(val)].format != '特殊檔案') ? data[Number(val)].name + '.' + data[Number(val)].format : data[Number(val)].name + '（特殊檔案或路徑)';
             $("#selectFileName").text(file);
+            $.ajax({
+                type: "POST",
+                url: "selectFile",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    filename: (data[Number(val)].format != '' && data[Number(val)].format != '特殊檔案') ? data[Number(val)].name + '.' + data[Number(val)].format : data[Number(val)].name
+                }),
+                success: function(data) {
+                    console.log('success')
+                },
+                error: function(data) {
+                    return false;
+                }
+            });
             alert('選擇的是' + file);
         }
     </script>
