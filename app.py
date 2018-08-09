@@ -80,16 +80,14 @@ def dnsSecond():
 
 @app.route("/iniUpdate")
 def iniUpdate():
-    
     file = File_search().ini_list()
+    fileList = []
     for i in range(len(file)):
-        fileList[i] = {
+        fileList.append({
             'num':i,
             'name':file[i].split('.')[0],
-            'format':file[i].split('.')[1]
-        }
-    print(fileList)
-    # fileList = [{'num':1,'name':'apple','format':'jpg','size':123456,'time':'20180730'},{'num':2,'name':'apple','format':'png','size':123456,'time':'20180731'}];
+            'format':(len(file[i].split('.'))==2) and file[i].split('.')[1] or ''
+        })
     return render_template('iniUpdate.html',fileList = fileList)
 
 @app.route("/upload",methods=['POST'])
