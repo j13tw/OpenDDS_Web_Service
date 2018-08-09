@@ -8,11 +8,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html');
+    return render_template('index.html')
 
 @app.route('/ipSettingMain')
 def ipSettingMain():
-    return render_template('ipSettingMain.html');
+    return render_template('ipSettingMain.html')
 
 @app.route('/setIpMain', methods=['POST'])
 def setIpMain():
@@ -46,7 +46,7 @@ def dnsMain():
 
 @app.route('/ipSettingSecond')
 def ipSettingSecond():
-    return render_template('ipSettingSecond.html');
+    return render_template('ipSettingSecond.html')
 
 @app.route('/setIpSecond', methods=['POST'])
 def setIpSecond():
@@ -80,6 +80,7 @@ def dnsSecond():
 
 @app.route("/iniUpdate")
 def iniUpdate():
+    
     file = File_search().ini_list()
     for i in range(len(file)):
         fileList[i] = {
@@ -87,26 +88,27 @@ def iniUpdate():
             'name':file[i].split('.')[0],
             'format':file[i].split('.')[1]
         }
+    print(fileList)
     # fileList = [{'num':1,'name':'apple','format':'jpg','size':123456,'time':'20180730'},{'num':2,'name':'apple','format':'png','size':123456,'time':'20180731'}];
-    return render_template('iniUpdate.html',fileList = fileList);
+    return render_template('iniUpdate.html',fileList = fileList)
 
 @app.route("/upload",methods=['POST'])
 def upload():
     f = request.files['file']
     f.save('/etc/network/'+ secure_filename(f.filename))
-    return redirect(url_for('iniUpdate'));
+    return redirect(url_for('iniUpdate'))
 
 @app.route('/iniSelect')
 def iniSelect():
-    return render_template('iniSelect.html');
+    return render_template('iniSelect.html')
 
 @app.route('/iniBuild')
 def iniBuild():
-    return render_template('iniBuild.html');
+    return render_template('iniBuild.html')
 
 @app.route('/ping')
 def ping():
-    return render_template('ping.html');
+    return render_template('ping.html')
 
 @app.route('/ping',methods=['POST'])
 def pings():
@@ -123,11 +125,11 @@ def pings():
 
 @app.route('/logs')
 def logs():
-    return render_template('logs.html');
+    return render_template('logs.html')
 
 @app.route('/sentTest')
 def sentTest():
-    return render_template('sentTest.html');
+    return render_template('sentTest.html')
 
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True
