@@ -93,7 +93,7 @@ def iniUpdate():
 @app.route("/upload",methods=['POST'])
 def upload():
     f = request.files['file']
-    f.save('/etc/network/'+ secure_filename(f.filename))
+    f.save('/home/pi/ini/'+ secure_filename(f.filename))
     return redirect(url_for('iniUpdate'))
 
 @app.route('/iniSelect')
