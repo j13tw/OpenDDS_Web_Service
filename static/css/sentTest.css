@@ -238,9 +238,11 @@ p {
 
 .message-b-to-a-sty div {
     position: relative;
+    width: max-content;
+    max-width: calc(100% - 41px);
     margin-top: 0px;
     margin-bottom: 0px;
-    margin-left: 10px;
+    left: 41px;
     border-radius: 6px;
     display: inline-block;
     text-align: left;
@@ -272,9 +274,11 @@ p {
 
 .message-a-to-b-sty div {
     position: relative;
+    width: max-content;
+    max-width: calc(100% - 41px);
     margin-top: 0px;
     margin-bottom: 0px;
-    margin-left: 10px;
+    left: 41px;
     border-radius: 6px;
     display: inline-block;
     text-align: left;
@@ -335,5 +339,7 @@ p {
 }
 
 img {
+    position: absolute;
     border-radius: 16px;
+    top: calc(50% - 31px/2);
 }
