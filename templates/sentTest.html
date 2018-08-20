@@ -21,31 +21,6 @@
             let listB = document.getElementById("listB");
             listB.scrollTop = listB.scrollHeight;
         }
-
-        var wsUrl = 'ws://127.0.0.1:3000';
-        var websocket = new WebSocket(wsUrl);
-        websocket.onopen = function(evt) {
-            console.log('Connected');
-            // websocket.send('Hello Server!');
-        };
-        websocket.onclose = function(evt) {
-            console.log('DisConnected');
-        };
-        websocket.onmessage = function(evt) {
-            console.log('Got Message');
-            console.log(evt.data);
-            var msg = $('<div>').append(evt.data);
-            $('#messages').append(msg);
-        };
-        websocket.onerror = function(evt) {
-            console.log('Something\'s wrong');
-        };
-        $(function() {
-            $('#send').on('click', function() {
-                websocket.send($('#msg').val());
-                $('#msg').val('');
-            });
-        });
     </script>
 </head>
 
@@ -223,10 +198,10 @@
                         </div>
                         <div class="send ">
                             <div class="send-input-text ">
-                                <input class="send-input-text-sty " type="text ">
+                                <input class="send-input-text-sty " type="text" id="msgA">
                             </div>
                             <div class="send-input-btn ">
-                                <input class="send-input-btn-sty " type="button " value="送出 ">
+                                <input class="send-input-btn-sty " type="button" value="送出" id="sendA">
                             </div>
                         </div>
                     </div>
@@ -235,11 +210,45 @@
                             <p>通訊B端</p>
                         </div>
                         <div class="message-list ">
-                            <ul class="message-list-sty " id="listB ">
+                            <ul class="message-list-sty " id="listB">
                                 <li>
                                     <div class="message-a-to-b-sty ">
                                         <img src="/static/img/A.jpg" alt="B" width="31px" height="31px">
                                         <div>sfgzffd</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-b-to-b-sty ">
+                                        <div>fzasdcsfdfvadfghbxdgfdsgtghsdzefzerw</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-a-to-b-sty ">
+                                        <img src="/static/img/A.jpg" alt="B" width="31px" height="31px">
+                                        <div>zsfafedf</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-b-to-b-sty ">
+                                        <div>fbdhbhfdg</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-a-to-b-sty ">
+                                        <img src="/static/img/A.jpg" alt="B" width="31px" height="31px">
+                                        <div>fdbg</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-a-to-b-sty ">
+                                        <img src="/static/img/A.jpg" alt="B" width="31px" height="31px">
+                                        <div>1234dsvvfbscaccasc</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-a-to-b-sty ">
+                                        <img src="/static/img/A.jpg" alt="B" width="31px" height="31px">
+                                        <div>saSCca</div>
                                     </div>
                                 </li>
                                 <li>
@@ -292,10 +301,10 @@
                         </div>
                         <div class="send ">
                             <div class="send-input-text ">
-                                <input class="send-input-text-sty " type="text ">
+                                <input class="send-input-text-sty " type="text" id="msgB">
                             </div>
                             <div class="send-input-btn ">
-                                <input class="send-input-btn-sty " type="button " value="送出 ">
+                                <input class="send-input-btn-sty " type="button" value="送出" id="sendB">
                             </div>
                         </div>
                     </div>
@@ -304,7 +313,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
+    <!-- Bootstrap core JavaScrip
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/static/js/jquery.min.js "></script>
@@ -314,6 +323,7 @@
     <script src="/static/js/bootstrap.min.js "></script>
     <script src="/static/js/holder.min.js "></script>
     <script src="/static/js/ie10-viewport-bug-workaround.js "></script>
+    <script src="/static/js/socket.js"></script>
 </body>
 
 </html>
