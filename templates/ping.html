@@ -17,7 +17,7 @@
     <script language="javascript" src="/static/js/jquery.min.js"></script>
     <script type="text/javascript">
         var pingStatus = false;
-        setInterval(function() {
+        setInterval(function () {
             if (pingStatus) {
                 ping()
             }
@@ -31,11 +31,11 @@
                 data: {
                     ip: $("#serverIp").val()
                 },
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                     $("#pingResultMsg").append(data + "<br>");
                 },
-                error: function(data) {
+                error: function (data) {
                     console.log(data);
                     return false;
                 }
@@ -57,7 +57,7 @@
         }
 
         function clearMsg() {
-            $("#clearPingResultMsg").click(function() {
+            $("#clearPingResultMsg").click(function () {
                 $("#pingResultMsg").html("");
             });
         }
@@ -78,14 +78,17 @@
                 <ul class="nav nav-sidebar">
                     <li class="active">
                         <a href="#">系統設定
-              <span class="sr-only">(current)</span>
-            </a>
+                            <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                     <li>
                         <a href="ipSettingMain">IP 設定(內建網卡）</a>
                     </li>
                     <li>
                         <a href="ipSettingSecond">IP 設定(外接網卡）</a>
+                    </li>
+                    <li>
+                        <a href="iniCreate">ini 建立</a>
                     </li>
                     <li>
                         <a href="iniUpdate">ini 設定</a>

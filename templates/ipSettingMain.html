@@ -17,17 +17,17 @@
     <script src="/static/js/jquery.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#dhcp').click(function() {
+        $(document).ready(function () {
+            $('#dhcp').click(function () {
                 $('#static').attr('checked', false);
             })
-            $('#static').click(function() {
+            $('#static').click(function () {
                 $('#dhcp').attr('checked', false);
             })
-            $('#autoDNS').click(function() {
+            $('#autoDNS').click(function () {
                 $('#staticDNS').attr('checked', false);
             })
-            $('#staticDNS').click(function() {
+            $('#staticDNS').click(function () {
                 $('#autoDNS').attr('checked', false);
             })
         })
@@ -45,7 +45,7 @@
                 if (staticIpCheck.length == 4) {
                     for (let i = 0; i < 4; i++) {
                         let TheNum = Number(staticIpCheck[i]);
-                        if (TheNum >= 0 && TheNum <= 255) {} else {
+                        if (TheNum >= 0 && TheNum <= 255) { } else {
                             alert("IP位址格式錯誤");
                             return false;
                         }
@@ -59,7 +59,7 @@
                 if (staticMaskCheck.length == 4) {
                     for (let i = 0; i < 4; i++) {
                         let TheNum = Number(staticMaskCheck[i]);
-                        if (TheNum >= 0 && TheNum <= 255) {} else {
+                        if (TheNum >= 0 && TheNum <= 255) { } else {
                             alert("子網路遮罩格式錯誤");
                             return false;
                         }
@@ -73,7 +73,7 @@
                 if (staticGatewayCheck.length == 4) {
                     for (let i = 0; i < 4; i++) {
                         let TheNum = Number(staticGatewayCheck[i]);
-                        if (TheNum >= 0 && TheNum <= 255) {} else {
+                        if (TheNum >= 0 && TheNum <= 255) { } else {
                             alert("預設閘道格式錯誤");
                             return false;
                         }
@@ -96,7 +96,7 @@
                 if (defaultDNSCheck.length == 4) {
                     for (let i = 0; i < 4; i++) {
                         let TheNum = Number(defaultDNSCheck[i]);
-                        if (TheNum >= 0 && TheNum <= 255) {} else {
+                        if (TheNum >= 0 && TheNum <= 255) { } else {
                             alert("慣用DNS伺服器格式錯誤");
                             return false;
                         }
@@ -111,7 +111,7 @@
                     if (otherDNSCheck.length == 4) {
                         for (let i = 0; i < 4; i++) {
                             let TheNum = Number(otherDNSCheck[i]);
-                            if (TheNum >= 0 && TheNum <= 255) {} else {
+                            if (TheNum >= 0 && TheNum <= 255) { } else {
                                 alert("其他DNS伺服器格式錯誤");
                                 return false;
                             }
@@ -150,6 +150,9 @@
                     </li>
                     <li>
                         <a href="ipSettingSecond">IP 設定(外接網卡）</a>
+                    </li>
+                    <li>
+                        <a href="iniCreate">ini 建立</a>
                     </li>
                     <li>
                         <a href="iniUpdate">ini 設定</a>

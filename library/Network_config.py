@@ -1,4 +1,6 @@
-import os, sys
+import os
+import sys
+
 
 class File_search():
     def __init__(self):
@@ -6,7 +8,8 @@ class File_search():
 
     def ini_list(self):
         self.ini_table = os.listdir('/home/pi/ini/')
-        return  self.ini_table
+        return self.ini_table
+
 
 class Time_config():
     def __init__(self):
@@ -15,14 +18,15 @@ class Time_config():
     def date_set(self, year, month, date):
         self.date_command = 'sudo date -s ' + year + month + date
         os.system(self.date_command)
-    
+
     def time_set(self, hour, minute, second):
         self.time_command = 'sudo date -s ' + hour + ':' + minute + ':' + second
         os.system(self.time_command)
 
+
 class Ntp_config():
     def __init__(self):
-#       need install ntpdate By 'sudo apt-get install ntpdate'
+        #       need install ntpdate By 'sudo apt-get install ntpdate'
         os.system('timedatectl set-timezone "Asia/Taipei"')
         os.system('sudo /etc/init.d/ntp stop >/tmp/ntp_stop.log')
         try:
@@ -37,6 +41,7 @@ class Ntp_config():
         self.f.write(ntp_host)
         self.f.close()
         os.system(self.ntp_command)
+
 
 class Net_config():
     def __init__(self):
@@ -87,7 +92,8 @@ class Net_config():
         self.f = open('/etc/network/interfaces', 'r+')
         self.f.seek(190)
         self.f.write('allow-hotplug eth1\n\n')
-        os.system("sudo sed -i '12c iface eth1 inet static' /etc/network/interfaces")
+        os.system(
+            "sudo sed -i '12c iface eth1 inet static' /etc/network/interfaces")
         command = "sudo sed -i '13c address " + ip + "' /etc/network/interfaces"
         os.system(command)
         command = "sudo sed -i '14c netmask " + netmask + "' /etc/network/interfaces"
@@ -116,19 +122,21 @@ class Net_config():
         self.usb_id = open('/tmp/usb.txt')
         self.usb_reset = 'sudo python /etc/network/Restusb.py -d ' + self.usb_id.read()
         os.system(self.usb_reset)
-    
+
     def eth0_dual_dns(self, dns, sub_dns):
         command = "sudo sed -i '7c dns-nameserver " + dns + "' /etc/network/interfaces"
         os.system(command)
-        command = "sudo sed -i '8c dns-nameserver " + sub_dns + "' /etc/network/interfaces"
+        command = "sudo sed -i '8c dns-nameserver " + \
+            sub_dns + "' /etc/network/interfaces"
         os.system(command)
         os.system('sudo ifdown eth0')
         os.system('sudo ifup eth0')
-    
+
     def eth1_dual_dns(self, dns, sub_dns):
         command = "sudo sed -i '16c dns-nameserver " + dns + "' /etc/network/interfaces"
         os.system(command)
-        command = "sudo sed -i '17c dns-nameserver " + sub_dns + "' /etc/network/interfaces"
+        command = "sudo sed -i '17c dns-nameserver " + \
+            sub_dns + "' /etc/network/interfaces"
         os.system(command)
         os.system('lsusb | grep "Realtek" | cut -c16,17,18 >/tmp/usb.txt')
         self.usb_id = open('/tmp/usb.txt')
@@ -140,7 +148,7 @@ class Net_config():
         os.system("sudo sed -i '8c \\ ' /etc/network/interfaces")
         os.system('sudo ifdown eth0')
         os.system('sudo ifup eth0')
-    
+
     def eth1_auto_dns(self):
         command = "sudo sed -i '16c dns-nameserver 8.8.8.8' /etc/network/interfaces"
         os.system(command)

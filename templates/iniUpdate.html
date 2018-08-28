@@ -14,6 +14,7 @@
     <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="/static/css/iniUpdate.css" rel="stylesheet">
     <script src="/static/js/ie-emulation-modes-warning.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <script>
         function selectFun(val) {
             var data = JSON.parse('{{fileList|tojson|safe}}');
@@ -27,10 +28,10 @@
                 data: JSON.stringify({
                     filename: (data[Number(val)].format != '' && data[Number(val)].format != '特殊檔案') ? data[Number(val)].name + '.' + data[Number(val)].format : data[Number(val)].name
                 }),
-                success: function(data) {
+                success: function (data) {
                     console.log('success')
                 },
-                error: function(data) {
+                error: function (data) {
                     return false;
                 }
             });
@@ -53,14 +54,17 @@
                 <ul class="nav nav-sidebar">
                     <li class="active">
                         <a href="#">系統設定
-              <span class="sr-only">(current)</span>
-            </a>
+                            <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                     <li>
                         <a href="ipSettingMain">IP 設定(內建網卡）</a>
                     </li>
                     <li>
                         <a href="ipSettingSecond">IP 設定(外接網卡）</a>
+                    </li>
+                    <li>
+                        <a href="iniCreate">ini 建立</a>
                     </li>
                     <li>
                         <a href="iniUpdate">ini 設定</a>
@@ -92,7 +96,7 @@
                         <p>（1）找到已上傳的檔</p>
                         <p>（2）點選檔案設定欄位的設定按鈕，將其設為使用檔案</p>
                         <p>（3）查看設定結果</p>（4）目前選擇的檔案：
-                        <h id="selectFileName">上未選擇</h>
+                        <h3 id="selectFileName">上未選擇</h3>
                     </div>
 
                     <!-- Table -->
