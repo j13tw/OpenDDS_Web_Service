@@ -94,8 +94,24 @@ def iniCreate():
 
 @app.route("/createFile", methods=['POST'])
 def createFile():
-    print(request.form.get('a'))
-    return redirect(url_for('iniCreate'))
+    print(request.json)
+    data = request.json
+    print(data["ini_file_name"])
+    if data["transport_type"] != "rtps_udp":
+        os.system("cp ./ini/default.ini ./ini/file/" +
+                  data["ini_file_name"]+".ini")
+        os.system("sed -i '' s:DCPSBit=1/0:DCPSBit=" +
+                  data["DCPSBit"]+": ./ini/file/" + data["ini_file_name"]+".ini")
+        os.system("sed -i '' s:Scheduler=SCHED_OTHER/SCHED_RR/SCHED_FIFO:Scheduler=" +
+                  data["Scheduler"]+": ./ini/file/" + data["ini_file_name"]+".ini")
+        os.system("sed -i '' '1,8 s:TTL=1～10:TTL=" +
+                  data["discovery_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
+        os.system("sed -i '' s:transport_type=rtps_udp/tcp/udp:transport_type=" +
+                  data["transport_type"]+": ./ini/file/" + data["ini_file_name"]+".ini")
+        os.system("sed -i '' '9,14 s:TTL=1～10:TTL=" +
+                  data["transportConf_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
+    # return json.dumps({'error': "True"}), 404, {'ContentType': 'application/json'}
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route("/iniUpdate")

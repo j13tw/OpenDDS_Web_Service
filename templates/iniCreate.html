@@ -17,12 +17,56 @@
   <script src="/static/js/jquery.min.js"></script>
   <script>
     $(document).ready(function () {
-      $("#endpoint-type").change(function () {
-        if ($(this).val() != "default") {
-          $("#QoS").show();
+      $("#transport_type").change(function () {
+        if ($(this).val() == "rtps_udp") {
+          $("#endpoint").show();
         } else {
-          $("#QoS").hide();
+          $("#endpoint").hide();
         }
+      });
+      $("#endpoint_type").change(function () {
+        if ($(this).val() == "default") {
+          $("#QoS").hide();
+        } else {
+          $("#QoS").show();
+        }
+      });
+
+      $("#send").click(function () {
+        let ini_file_name = $("#ini_file_name").val();
+        let transport_type = $("#transport_type").val();
+        let transportConf_TTL = $("#transportConf_TTL").val();
+        let DCPSBit = $("#DCPSBit").val();
+        let Scheduler = $("#Scheduler").val();
+        let discovery_TTL = $("#discovery_TTL").val();
+        let endpoint_type = $("#endpoint_type").val();
+        let history_kind = (endpoint_type != "default") ? $("#history_kind").val() : null;
+        let reliability_kind = (endpoint_type != "default") ? $("#reliability_kind").val() : null;
+        console.log(ini_file_name, transport_type, transportConf_TTL, DCPSBit, Scheduler, discovery_TTL, endpoint_type, history_kind, reliability_kind);
+        $.ajax({
+          type: "POST",
+          url: "createFile",
+          contentType: "application/json",
+          dataType: "json",
+          data: JSON.stringify({
+            ini_file_name: (ini_file_name != "") ? ini_file_name : endpoint_type,
+            transport_type: transport_type,
+            transportConf_TTL: transportConf_TTL,
+            DCPSBit: DCPSBit,
+            Scheduler: Scheduler,
+            discovery_TTL: discovery_TTL,
+            endpoint_type: endpoint_type,
+            history_kind: history_kind,
+            reliability_kind: reliability_kind
+          }), success: function (result) {
+            alert("建檔成功");
+          },
+          error: function (data) {
+            console.log(data);
+            // alert("建檔失敗");
+            // return false;
+          }
+        });
       });
     });
   </script>
@@ -70,59 +114,21 @@
       </div>
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
         <h1 class="page-header">ini建立</h1>
+        <span>ini 檔案名稱：</span>
+        <input type="text" value="" id="ini_file_name">
         <h3>1、transportConf 設定</h3>
-        <div class="row">
-          <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
-            <div class="select-sty">
-              <h4>(1) transport_type</h4>
-              <select name="transport_type">
-                <option value="rtps_udp">rtps_udp</option>
-                <option value="tcp">tcp</option>
-                <option value="udp">udp</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
-            <div class="select-sty">
-              <h4>(2) TTL</h4>
-              <select name="transportConf-TTL">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <h3>2、common 設定</h3>
         <div class="row select-sty">
           <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
-            <h4>(1) DCPSBit</h4>
-            <select name="DCPSBit">
-              <option value="1">1</option>
-              <option value="0">0</option>
+            <h4>(1) transport_type</h4>
+            <select name="transport_type" id="transport_type">
+              <option value="rtps_udp">rtps_udp</option>
+              <option value="tcp">tcp</option>
+              <option value="udp">udp</option>
             </select>
           </div>
-          <div class="col-sm-3 col-md-3 col-sm-10 col-xs-8">
-            <h4>(2) Scheduler</h4>
-            <select name="Scheduler">
-              <option value="SCHED_OTHER">SCHED_OTHER</option>
-              <option value="SCHED_RR">SCHED_RR</option>
-              <option value="SCHED_FIFO">SCHED_FIFO</option>
-            </select>
-          </div>
-        </div>
-        <h3>3、discovery 設定</h3>
-        <div class="row select-sty">
           <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
-            <h4>(1) TTL</h4>
-            <select name="discovery-TTL">
+            <h4>(2) TTL</h4>
+            <select name="transportConf_TTL" id="transportConf_TTL">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -136,15 +142,53 @@
             </select>
           </div>
         </div>
-        <h3>4、endpoint 設定</h3>
+        <h3>2、common 設定</h3>
         <div class="row select-sty">
           <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
-            <h4>(1) type</h4>
-            <select name="type" id="endpoint-type">
-              <option value="default">default</option>
-              <option value="reader">reader</option>
-              <option value="writer">writer</option>
+            <h4>(1) DCPSBit</h4>
+            <select name="DCPSBit" id="DCPSBit">
+              <option value="1">1</option>
+              <option value="0">0</option>
             </select>
+          </div>
+          <div class="col-sm-3 col-md-3 col-sm-10 col-xs-8">
+            <h4>(2) Scheduler</h4>
+            <select name="Scheduler" id="Scheduler">
+              <option value="SCHED_OTHER">SCHED_OTHER</option>
+              <option value="SCHED_RR">SCHED_RR</option>
+              <option value="SCHED_FIFO">SCHED_FIFO</option>
+            </select>
+          </div>
+        </div>
+        <h3>3、discovery 設定</h3>
+        <div class="row select-sty">
+          <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+            <h4>(1) TTL</h4>
+            <select name="discovery_TTL" id="discovery_TTL">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+        </div>
+        <div id="endpoint">
+          <h3>4、endpoint 設定</h3>
+          <div class="row select-sty">
+            <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+              <h4>(1) type</h4>
+              <select name="endpoint_type" id="endpoint_type">
+                <option value="default">default</option>
+                <option value="reader">reader</option>
+                <option value="writer">writer</option>
+              </select>
+            </div>
           </div>
         </div>
         <div id="QoS">
@@ -152,23 +196,21 @@
           <div class="row select-sty">
             <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
               <h4>(1) history.kind</h4>
-              <select name="history.kind">
+              <select name="history_kind" id="history_kind">
                 <option value="KEEP_LAST">KEEP_LAST</option>
                 <option value="KEEP_ALL">KEEP_ALL</option>
               </select>
             </div>
             <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
               <h4>(2) reliability.kind</h4>
-              <select name="reliability.kind">
+              <select name="reliability_kind" id="reliability_kind">
                 <option value="RELIABLE">RELIABLE</option>
                 <option value="BEST_EFFORT">BEST_EFFORT</option>
               </select>
             </div>
           </div>
         </div>
-        <div id="send">
-          <button class="btn btn-primary btn-lg" type="submit">送出</button>
-        </div>
+        <button class="btn btn-primary btn-lg" type="submit" id="send">送出</button>
       </div>
     </div>
 
