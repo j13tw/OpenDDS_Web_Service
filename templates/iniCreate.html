@@ -59,12 +59,12 @@
             history_kind: history_kind,
             reliability_kind: reliability_kind
           }), success: function (result) {
+            console.log(result);
             alert("建檔成功");
           },
-          error: function (data) {
-            console.log(data);
-            // alert("建檔失敗");
-            // return false;
+          error: function (result) {
+            alert("建檔失敗");
+            return false;
           }
         });
       });
