@@ -59,10 +59,11 @@
             history_kind: history_kind,
             reliability_kind: reliability_kind
           }), success: function (result) {
-            console.log(result);
+            console.log(result.success);
             alert("建檔成功");
           },
           error: function (result) {
+            console.log(JSON.parse(result.responseText).error);
             alert("建檔失敗");
             return false;
           }

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, abort
+from flask import Flask, request, render_template, redirect, url_for, abort, jsonify
 from werkzeug.utils import secure_filename
 from library.Network_config import Net_config, File_search
 import subprocess
@@ -135,9 +135,9 @@ def createFile():
         return None, 404
         pass
     if os.path.isfile("./ini/file/" + data["ini_file_name"]+".ini"):
-        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+        return json.dumps({'success': '建檔成功'}), 200, {'ContentType': 'application/json'}
     else:
-        return None, 404
+        return jsonify({'error': '建檔失敗'}), 400
 
 
 @app.route("/iniUpdate")
