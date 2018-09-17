@@ -1,4 +1,38 @@
 import os, sys
+import serial
+from serial import SerialException
+import datetime, time
+
+
+class Gps_time():
+    def __init__(self):
+        self.set_date = ""
+        self.set_time = ""
+    def get_time(self):
+        try:
+            self.gps = serial.Serial('/tty/USB0', 4800, timeout=1)
+        except:
+            return "ERROR"    
+        while(1):
+            response = self.gps.readline().decode('ascii')     							# read up to return data 30 bytes (timeout)
+#            print(response)
+            if (response.split(',')[0] == "$GPRMC"):
+                date = datetime.datetime.strptime(response.split(',')[9], '%d%m%y')
+#                print("DATE : ", date.year, date.month, date.day)
+                self.set_date = str(date.year) + "-" + str(date.month) + "-" + str(date.day)
+#                print(set_date)
+            if (response.split(',')[0] == "$GPGGA"):
+                now = datetime.datetime.strptime(response.split(',')[1].split('.')[0], '%I%M%S')
+#                print("Now", now.hour+ 8, now.minute, now.second)
+                self.set_time = str(now.hour+ 8) + ":" + str(now.minute) + ":" + str(now.second)
+#                print(set_time)
+            if (self.set_time != "" and self.set_date != ""):
+#               print("set GPS time")
+                command = 'sudo date -s "' + self.set_date + ' ' + self.set_time + '"'
+                os.system(command)
+                break
+        self.gps.close()
+        return "OK"
 
 class File_search():
     def __init__(self):
@@ -13,11 +47,15 @@ class Time_config():
         pass
 
     def date_set(self, year, month, date):
-        self.date_command = 'sudo date -s ' + year + month + date
+        now = datetime.datetime.now()
+        self.date_command = 'sudo date -s "' + year + '-' + month + '-' + date + " " + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second) + '"'
+#        print(self.date_command)
         os.system(self.date_command)
     
     def time_set(self, hour, minute, second):
-        self.time_command = 'sudo date -s ' + hour + ':' + minute + ':' + second
+        now = datetime.datetime.now()
+        self.time_command = 'sudo date -s "' + str(now.year) + '-' + str(now.month) + '-' + str(now.day) + " " + hour + ':' + minute + ':' + second + '"'
+#        print(self.time_command)
         os.system(self.time_command)
 
 class Ntp_config():
