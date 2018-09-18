@@ -15,7 +15,7 @@
     <link href="/static/css/sentTest.css" rel="stylesheet">
     <script src="/static/js/ie-emulation-modes-warning.js"></script>
     <script>
-        window.onload = function() {
+        window.onload = function () {
             let listA = document.getElementById("listA");
             listA.scrollTop = listA.scrollHeight;
             let listB = document.getElementById("listB");
@@ -38,14 +38,17 @@
                 <ul class="nav nav-sidebar">
                     <li class="active">
                         <a href="#">系統設定
-              <span class="sr-only">(current)</span>
-            </a>
+                            <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                     <li>
                         <a href="ipSettingMain">IP 設定(內建網卡）</a>
                     </li>
                     <li>
                         <a href="ipSettingSecond">IP 設定(外接網卡）</a>
+                    </li>
+                    <li>
+                        <a href="iniCreate">ini 建立</a>
                     </li>
                     <li>
                         <a href="iniUpdate">ini 設定</a>
@@ -79,95 +82,30 @@
                             <p>通訊A端</p>
                         </div>
                         <div class="message-list">
-                            <ul class="message-list-sty" id="listA">
-                                <li>
-                                    <div style="background-color: blueviolet">123456</div>
-                                </li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                            </ul>
+                            <ul class="message-list-sty" id="listA"></ul>
                         </div>
-                        <div class="send">
-                            <div class="send-input-text">
-                                <input class="send-input-text-sty" type="text">
+                        <div class="send ">
+                            <div class="send-input-text ">
+                                <input class="send-input-text-sty " type="text" id="msgA">
                             </div>
-                            <div class="send-input-btn">
-                                <input class="send-input-btn-sty" type="button" value="送出">
+                            <div class="send-input-btn ">
+                                <input class="send-input-btn-sty " type="button" value="送出" id="sendA">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-xs-5 col-xs-offset-2 message">
-                        <div class="message-title">
+                    <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-xs-5 col-xs-offset-2 message ">
+                        <div class="message-title ">
                             <p>通訊B端</p>
                         </div>
-                        <div class="message-list">
-                            <ul class="message-list-sty" id="listB">
-                                <li>
-                                    <div style="background-color: blueviolet">123456</div>
-                                </li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                                <li>123</li>
-                            </ul>
+                        <div class="message-list ">
+                            <ul class="message-list-sty " id="listB"></ul>
                         </div>
-                        <div class="send">
-                            <div class="send-input-text">
-                                <input class="send-input-text-sty" type="text">
+                        <div class="send ">
+                            <div class="send-input-text ">
+                                <input class="send-input-text-sty " type="text" id="msgB">
                             </div>
-                            <div class="send-input-btn">
-                                <input class="send-input-btn-sty" type="button" value="送出">
+                            <div class="send-input-btn ">
+                                <input class="send-input-btn-sty " type="button" value="送出" id="sendB">
                             </div>
                         </div>
                     </div>
@@ -176,16 +114,17 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
+    <!-- Bootstrap core JavaScrip
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery.min.js "></script>
     <script>
-        window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')
+        window.jQuery || document.write('<script src="/static/js/jquery.min.js "><\/script>')
     </script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/holder.min.js"></script>
-    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/static/js/bootstrap.min.js "></script>
+    <script src="/static/js/holder.min.js "></script>
+    <script src="/static/js/ie10-viewport-bug-workaround.js "></script>
+    <script src="/static/js/socket.js"></script>
 </body>
 
 </html>

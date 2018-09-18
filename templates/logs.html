@@ -33,14 +33,17 @@
                 <ul class="nav nav-sidebar">
                     <li class="active">
                         <a href="#">系統設定
-              <span class="sr-only">(current)</span>
-            </a>
+                            <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                     <li>
                         <a href="ipSettingMain">IP 設定(內建網卡）</a>
                     </li>
                     <li>
                         <a href="ipSettingSecond">IP 設定(外接網卡）</a>
+                    </li>
+                    <li>
+                        <a href="iniCreate">ini 建立</a>
                     </li>
                     <li>
                         <a href="iniUpdate">ini 設定</a>
@@ -98,7 +101,7 @@
 
             return data;
         }
-        $(document).ready(function() {
+        $(document).ready(function () {
             data1 = DoSeries2();
             data2 = DoSeries2();
             $.plot($("#chart1"), [{
@@ -110,16 +113,16 @@
                     show: true
                 }
             }], {
-                grid: {
-                    backgroundColor: {
-                        colors: ["#B0D5FF", "#5CA8FF"]
+                    grid: {
+                        backgroundColor: {
+                            colors: ["#B0D5FF", "#5CA8FF"]
+                        }
+                    },
+                    xaxis: {
+                        mode: "time",
+                        timeformat: "%0m/%0d %0H:%0M"
                     }
-                },
-                xaxis: {
-                    mode: "time",
-                    timeformat: "%0m/%0d %0H:%0M"
-                }
-            });
+                });
             $.plot($("#chart2"), [{
                 data: data2,
                 points: {
@@ -129,16 +132,16 @@
                     show: true
                 }
             }], {
-                grid: {
-                    backgroundColor: {
-                        colors: ["#B0D5FF", "#5CA8FF"]
+                    grid: {
+                        backgroundColor: {
+                            colors: ["#B0D5FF", "#5CA8FF"]
+                        }
+                    },
+                    xaxis: {
+                        mode: "time",
+                        timeformat: "%0m/%0d %0H:%0M"
                     }
-                },
-                xaxis: {
-                    mode: "time",
-                    timeformat: "%0m/%0d %0H:%0M"
-                }
-            });
+                });
         });
     </script>
 </body>
