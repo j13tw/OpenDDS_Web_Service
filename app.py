@@ -210,6 +210,11 @@ def sentTest():
     return render_template('sentTest.html')
 
 
+@app.route('/rpiSetting')
+def rpiSetting():
+    return render_template('rpiSetting.html')
+
+
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True

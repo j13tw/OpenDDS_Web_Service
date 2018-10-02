@@ -7,7 +7,8 @@ class File_search():
         pass
 
     def ini_list(self):
-        self.ini_table = os.listdir('/home/pi/ini/')
+        self.ini_table = os.listdir(
+            '/Users/liwensheng/Documents/python/flask_dds/ini/file')
         return self.ini_table
 
 

@@ -12,16 +12,17 @@
     <title>Dashboard Template for Bootstrap</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="/static/css/sentTest.css" rel="stylesheet">
+    <link href="/static/css/rpiSetting.css" rel="stylesheet">
     <script src="/static/js/ie-emulation-modes-warning.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script>
         window.onload = function () {
-            let listA = document.getElementById("listA");
-            listA.scrollTop = listA.scrollHeight;
-            let listB = document.getElementById("listB");
-            listB.scrollTop = listB.scrollHeight;
+            $("#date-method").change(function () {
+                if ($(this).val() == 'manual') {
+                    $("#date-set").show();
+                } else {
+                    $("#date-set").hide();
+                }
+            });
         }
     </script>
 </head>
@@ -70,51 +71,27 @@
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
-                <h1 class="page-header">傳輸測試</h1>
-                <form action="#">
-                    <h3>通訊Ａ端通道設定：</h3>
-                    <input class="inline" type="text">
-                    <input class="inline" type="submit" value="送出">
-                </form>
-                <form action="#">
-                    <h3>通訊Ｂ端通道設定：</h3>
-                    <input class="inline" type="text">
-                    <input class="inline" type="submit" value="送出">
-                </form>
-                <div class="row">
-                    <div class="col-sm-5 col-md-5 col-sm-5 col-xs-5 message">
-                        <div class="message-title">
-                            <p>通訊A端</p>
-                        </div>
-                        <div class="message-list">
-                            <ul class="message-list-sty" id="listA"></ul>
-                        </div>
-                        <div class="send ">
-                            <div class="send-input-text ">
-                                <input class="send-input-text-sty " type="text" id="msgA">
-                            </div>
-                            <div class="send-input-btn ">
-                                <input class="send-input-btn-sty " type="button" value="送出" id="sendA">
-                            </div>
-                        </div>
+                <h1 class="page-header">設定</h1>
+                <h2>時間設定</h2>
+                <div class="setTime">
+                    <div>
+                        <p class="inline">（1）對時方式：</p>
+                        <select id="date-method">
+                            <option value="manual">手動對時</option>
+                            <option value="gps">GPS對時</option>
+                            <option value="ntp">NTP對時</option>
+                        </select>
                     </div>
-                    <div class="col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-2 col-sm-5 col-sm-offset-2 col-xs-5 col-xs-offset-2 message ">
-                        <div class="message-title ">
-                            <p>通訊B端</p>
-                        </div>
-                        <div class="message-list ">
-                            <ul class="message-list-sty " id="listB"></ul>
-                        </div>
-                        <div class="send ">
-                            <div class="send-input-text ">
-                                <input class="send-input-text-sty " type="text" id="msgB">
-                            </div>
-                            <div class="send-input-btn ">
-                                <input class="send-input-btn-sty " type="button" value="送出" id="sendB">
-                            </div>
-                        </div>
+                    <br>
+                    <div id="date-set">
+                        <p class="inline">（2）日期設定：</p>
+                        <input type="date" class="date" /><br><br>
+                        <p class="inline">（3）時間設定：</p>
+                        <input type="time" class="date" />
                     </div>
+                    <input class="btn btn-primary btn-lg btn-sty" type="button" value="送出" />
                 </div>
+                <h2>Watch Dog 設定</h2>
             </div>
         </div>
     </div>
@@ -129,7 +106,7 @@
     <script src="/static/js/bootstrap.min.js "></script>
     <script src="/static/js/holder.min.js "></script>
     <script src="/static/js/ie10-viewport-bug-workaround.js "></script>
-    <script src="/static/js/socket-io.js"></script>
+    <script src="/static/js/socket.js"></script>
 </body>
 
 </html>

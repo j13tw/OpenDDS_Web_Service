@@ -4,14 +4,14 @@ const websocket = new WebSocket(wsUrl);
 const ul_A = document.getElementById("listA");
 const ul_B = document.getElementById("listB");
 
-websocket.onopen = function(evt) {
+websocket.onopen = function (evt) {
     console.log('Connected');
     // websocket.send('Hello Server!');
 };
-websocket.onclose = function(evt) {
+websocket.onclose = function (evt) {
     console.log('DisConnected');
 };
-websocket.onmessage = function(evt) {
+websocket.onmessage = function (evt) {
     console.log('Got Message');
     console.log(evt.data);
     try {
@@ -51,17 +51,17 @@ websocket.onmessage = function(evt) {
     // var msg = $('<div>').append(evt.data);
     // $('#messages').append(msg);
 };
-websocket.onerror = function(evt) {
+websocket.onerror = function (evt) {
     console.log('Something\'s wrong');
 };
 
-$(function() {
-    $('#sendA').on('click', function() {
+$(function () {
+    $('#sendA').on('click', function () {
         websocket.send(JSON.stringify({ "from": "A", "msg": $('#msgA').val() }));
         $('#msgA').val('');
     });
 
-    $('#sendB').on('click', function() {
+    $('#sendB').on('click', function () {
         websocket.send(JSON.stringify({ "from": "B", "msg": $('#msgB').val() }));
 
         $('#msgB').val('');
