@@ -16,27 +16,40 @@
     <script src="/static/js/ie-emulation-modes-warning.js"></script>
     <script src="/static/js/jquery.min.js"></script>
     <script>
-        function selectFun(val) {
+        function deleteFun(val) {
             var data = JSON.parse('{{fileList|tojson|safe}}');
             let file = (data[Number(val)].format != '' && data[Number(val)].format != '特殊檔案') ? data[Number(val)].name + '.' + data[Number(val)].format : data[Number(val)].name + '（特殊檔案或路徑)';
-            $("#selectFileName").text(file);
-            $.ajax({
-                type: "POST",
-                url: "selectFile",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify({
-                    filename: (data[Number(val)].format != '' && data[Number(val)].format != '特殊檔案') ? data[Number(val)].name + '.' + data[Number(val)].format : data[Number(val)].name
-                }),
-                success: function (data) {
-                    console.log('success')
-                },
-                error: function (data) {
-                    return false;
-                }
-            });
-            alert('選擇的是' + file);
+            // window.location.reload(true);
+            if (window.confirm('確定要刪除' + file + '嗎?')) {
+                $.ajax({
+                    type: "POST",
+                    url: "deleteFile",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        filename: (data[Number(val)].format != '' && data[Number(val)].format != '特殊檔案') ? data[Number(val)].name + '.' + data[Number(val)].format : data[Number(val)].name
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        if (!alert(file + '檔案已刪除')) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert(file + '檔案刪除失敗')
+                        return false;
+                    }
+                });
+            }
+            else {
+                // They clicked no
+            }
         }
+
+        setInterval(() => {
+            // window.location.reload(true);
+        }, 3000);
     </script>
 </head>
 
@@ -84,22 +97,19 @@
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
-                <h1 class="page-header">ini</h1>
+                <h1 class="page-header">ini列表及上傳</h1>
                 <h3>ini上傳</h3>
                 <form action="/upload" method="post" enctype="multipart/form-data">
                     <input type="file" name="file" multiple>
                     <input type="submit" value="Upload">
                 </form>
-                <h3>ini選擇</h3>
+                <h3>ini列表</h3>
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
                     <div class="panel-heading">操作說明</div>
                     <div class="panel-body">
-                        <p>選擇要做為設定openDDS的ini檔</p>
-                        <p>（1）找到已上傳的檔</p>
-                        <p>（2）點選檔案設定欄位的設定按鈕，將其設為使用檔案</p>
-                        <p>（3）查看設定結果</p>（4）目前選擇的檔案：
-                        <h3 id="selectFileName">上未選擇</h3>
+                        <p>管理openDDS的ini檔:</p>
+                        <p>（1）設定欄位之刪除按鈕，可將對應檔案刪除</p>
                     </div>
 
                     <!-- Table -->
@@ -118,7 +128,7 @@
                                 <td>{{key.num}}</td>
                                 <td>{{key.name}}</td>
                                 <td>{{key.format}}</td>
-                                <td><input type="button" value="選擇" onclick="selectFun('{{key.num}}');"></td>
+                                <td><input type="button" value="刪除" onclick="deleteFun('{{key.num}}');"></td>
                             </tr>
                             {% endfor %}
                         </tbody>
