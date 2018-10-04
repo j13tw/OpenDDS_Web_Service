@@ -60,10 +60,12 @@
             reliability_kind: reliability_kind
           }), success: function (result) {
             console.log(result.success);
+            $("#ini_file_name").val('');
             alert("建檔成功");
           },
           error: function (result) {
             console.log(JSON.parse(result.responseText).error);
+            $("#ini_file_name").val('');
             alert("建檔失敗");
             return false;
           }
