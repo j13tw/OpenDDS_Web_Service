@@ -135,9 +135,10 @@ def createFile():
         return None, 404
         pass
     if os.path.isfile("./ini/file/" + data["ini_file_name"]+".ini"):
-        return json.dumps({'success': '建檔成功'}), 200, {'ContentType': 'application/json'}
+        return json.dumps({'error': '建檔失敗'}), 400
+        # return json.dumps({'success': '建檔成功'}), 200, {'ContentType': 'application/json'}
     else:
-        return jsonify({'error': '建檔失敗'}), 400
+        return json.dumps({'error': '建檔失敗'}), 400
 
 
 @app.route("/iniUpdate")
@@ -156,29 +157,33 @@ def iniUpdate():
 @app.route("/upload", methods=['POST'])
 def upload():
     f = request.files['file']
-    f.save('/home/pi/ini/' + secure_filename(f.filename))
+    f.save('/Users/liwensheng/Documents/python/flask_dds/ini/file/' +
+           secure_filename(f.filename))
     return redirect(url_for('iniUpdate'))
 
 
-@app.route("/selectFile", methods=['POST'])
-def selectFile():
+@app.route("/deleteFile", methods=['POST'])
+def deleteFile():
     if not request.json:
-        abort(400)
-    print(request.json['filename'])
-    os.system('echo '+os.getcwd()+'/' +
-              request.json['filename']+'> ./db/selectIniPath.txt')
-    return redirect(url_for('iniUpdate'))
-    # return json.dumps(request.json)
+        return abort(400)
+    else:
+        print(request.json['filename'])
+        try:
+            os.system(
+                'rm -r /home/pi/ini/' + request.json['filename'])
+            return json.dumps(request.json)
+        except:
+            return abort(400)
 
 
-@app.route('/iniSelect')
-def iniSelect():
-    return render_template('iniSelect.html')
+# @app.route('/iniSelect')
+# def iniSelect():
+#     return render_template('iniSelect.html')
 
 
-@app.route('/iniBuild')
-def iniBuild():
-    return render_template('iniBuild.html')
+# @app.route('/iniBuild')
+# def iniBuild():
+#     return render_template('iniBuild.html')
 
 
 @app.route('/ping')
@@ -207,12 +212,117 @@ def logs():
 
 @app.route('/sentTest')
 def sentTest():
-    return render_template('sentTest.html')
+    file = File_search().ini_list()
+    print(file)
+    fileList = []
+    for i in range(len(file)):
+        if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
+            fileList.append(file[i])
+    return render_template('sentTest.html', fileList=fileList)
 
 
 @app.route('/rpiSetting')
 def rpiSetting():
     return render_template('rpiSetting.html')
+
+
+@app.route('/setRpiTime', methods=['POST'])
+def setRpiTime():
+    if not request.json:
+        return abort(400)
+    else:
+        dateMethod = request.json['dateMethod']
+        if dateMethod == 'manual':
+            date = request.json['date']
+            time = request.json['time']
+            print(dateMethod, date, time)
+            if Time_config().date_set(date.split('-')[0], date.split('-')[1], date.split('-')[2]) == 'OK' and Time_config().time_set(time.split(':')[0], time.split(':')[1], 0) == 'OK':
+                return jsonify({'status': 'ok'})
+            else:
+                return abort(400)
+        elif dateMethod == 'gps':
+            print(dateMethod)
+            if Gps_time().get_time() == 'OK':
+                return jsonify({'status': 'ok'})
+            else:
+                return abort(400)
+        elif dateMethod == 'ntp':
+            ntp_host = request.json['ntp']
+            print(dateMethod, ntp_host)
+            if Ntp_config().ntp_set(ntp_host) == 'OK' and ntp_host != '':
+                return jsonify({'status': 'ok'})
+            else:
+                return abort(400)
+        return abort(404)
+
+
+@app.route('/setWatchDog1', methods=['POST'])
+def setWatchDog1():
+    if not request.json:
+        return abort(400)
+    else:
+        try:
+            setWatchDogVal1 = request.json['setWatchDogVal1']
+            status = Watchdog_config().set_cpu_load_short()
+            return jsonify({'status': status})
+        except:
+            return abort(400)
+
+
+@app.route('/setWatchDogCancel1', methods=['POST'])
+def setWatchDogCancel1():
+    return True
+
+
+@app.route('/setWatchDog5', methods=['POST'])
+def setWatchDog5():
+    dateMethod = request.form.get('dateMethod')
+    if dateMethod == 'manual':
+        print(dateMethod)
+        # Time_config().date_set(date.split(
+        #     '-')[0], date.split('-')[1], date.split('-')[2])
+        # Time_config().time_set(time.split(':')[0], time.split(':')[1], 0)
+
+    return redirect(url_for('rpiSetting'))
+
+
+@app.route('/setWatchDogCancel5', methods=['POST'])
+def setWatchDogCancel5():
+    return True
+
+
+@app.route('/setWatchDog15', methods=['POST'])
+def setWatchDog15():
+    dateMethod = request.form.get('dateMethod')
+    if dateMethod == 'manual':
+        print(dateMethod)
+        # Time_config().date_set(date.split(
+        #     '-')[0], date.split('-')[1], date.split('-')[2])
+        # Time_config().time_set(time.split(':')[0], time.split(':')[1], 0)
+
+    return redirect(url_for('rpiSetting'))
+
+
+@app.route('/setWatchDogCancel15', methods=['POST'])
+def setWatchDogCancel15():
+    return True
+
+
+@app.route('/setWatchDogCPU', methods=['POST'])
+def setWatchDogCPU():
+    dateMethod = request.form.get('dateMethod')
+    if dateMethod == 'manual':
+        print(dateMethod)
+        # Time_config().date_set(date.split(
+        #     '-')[0], date.split('-')[1], date.split('-')[2])
+        # Time_config().time_set(time.split(':')[0], time.split(':')[1], 0)
+
+    return redirect(url_for('rpiSetting'))
+
+
+@app.route('/setWatchDogCancelCPU', methods=['POST'])
+def setWatchDogCancelCPU():
+    return True
 
 
 if __name__ == '__main__':
