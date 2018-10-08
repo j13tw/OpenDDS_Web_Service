@@ -45,7 +45,8 @@
                     }),
                     success: function (data) {
                         console.log('success');
-                        if (!alert('已更新完成')) {
+                        console.log(data);
+                        if (!alert('已更新狀態：' + data.status)) {
                             window.location.reload(true);
                         }
                     },

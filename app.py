@@ -235,21 +235,36 @@ def setRpiTime():
         if dateMethod == 'manual':
             date = request.json['date']
             time = request.json['time']
-            print(dateMethod, date, time)
-            if Time_config().date_set(date.split('-')[0], date.split('-')[1], date.split('-')[2]) == 'OK' and Time_config().time_set(time.split(':')[0], time.split(':')[1], 0) == 'OK':
-                return jsonify({'status': 'ok'})
-            else:
+            print(dateMethod, date.split('-'), time.split(':'))
+            # return jsonify({'status': 'ok'})
+            try:
+                setDateStatus = Time_config().date_set(date.split(
+                    '-')[0], date.split('-')[1], date.split('-')[2])
+                print('date_set', date.split('-')
+                      [0], date.split('-')[1], date.split('-')[2])
+                setTimeStatus = Time_config().time_set(
+                    time.split(':')[0], time.split(':')[1], '0')
+                print('time_set', time.split(':')[0], time.split(':')[1], '0')
+                if setDateStatus == 'OK' and setTimeStatus == 'OK':
+                    return jsonify({'status': 'ok'})
+                else:
+                    return abort(400)
+            except:
                 return abort(400)
         elif dateMethod == 'gps':
             print(dateMethod)
-            if Gps_time().get_time() == 'OK':
+            gps = Gps_time().get_time()
+            if gps == 'OK':
                 return jsonify({'status': 'ok'})
+            elif gps == 'GPS Pending':
+                return jsonify({'status': 'GPS Pending'})
             else:
                 return abort(400)
         elif dateMethod == 'ntp':
             ntp_host = request.json['ntp']
             print(dateMethod, ntp_host)
-            if Ntp_config().ntp_set(ntp_host) == 'OK' and ntp_host != '':
+            ntp = Ntp_config().ntp_set(ntp_host)
+            if ntp == 'OK':
                 return jsonify({'status': 'ok'})
             else:
                 return abort(400)
