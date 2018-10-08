@@ -39,9 +39,9 @@
                     dataType: "json",
                     data: JSON.stringify({
                         dateMethod: $('#dateMethod').val(),
-                        date: $('#setDate').val(),
-                        time: $('#setTime').val(),
-                        ntp: $('#setNtp').val()
+                        date: $('#setDateVal').val(),
+                        time: $('#setTimeVal').val(),
+                        ntp: $('#setNtpVal').val()
                     }),
                     success: function (data) {
                         console.log('success');
@@ -140,13 +140,13 @@
                     <br>
                     <div class="date-set">
                         <p class="inline">（2）日期設定：</p>
-                        <input type="date" class="date" id="setDate" name="date" /><br><br>
+                        <input type="date" class="date" id="setDateVal" name="date" /><br><br>
                         <p class="inline">（3）時間設定：</p>
-                        <input type="time" class="date" id="setTime" name="time" />
+                        <input type="time" class="date" id="setTimeVal" name="time" />
                     </div>
                     <div class="set-ntp-display">
                         <p class="inline">（2）NTP設定：</p>
-                        <input type="text" class="date" id="setNtp" name="ntp" /><br>
+                        <input type="text" class="date" id="setNtpVal" name="ntp" /><br>
                     </div>
                     <input class="btn btn-primary btn-lg btn-sty" type="button" id="setTime" value="送出" />
                 </div><br>
