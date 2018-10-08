@@ -21,6 +21,7 @@ class Watchdog_config():
         file = open('/etc/watchdog.conf', 'r') 
         for x in range (1, 36):
             line = file.readline()
+#            print(line)
             if (x == 10): 
                 self.cpu_short_load = line.split(" ")[2].split("\n")[0]
             if (x == 11): 
@@ -77,7 +78,7 @@ class Gps_time():
 
     def get_time(self):
         try:
-            self.gps = serial.Serial('/tty/USB0', 4800, timeout=1)
+            self.gps = serial.Serial('dev//ttyUSB0', 4800, timeout=1)
         except:
             return "ERROR"    
         while(1):
@@ -129,7 +130,7 @@ class Time_config():
         else: second = str(now.second)
         response = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
         return response
-
+   
     def date_set(self, year, month, date):
         os.system("sudo timedatectl set-ntp 0")
         now = datetime.datetime.now()
@@ -137,7 +138,7 @@ class Time_config():
 #        print(self.date_command)
         os.system(self.date_command)
         return "OK"
-
+    
     def time_set(self, hour, minute, second):
         os.system("sudo timedatectl set-ntp 0")
         now = datetime.datetime.now()
