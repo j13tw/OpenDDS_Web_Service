@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, abort, jsonify
 from werkzeug.utils import secure_filename
-from library.Network_config import Net_config, File_search, Time_config, Gps_time, dateMethod
+from library.Network_config import Net_config, File_search, Time_config, Gps_time, Ntp_config
 import subprocess
 import json
 import os
