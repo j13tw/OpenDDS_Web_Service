@@ -90,6 +90,11 @@ body {
     margin-top: 0;
 }
 
+.full-screen {
+    position: absolute;
+    height: calc(100% - 61px);
+}
+
 h3 {
     display: inline;
 }
@@ -118,10 +123,25 @@ p {
     color: white
 }
 
-.message {
+.send-setting {
+    height: 40%;
+}
+
+.set-text-sty {
     position: relative;
-    top: 16px;
-    height: 600px;
+    margin-left: 16px;
+}
+
+.message {
+    /* position: relative; */
+    position: absolute;
+    /* margin-left: 45%; */
+    height: 60%;
+    bottom: 10px;
+    left: 1px;
+    width: calc(100% - 120px);
+    margin-left:60px;
+    margin-right: 60px;
 }
 
 .message-list {
