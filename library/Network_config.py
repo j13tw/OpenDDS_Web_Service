@@ -1,6 +1,5 @@
 import os, sys
 import serial
-from serial import SerialException
 import datetime, time
 
 class Reboot_system():
@@ -85,11 +84,25 @@ class Gps_time():
             response = self.gps.readline().decode('ascii')
 #            print(response)
             if (response.split(',')[0] == "$GPRMC"):
+                if(response.split(',')[1] != ""):
+                    now = datetime.datetime.strptime(response.split(',')[1].split('.')[0], '%I%M%S')
+#                    print("Now", now.hour+ 8, now.minute, now.second)
+                    self.set_time = str(now.hour + 8) + ":" + str(now.minute) + ":" + str(now.second)
+                    print(self.set_time)
+                else:
+                    return "GPS Pending"
                 date = datetime.datetime.strptime(response.split(',')[9], '%d%m%y')
 #                print("DATE : ", date.year, date.month, date.day)
                 self.set_date = str(date.year) + "-" + str(date.month) + "-" + str(date.day)
 #                print(set_date)
             if (response.split(',')[0] == "$GPGGA"):
+                if(response.split(',')[1] != ""):
+                    now = datetime.datetime.strptime(response.split(',')[1].split('.')[0], '%I%M%S')
+#                    print("Now", now.hour+ 8, now.minute, now.second)
+                    self.set_time = str(now.hour + 8) + ":" + str(now.minute) + ":" + str(now.second)
+                    print(self.set_time)
+                else:
+                    return "GPS Pending"
                 now = datetime.datetime.strptime(response.split(',')[1].split('.')[0], '%I%M%S')
 #                print("Now", now.hour+ 8, now.minute, now.second)
                 self.set_time = str(now.hour + 8) + ":" + str(now.minute) + ":" + str(now.second)
@@ -152,6 +165,7 @@ class Ntp_config():
 #       need install ntpdate By 'sudo apt-get install ntpdate'
         os.system('timedatectl set-timezone "Asia/Taipei"')
 #        os.system('sudo /etc/init.d/ntp stop >/dev/null 2>&1')
+        os.system('sudo apt-get install ntpdate -y')
         try:
             f = open('/etc/network/ntp.log', 'r')
             f.close()
