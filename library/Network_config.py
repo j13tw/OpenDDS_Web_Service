@@ -230,23 +230,10 @@ class Ntp_config():
         self.f.write(ntp_host)
         self.f.close()
         connect = os.system(self.ntp_command)
-        now = datetime.datetime.now()
-        year = str(now.year)
-        if (int(now.month) < 10): month = "0" + str(now.month)
-        else: month = str(now.month)
-        if (int(now.day) < 10): day = "0" + str(now.day)
-        else: day = str(now.day)
-        if (int(now.hour) < 10): hour = "0" + str(now.hour)
-        else: hour = str(now.hour)
-        if (int(now.minute) < 10): minute = "0" + str(now.minute)
-        else: minute = str(now.minute)
-        if (int(now.second) < 10): second = "0" + str(now.second)
-        else: second = str(now.second)
-        response = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
         if (connect == 0):
-            return "OK", response
+            return "OK"
         else:
-            return "ERROR", response
+            return "ERROR"
 
 class Net_config():
     def __init__(self):
