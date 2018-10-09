@@ -14,14 +14,70 @@
     <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="/static/css/rpiSetting.css" rel="stylesheet">
     <script src="/static/js/ie-emulation-modes-warning.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <script>
         window.onload = function () {
-            $("#date-method").change(function () {
+            $('#dateMethod').change(function () {
                 if ($(this).val() == 'manual') {
-                    $("#date-set").show();
+                    $('.date-set').show();
                 } else {
-                    $("#date-set").hide();
+                    $('.date-set').hide();
                 }
+
+                if ($(this).val() == 'ntp') {
+                    $('.set-ntp-display').show();
+                } else {
+                    $('.set-ntp-display').hide();
+                }
+            });
+
+            $('#setTime').on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "setRpiTime",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        dateMethod: $('#dateMethod').val(),
+                        date: $('#setDateVal').val(),
+                        time: $('#setTimeVal').val(),
+                        ntp: $('#setNtpVal').val()
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        console.log(data);
+                        if (!alert('已更新狀態：' + data.status)) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert('更新失敗')
+                        return false;
+                    }
+                });
+            });
+            $("#setWatchDog1").on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "setWatchDog1",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        setWatchDogVal1: $('#setWatchDogVal1').val()
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        if (!alert('已更新完成')) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert('更新失敗')
+                        return false;
+                    }
+                });
             });
         }
     </script>
@@ -76,22 +132,44 @@
                 <div class="setTime">
                     <div>
                         <p class="inline">（1）對時方式：</p>
-                        <select id="date-method">
+                        <select id="dateMethod" name="dateMethod">
                             <option value="manual">手動對時</option>
                             <option value="gps">GPS對時</option>
                             <option value="ntp">NTP對時</option>
                         </select>
                     </div>
                     <br>
-                    <div id="date-set">
+                    <div class="date-set">
                         <p class="inline">（2）日期設定：</p>
-                        <input type="date" class="date" /><br><br>
+                        <input type="date" class="date" id="setDateVal" name="date" /><br><br>
                         <p class="inline">（3）時間設定：</p>
-                        <input type="time" class="date" />
+                        <input type="time" class="date" id="setTimeVal" name="time" />
                     </div>
-                    <input class="btn btn-primary btn-lg btn-sty" type="button" value="送出" />
-                </div>
+                    <div class="set-ntp-display">
+                        <p class="inline">（2）NTP設定：</p>
+                        <input type="text" class="date" id="setNtpVal" name="ntp" /><br>
+                    </div>
+                    <input class="btn btn-primary btn-lg btn-sty" type="button" id="setTime" value="送出" />
+                </div><br>
                 <h2>Watch Dog 設定</h2>
+                <div class="setWatchDog">
+                    <p class="inline">1分鐘 (需大於等於24)：</p>
+                    <input type="number" id="setWatchDogVal1">
+                    <button id="watchDogCancel1">取消</button>
+                    <button id="setWatchDog1">送出</button><br><br>
+                    <p class="inline">5分鐘（需大於等於20）：</p>
+                    <input type="number" id="setWatchDogVal5">
+                    <button id="watchDogCancel5">取消</button>
+                    <button id="setWatchDog5">送出</button><br><br>
+                    <p class="inline">15分鐘（需大於等於20）：</p>
+                    <input type="number" id="setWatchDogVal15">
+                    <button id="watchDogCancel15">取消</button>
+                    <button id="setWatchDog15">送出</button><br><br>
+                    <p class="inline">CPU溫度（需大於等於40）：</p>
+                    <input type="number" id="setWatchDogValCPU">
+                    <button id="watchDogCancelCPU">取消</button>
+                    <button id="setWatchDogCPU">送出</button><br><br>
+                </div>
             </div>
         </div>
     </div>
@@ -105,8 +183,6 @@
     </script>
     <script src="/static/js/bootstrap.min.js "></script>
     <script src="/static/js/holder.min.js "></script>
-    <script src="/static/js/ie10-viewport-bug-workaround.js "></script>
-    <script src="/static/js/socket.js"></script>
 </body>
 
 </html>
