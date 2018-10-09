@@ -23,9 +23,9 @@ class Watchdog_config():
                 os.system("sudo cp /library/modules /etc/modules")
                 os.system("sudo modprobe bcm2835_wdt")
                 os.system("sudo apt-get install watchdog >/dev/null 2>&1")
-	        os.system("sudo cp /library/watchdog.conf /etc/watchdog.conf")
-	        os.system("sudo service watchdog start")
-	        os.system("sudo update-rc.d watchdog defaults")
+                os.system("sudo cp /library/watchdog.conf /etc/watchdog.conf")
+                os.system("sudo service watchdog start")
+                os.system("sudo update-rc.d watchdog defaults")
 
     def watchdog_status(self):
         file = open('/etc/watchdog.conf', 'r') 
