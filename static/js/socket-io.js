@@ -29,19 +29,29 @@ socket.on('publishReturn', function (evt) {
             //     let listB = document.getElementById("listB");
             //     listB.scrollTop = listB.scrollHeight;
         } else {
-            // if (data == 'exist')
-            //send message from b to a
-            let li_A = document.createElement("li");
-            li_A.innerHTML = "<div class = 'message-b-to-a-sty' ><img src='/static/img/B.jpg' alt='B' width='31px' height='31px'><div>" + data + "</div></div>"
-            ul_A.appendChild(li_A);
+            if (data == 'create' || data == 'exist' || data == 'exit' || data == 'kill') {
+                //send message from b to a
+                let li_A = document.createElement("li");
+                li_A.innerHTML = "<div class = 'message-b-to-a-sty' ><img src='/static/img/B.jpg' alt='B' width='31px' height='31px'><div>" + 'publish狀態：' + data + "</div></div>"
+                ul_A.appendChild(li_A);
+                let listA = document.getElementById("listA");
+                listA.scrollTop = listA.scrollHeight;
+                userSendMsg = "";
+            } else {
+                console.log(data)
+                //send message from b to a
+                let li_A = document.createElement("li");
+                li_A.innerHTML = "<div class = 'message-b-to-a-sty' ><img src='/static/img/B.jpg' alt='B' width='31px' height='31px'><div>" + data + "</div></div>"
+                ul_A.appendChild(li_A);
+                let listA = document.getElementById("listA");
+                listA.scrollTop = listA.scrollHeight;
+                userSendMsg = "";
+            }
             //     //send message from b to b
             //     let li_B = document.createElement("li");
             //     li_B.innerHTML = "<div class = 'message-b-to-b-sty' ><div>" + data.message + "</div></div>";
             //     ul_B.appendChild(li_B);
 
-            let listA = document.getElementById("listA");
-            listA.scrollTop = listA.scrollHeight;
-            userSendMsg = "";
             //     let listB = document.getElementById("listB");
             //     listB.scrollTop = listB.scrollHeight;
         }
@@ -55,8 +65,15 @@ socket.on('publishReturn', function (evt) {
 socket.on('subscriberReturn', function (evt) {
     console.log('subscriberReturn');
     console.log(evt);
+    let data = evt.data;
     try {
-
+        //send message from b to a
+        let li_A = document.createElement("li");
+        li_A.innerHTML = "<div class = 'message-b-to-a-sty' ><img src='/static/img/B.jpg' alt='B' width='31px' height='31px'><div>" + 'subscriber狀態：' + data + "</div></div>"
+        ul_A.appendChild(li_A);
+        let listA = document.getElementById("listA");
+        listA.scrollTop = listA.scrollHeight;
+        userSendMsg = "";
     } catch (error) {
         console.log("a json error");
     }
@@ -65,8 +82,15 @@ socket.on('subscriberReturn', function (evt) {
 socket.on('subscriberRecevie', function (evt) {
     console.log('subscriberRecevie');
     console.log(evt);
+    let data = evt.data;
     try {
-
+        //send message from b to a
+        let li_A = document.createElement("li");
+        li_A.innerHTML = "<div class = 'message-b-to-a-sty' ><img src='/static/img/B.jpg' alt='B' width='31px' height='31px'><div>" + 'subscriber狀態：' + data + "</div></div>"
+        ul_A.appendChild(li_A);
+        let listA = document.getElementById("listA");
+        listA.scrollTop = listA.scrollHeight;
+        userSendMsg = "";
     } catch (error) {
         console.log("b json error");
     }
