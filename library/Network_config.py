@@ -20,10 +20,10 @@ class Watchdog_config():
             tmp = f.readline().split("\n\r")[0].split("\n")[0]
             if (tmp == "bcm2835_wdt"): break
             if (x == 8):
-                os.system("sudo cp /library/modules /etc/modules")
+                os.system("sudo cp ./library/modules /etc/modules")
                 os.system("sudo modprobe bcm2835_wdt")
                 os.system("sudo apt-get install watchdog >/dev/null 2>&1")
-                os.system("sudo cp /library/watchdog.conf /etc/watchdog.conf")
+                os.system("sudo cp ./library/watchdog.conf /etc/watchdog.conf")
                 os.system("sudo service watchdog start")
                 os.system("sudo update-rc.d watchdog defaults")
 
