@@ -18,7 +18,7 @@ class Watchdog_config():
         f = open("/etc/modules", "r")
         for x in range(1,9):
             tmp = f.readline().split("\n\r")[0].split("\n")[0]
-            if (tmp == "bcm2835_wdt") break
+            if (tmp == "bcm2835_wdt"): break
             if (x == 8):
                 os.system("sudo cp /library/modules /etc/modules")
                 os.system("sudo modprobe bcm2835_wdt")
