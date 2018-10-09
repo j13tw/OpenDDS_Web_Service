@@ -11,10 +11,10 @@ class Reboot_system():
 
 class Watchdog_config():
     def __init__(self):
-        self.cpu_short_load = "0"
-        self.cpu_middle_load = "0"
-        self.cpu_long_load = "0"
-        self.cpu_temperature = "0"
+        self.cpu_short_load = "28"
+        self.cpu_middle_load = "24"
+        self.cpu_long_load = "12"
+        self.cpu_temperature = "90"
         self.cpu_short_load_status = "Enable"
         self.cpu_middlet_load_status = "Enable"
         self.cpu_long_load_status = "Enable"
