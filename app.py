@@ -99,44 +99,44 @@ def createFile():
     print(data["ini_file_name"])
     try:
         if (data["transport_type"] != "rtps_udp" or data["transport_type"] == "rtps_udp" and data["endpoint_type"] == "default"):
-            os.system("cp ./ini/default.ini ./ini/file/" +
+            os.system("cp ./ini/default.ini /home/pi/ini/" +
                       data["ini_file_name"]+".ini")
             os.system("sed -i s:DCPSBit=1/0:DCPSBit=" +
-                      data["DCPSBit"]+": ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["DCPSBit"]+": /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i s:Scheduler=SCHED_OTHER/SCHED_RR/SCHED_FIFO:Scheduler=" +
-                      data["Scheduler"]+": ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["Scheduler"]+": /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i '1,8 s:TTL=1～10:TTL=" +
-                      data["discovery_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["discovery_TTL"]+":' /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i s:transport_type=rtps_udp/tcp/udp:transport_type=" +
-                      data["transport_type"]+": ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["transport_type"]+": /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i '9,14 s:TTL=1～10:TTL=" +
-                      data["transportConf_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["transportConf_TTL"]+":' /home/pi/ini/" + data["ini_file_name"]+".ini")
         else:
             if(data["endpoint_type"] == "reader"):
-                os.system("cp ./ini/staticReader.ini ./ini/file/" +
+                os.system("cp ./ini/staticReader.ini /home/pi/ini/" +
                           data["ini_file_name"]+".ini")
             elif(data["endpoint_type"] == "writer"):
-                os.system("cp ./ini/staticWriter.ini ./ini/file/" +
+                os.system("cp ./ini/staticWriter.ini /home/pi/ini/" +
                           data["ini_file_name"]+".ini")
             os.system("sed -i s:DCPSBit=1/0:DCPSBit=" +
-                      data["DCPSBit"]+": ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["DCPSBit"]+": /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i s:Scheduler=SCHED_OTHER/SCHED_RR/SCHED_FIFO:Scheduler=" +
-                      data["Scheduler"]+": ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["Scheduler"]+": /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i '1,8 s:TTL=1～10:TTL=" +
-                      data["discovery_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["discovery_TTL"]+":' /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i 's:history.kind=KEEP_LAST/KEEP_ALL:history.kind=" +
-                      data["history_kind"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["history_kind"]+":' /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i 's:reliability.kind=RELIABLE/BEST_EFFORT:reliability.kind=" +
-                      data["reliability_kind"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["reliability_kind"]+":' /home/pi/ini/" + data["ini_file_name"]+".ini")
             os.system("sed -i '24,26 s:TTL=1～10:TTL=" +
-                      data["transportConf_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
+                      data["transportConf_TTL"]+":' /home/pi/ini/" + data["ini_file_name"]+".ini")
         pass
     except:
         return None, 404
         pass
-    if os.path.isfile("./ini/file/" + data["ini_file_name"]+".ini"):
-        return json.dumps({'error': '建檔失敗'}), 400
-        # return json.dumps({'success': '建檔成功'}), 200, {'ContentType': 'application/json'}
+    if os.path.isfile("/home/pi/ini/" + data["ini_file_name"]+".ini"):
+        # return json.dumps({'error': '建檔失敗'}), 400
+        return json.dumps({'success': '建檔成功'}), 200, {'ContentType': 'application/json'}
     else:
         return json.dumps({'error': '建檔失敗'}), 400
 
@@ -212,12 +212,12 @@ def logs():
 
 @app.route('/sentTest')
 def sentTest():
-    file = File_search().ini_list()
-    print(file)
-    fileList = []
-    for i in range(len(file)):
-        if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
-            fileList.append(file[i])
+    # file = File_search().ini_list()
+    # print(file)
+    fileList = ['rtps.ini']
+    # for i in range(len(file)):
+    #     if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
+    #         fileList.append(file[i])
     return render_template('sentTest.html', fileList=fileList)
 
 
