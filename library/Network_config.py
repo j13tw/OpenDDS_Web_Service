@@ -1,156 +1,125 @@
-import os
-import sys
+import os, sys
 import serial
-from serial import SerialException
-import datetime
-import time
-
+import datetime, time
 
 class Reboot_system():
     def __init__(self):
-        self.command = "sudo init 6"
+       self.command = "sudo init 6"
 
     def reboot(self):
-        os.system(self.command)
-
+       os.system(self.command)
 
 class Watchdog_config():
     def __init__(self):
-        self.cpu_short_load = "24"
-        self.cpu_middle_load = "20"
-        self.cpu_long_load = "18"
-        self.cpu_temperature = "40"
+        self.cpu_short_load = "0"
+        self.cpu_middle_load = "0"
+        self.cpu_long_load = "0"
+        self.cpu_temperature = "0"
+        self.cpu_short_load_status = "Enable"
+        self.cpu_middlet_load_status = "Enable"
+        self.cpu_long_load_status = "Enable"
+        f = open("/etc/modules", "r")
+        for x in range(1,9):
+            tmp = f.readline().split("\n\r")[0].split("\n")[0]
+            if (tmp == "bcm2835_wdt"): break
+            if (x == 8):
+                os.system("sudo cp ./library/modules /etc/modules")
+                os.system("sudo modprobe bcm2835_wdt")
+                os.system("sudo apt-get install watchdog >/dev/null 2>&1")
+                os.system("sudo cp ./library/watchdog.conf /etc/watchdog.conf")
+                os.system("sudo service watchdog start")
+                os.system("sudo update-rc.d watchdog defaults")
 
     def watchdog_status(self):
-        file = open('/etc/watchdog.conf', 'r')
-        for x in range(1, 36):
+        file = open('/etc/watchdog.conf', 'r') 
+        for x in range (1, 37):
             line = file.readline()
-            if (x == 10):
-                self.cpu_short_load = line.split(" ")[2].split("\n")[0]
-            if (x == 11):
-                self.cpu_middle_load = line.split(" ")[2].split("\n")[0]
-            if (x == 12):
-                self.cpu_long_load = line.split(" ")[2].split("\n")[0]
-            if (x == 35):
-                self.cpu_temperature = line.split(" ")[2].split("\n")[0]
+#            print(line)
+            if (x == 10): 
+                tmp = line.split(" ")
+                if (len(tmp[0].split("#")) == 1): self.cpu_short_load_status = "Enable"
+                else: self.cpu_short_load_status = "Disable"
+                self.cpu_short_load = tmp[len(tmp)-1].split("\n")[0]
+            if (x == 11): 
+                tmp = line.split(" ")
+                if (len(tmp[0].split("#")) == 1): self.cpu_middle_load_status = "Enable"
+                else: self.cpu_middle_load_status = "Disable"
+                self.cpu_middle_load = tmp[len(tmp)-1].split("\n")[0]
+            if (x == 12): 
+                tmp = line.split(" ")
+                if (len(tmp[0].split("#")) == 1): self.cpu_long_load_status = "Enable"
+                else: self.cpu_long_load_status = "Disable"
+                self.cpu_long_load = tmp[len(tmp)-1].split("\n")[0]
+            if (x == 36): 
+                tmp = line.split(" ")
+                self.cpu_temperature = tmp[len(tmp)-1].split("\n")[0]
 #        print(self.cpu_short_load)
 #        print(self.cpu_middle_load)
 #        print(self.cpu_long_load)
 #        print(self.cpu_temperature)
-        return self.cpu_short_load, self.cpu_middle_load, self.cpu_long_load, self.cpu_temperature
+        return self.cpu_short_load_status, self.cpu_short_load, self.cpu_middle_load_status, self.cpu_middle_load, self.cpu_long_load , self.cpu_long_load_status, 
+self.cpu_temperature
+
+    def start_cpu_load_short(self):
+        command = "sudo sed -i '10c max-load-1 = " + self_short_load + "' /etc/watchdog.conf"
+        status = os.system(command)
+        if (status == 0): return "OK"
+        else: return "ERROR"
+
+    def start_cpu_load_middle(self):
+        command = "sudo sed -i '11c max-load-5 = " + self_middle_load + "' /etc/watchdog.conf"
+        status = os.system(command)
+        if (status == 0): return "OK"
+        else: return "ERROR"
+
+    def start_cpu_load_long(self):
+        command = "sudo sed -i '12c max-load-15 = " + self_long_load + "' /etc/watchdog.conf"
+        status = os.system(command)
+        if (status == 0): return "OK"
+        else: return "ERROR"
+
 
     def set_cpu_load_short(self, percent):
         command = "sudo sed -i '10c max-load-1 = " + percent + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def set_cpu_load_middle(self, percent):
         command = "sudo sed -i '11c max-load-5 = " + percent + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def set_cpu_load_long(self, percent):
         command = "sudo sed -i '12c max-load-15 = " + percent + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def set_cpu_temperature(self, temperature):
-        command = "sudo sed -i '35c max-temperature = " + \
-            temperature + "' /etc/watchdog.conf"
+        command = "sudo sed -i '36c max-temperature = " + temperature + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR" 
 
     def remove_cpu_load_short(self):
-        command = "sudo sed -i '10c \#max-load-1 = " + \
-            self.cpu_long_load + "' /etc/watchdog.conf"
+        command = "sudo sed -i '10c \#max-load-1 = " +  self.cpu_long_load  + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def remove_cpu_load_middle(self):
-        command = "sudo sed -i '11c \#max-load-5 = " + \
-            self.cpu_middle_load + "' /etc/watchdog.conf"
+        command = "sudo sed -i '11c \#max-load-5 = " +  self.cpu_middle_load  + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def remove_cpu_load_long(self):
-        command = "sudo sed -i '12c \#max-load-15 = " + \
-            self.cpu_long_load + "' /etc/watchdog.conf"
+        command = "sudo sed -i '12c \#max-load-15 = " + self.cpu_long_load + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
-
-
-class Reboot_system():
-    def __init__(self):
-        self.command = "sudo init 6"
-
-    def reboot(self):
-        os.system(self.command)
-
-
-class Watchdog_config():
-    def __init__(self):
-        self.cpu_short_load = "24"
-        self.cpu_middle_load = "20"
-        self.cpu_long_load = "18"
-        self.cpu_temperature = "40"
-
-    def watchdog_status(self):
-        file = open('/etc/watchdog.conf', 'r')
-        for x in range(1, 36):
-            line = file.readline()
-            if (x == 10):
-                self.cpu_short_load = line.split(" ")[2].split("\n")[0]
-            if (x == 11):
-                self.cpu_middle_load = line.split(" ")[2].split("\n")[0]
-            if (x == 12):
-                self.cpu_long_load = line.split(" ")[2].split("\n")[0]
-            if (x == 35):
-                self.cpu_temperature = line.split(" ")[2].split("\n")[0]
-#        print(self.cpu_short_load)
-#        print(self.cpu_middle_load)
-#        print(self.cpu_long_load)
-#        print(self.cpu_temperature)
-        return self.cpu_short_load, self.cpu_middle_load, self.cpu_long_load, self.cpu_temperature
-
-    def set_cpu_load_short(self, percent):
-        command = "sudo sed -i '10c max-load-1 = " + percent + "' /etc/watchdog.conf"
-        status = os.system(command)
-        return status
-
-    def set_cpu_load_middle(self, percent):
-        command = "sudo sed -i '11c max-load-5 = " + percent + "' /etc/watchdog.conf"
-        status = os.system(command)
-        return status
-
-    def set_cpu_load_long(self, percent):
-        command = "sudo sed -i '12c max-load-15 = " + percent + "' /etc/watchdog.conf"
-        status = os.system(command)
-        return status
-
-    def set_cpu_temperature(self, temperature):
-        command = "sudo sed -i '35c max-temperature = " + \
-            temperature + "' /etc/watchdog.conf"
-        status = os.system(command)
-        return status
-
-    def remove_cpu_load_short(self):
-        command = "sudo sed -i '10c \#max-load-1 = " + \
-            self.cpu_long_load + "' /etc/watchdog.conf"
-        status = os.system(command)
-        return status
-
-    def remove_cpu_load_middle(self):
-        command = "sudo sed -i '11c \#max-load-5 = " + \
-            self.cpu_middle_load + "' /etc/watchdog.conf"
-        status = os.system(command)
-        return status
-
-    def remove_cpu_load_long(self):
-        command = "sudo sed -i '12c \#max-load-15 = " + \
-            self.cpu_long_load + "' /etc/watchdog.conf"
-        status = os.system(command)
-        return status
-
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
 class Gps_time():
     def __init__(self):
@@ -159,28 +128,38 @@ class Gps_time():
 
     def get_time(self):
         try:
-            self.gps = serial.Serial('/tty/USB0', 4800, timeout=1)
+            self.gps = serial.Serial('/dev/ttyUSB0', 4800, timeout=1)
         except:
-            return "ERROR"
+            return "ERROR"    
         while(1):
             response = self.gps.readline().decode('ascii')
 #            print(response)
             if (response.split(',')[0] == "$GPRMC"):
-                date = datetime.datetime.strptime(
-                    response.split(',')[9], '%d%m%y')
+                if(response.split(',')[1] != ""):
+                    now = datetime.datetime.strptime(response.split(',')[1].split('.')[0], '%I%M%S')
+#                    print("Now", now.hour+ 8, now.minute, now.second)
+                    self.set_time = str(now.hour + 8) + ":" + str(now.minute) + ":" + str(now.second)
+                    print(self.set_time)
+                else:
+                    return "GPS Pending"
+                date = datetime.datetime.strptime(response.split(',')[9], '%d%m%y')
 #                print("DATE : ", date.year, date.month, date.day)
-                self.set_date = str(date.year) + "-" + \
-                    str(date.month) + "-" + str(date.day)
+                self.set_date = str(date.year) + "-" + str(date.month) + "-" + str(date.day)
 #                print(set_date)
             if (response.split(',')[0] == "$GPGGA"):
-                now = datetime.datetime.strptime(
-                    response.split(',')[1].split('.')[0], '%I%M%S')
+                if(response.split(',')[1] != ""):
+                    now = datetime.datetime.strptime(response.split(',')[1].split('.')[0], '%I%M%S')
+#                    print("Now", now.hour+ 8, now.minute, now.second)
+                    self.set_time = str(now.hour + 8) + ":" + str(now.minute) + ":" + str(now.second)
+                    print(self.set_time)
+                else:
+                    return "GPS Pending"
+                now = datetime.datetime.strptime(response.split(',')[1].split('.')[0], '%I%M%S')
 #                print("Now", now.hour+ 8, now.minute, now.second)
-                self.set_time = str(now.hour + 8) + ":" + \
-                    str(now.minute) + ":" + str(now.second)
+                self.set_time = str(now.hour + 8) + ":" + str(now.minute) + ":" + str(now.second)
 #                print(set_time)
             if (self.set_time != "" and self.set_date != ""):
-                #               print("set GPS time")
+#               print("set GPS time")
                 os.system("sudo timedatectl set-ntp 0")
                 command = 'sudo date -s "' + self.set_date + ' ' + self.set_time + '"'
                 os.system(command)
@@ -188,15 +167,13 @@ class Gps_time():
         self.gps.close()
         return "OK"
 
-
 class File_search():
     def __init__(self):
         pass
 
     def ini_list(self):
         self.ini_table = os.listdir('/home/pi/ini/')
-        return self.ini_table
-
+        return  self.ini_table
 
 class Time_config():
     def __init__(self):
@@ -205,55 +182,41 @@ class Time_config():
     def get_now(self):
         now = datetime.datetime.now()
         year = str(now.year)
-        if (int(now.month) < 10):
-            month = "0" + str(now.month)
-        else:
-            month = str(now.month)
-        if (int(now.day) < 10):
-            day = "0" + str(now.day)
-        else:
-            day = str(now.day)
-        if (int(now.hour) < 10):
-            hour = "0" + str(now.hour)
-        else:
-            hour = str(now.hour)
-        if (int(now.minute) < 10):
-            minute = "0" + str(now.minute)
-        else:
-            minute = str(now.minute)
-        if (int(now.second) < 10):
-            second = "0" + str(now.second)
-        else:
-            second = str(now.second)
-        response = year + "-" + month + "-" + day + \
-            " " + hour + ":" + minute + ":" + second
+        if (int(now.month) < 10): month = "0" + str(now.month)
+        else: month = str(now.month)
+        if (int(now.day) < 10): day = "0" + str(now.day)
+        else: day = str(now.day)
+        if (int(now.hour) < 10): hour = "0" + str(now.hour)
+        else: hour = str(now.hour)
+        if (int(now.minute) < 10): minute = "0" + str(now.minute)
+        else: minute = str(now.minute)
+        if (int(now.second) < 10): second = "0" + str(now.second)
+        else: second = str(now.second)
+        response = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
         return response
-
+   
     def date_set(self, year, month, date):
         os.system("sudo timedatectl set-ntp 0")
         now = datetime.datetime.now()
-        self.date_command = 'sudo date -s "' + year + '-' + month + '-' + date + \
-            " " + str(now.hour) + ':' + str(now.minute) + \
-            ':' + str(now.second) + '"'
+        self.date_command = 'sudo date -s "' + year + '-' + month + '-' + date + " " + str(now.hour) + ':' + str(now.minute) + ':' + str(now.second) + '"'
 #        print(self.date_command)
         os.system(self.date_command)
         return "OK"
-
+    
     def time_set(self, hour, minute, second):
         os.system("sudo timedatectl set-ntp 0")
         now = datetime.datetime.now()
-        self.time_command = 'sudo date -s "' + str(now.year) + '-' + str(
-            now.month) + '-' + str(now.day) + " " + hour + ':' + minute + ':' + second + '"'
+        self.time_command = 'sudo date -s "' + str(now.year) + '-' + str(now.month) + '-' + str(now.day) + " " + hour + ':' + minute + ':' + second + '"'
 #        print(self.time_command)
         os.system(self.time_command)
         return "OK"
 
-
 class Ntp_config():
     def __init__(self):
-        #       need install ntpdate By 'sudo apt-get install ntpdate'
+#       need install ntpdate By 'sudo apt-get install ntpdate'
         os.system('timedatectl set-timezone "Asia/Taipei"')
 #        os.system('sudo /etc/init.d/ntp stop >/dev/null 2>&1')
+        os.system('sudo apt-get install ntpdate -y')
         try:
             f = open('/etc/network/ntp.log', 'r')
             f.close()
@@ -269,33 +232,21 @@ class Ntp_config():
         connect = os.system(self.ntp_command)
         now = datetime.datetime.now()
         year = str(now.year)
-        if (int(now.month) < 10):
-            month = "0" + str(now.month)
-        else:
-            month = str(now.month)
-        if (int(now.day) < 10):
-            day = "0" + str(now.day)
-        else:
-            day = str(now.day)
-        if (int(now.hour) < 10):
-            hour = "0" + str(now.hour)
-        else:
-            hour = str(now.hour)
-        if (int(now.minute) < 10):
-            minute = "0" + str(now.minute)
-        else:
-            minute = str(now.minute)
-        if (int(now.second) < 10):
-            second = "0" + str(now.second)
-        else:
-            second = str(now.second)
-        response = year + "-" + month + "-" + day + \
-            " " + hour + ":" + minute + ":" + second
+        if (int(now.month) < 10): month = "0" + str(now.month)
+        else: month = str(now.month)
+        if (int(now.day) < 10): day = "0" + str(now.day)
+        else: day = str(now.day)
+        if (int(now.hour) < 10): hour = "0" + str(now.hour)
+        else: hour = str(now.hour)
+        if (int(now.minute) < 10): minute = "0" + str(now.minute)
+        else: minute = str(now.minute)
+        if (int(now.second) < 10): second = "0" + str(now.second)
+        else: second = str(now.second)
+        response = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
         if (connect == 0):
             return "OK", response
         else:
             return "ERROR", response
-
 
 class Net_config():
     def __init__(self):
@@ -346,8 +297,7 @@ class Net_config():
         self.f = open('/etc/network/interfaces', 'r+')
         self.f.seek(190)
         self.f.write('allow-hotplug eth1\n\n')
-        os.system(
-            "sudo sed -i '12c iface eth1 inet static' /etc/network/interfaces")
+        os.system("sudo sed -i '12c iface eth1 inet static' /etc/network/interfaces")
         command = "sudo sed -i '13c address " + ip + "' /etc/network/interfaces"
         os.system(command)
         command = "sudo sed -i '14c netmask " + netmask + "' /etc/network/interfaces"
@@ -376,21 +326,19 @@ class Net_config():
         self.usb_id = open('/tmp/usb.txt')
         self.usb_reset = 'sudo python /etc/network/Restusb.py -d ' + self.usb_id.read()
         os.system(self.usb_reset)
-
+    
     def eth0_dual_dns(self, dns, sub_dns):
         command = "sudo sed -i '7c dns-nameserver " + dns + "' /etc/network/interfaces"
         os.system(command)
-        command = "sudo sed -i '8c dns-nameserver " + \
-            sub_dns + "' /etc/network/interfaces"
+        command = "sudo sed -i '8c dns-nameserver " + sub_dns + "' /etc/network/interfaces"
         os.system(command)
         os.system('sudo ifdown eth0')
         os.system('sudo ifup eth0')
-
+    
     def eth1_dual_dns(self, dns, sub_dns):
         command = "sudo sed -i '16c dns-nameserver " + dns + "' /etc/network/interfaces"
         os.system(command)
-        command = "sudo sed -i '17c dns-nameserver " + \
-            sub_dns + "' /etc/network/interfaces"
+        command = "sudo sed -i '17c dns-nameserver " + sub_dns + "' /etc/network/interfaces"
         os.system(command)
         os.system('lsusb | grep "Realtek" | cut -c16,17,18 >/tmp/usb.txt')
         self.usb_id = open('/tmp/usb.txt')
@@ -402,7 +350,7 @@ class Net_config():
         os.system("sudo sed -i '8c \\ ' /etc/network/interfaces")
         os.system('sudo ifdown eth0')
         os.system('sudo ifup eth0')
-
+    
     def eth1_auto_dns(self):
         command = "sudo sed -i '16c dns-nameserver 8.8.8.8' /etc/network/interfaces"
         os.system(command)
