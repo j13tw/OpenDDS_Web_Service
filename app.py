@@ -226,7 +226,7 @@ def rpiSetting():
     nowTime = Time_config().get_now()
     status = Watchdog_config().watchdog_status()
     print(status)
-    return render_template('rpiSetting.html', nowTime=nowTime, ntpVal='TIME.google.com', watchDogVal1='41', watchDogVal5='42', watchDogVal15='43', watchDogValTemp='44')
+    return render_template('rpiSetting.html', nowTime=nowTime, ntpVal='TIME.google.com', watchDogVal1=(status[0] == 'Enable' and status[1] or status[0]), watchDogVal5=(status[2] == 'Enable' and status[3] or status[2]), watchDogVal15=(status[4] == 'Enable' and status[5] or status[4]), watchDogValTemp=status[6])
 
 
 @app.route('/setRpiTime', methods=['POST'])
@@ -307,14 +307,20 @@ def setWatchDogCancel1():
 
 @app.route('/setWatchDog5', methods=['POST'])
 def setWatchDog5():
+    print(1)
     if not request.json:
+        print(2)
         return abort(400)
     else:
+        print(3)
         try:
+            print(4)
             setWatchDogVal5 = request.json['setWatchDogVal5']
-            if int(setWatchDogVal5) >= 20 and int(setWatchDogVal1) <= 100:
+            print(type(setWatchDogVal5))
+            if int(setWatchDogVal5) >= 20 and int(setWatchDogVal5) <= 100:
+                # print(type(setWatchDogVal5), setWatchDogVal5)
                 status = Watchdog_config().set_cpu_load_middle(setWatchDogVal5)
-                print(setWatchDogVal5, status)
+                print(status)
                 return jsonify({'status': status})
             else:
                 return jsonify({'status': '輸入值請在指定範圍內'})
@@ -343,7 +349,7 @@ def setWatchDog15():
     else:
         try:
             setWatchDogVal15 = request.json['setWatchDogVal15']
-            if int(setWatchDogVal15) >= 20 and int(setWatchDogVal1) <= 100:
+            if int(setWatchDogVal15) >= 20 and int(setWatchDogVal15) <= 100:
                 status = Watchdog_config().set_cpu_load_long(setWatchDogVal15)
                 print(setWatchDogVal15, status)
                 return jsonify({'status': status})
@@ -374,7 +380,7 @@ def setWatchDogTemp():
     else:
         try:
             setWatchDogValTemp = request.json['setWatchDogValTemp']
-            if int(setWatchDogValTemp) >= 40 and int(setWatchDogVal1) <= 100:
+            if int(setWatchDogValTemp) >= 40 and int(setWatchDogValTemp) <= 100:
                 status = Watchdog_config().set_cpu_temperature(setWatchDogValTemp)
                 print(setWatchDogValTemp, status)
                 return jsonify({'status': status})
