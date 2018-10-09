@@ -358,11 +358,11 @@ p {
     background: hsla(41, 43%, 72%, 0.747);
 }
 
-/* img {
+.message-img {
     position: absolute;
     border-radius: 16px;
     top: calc(50% - 31px/2);
-} */
+}
 
 .power-btn {
     position: absolute;
