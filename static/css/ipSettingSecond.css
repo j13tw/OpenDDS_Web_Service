@@ -154,3 +154,22 @@ body {
     background: white;
     margin-left: 12px
 }
+
+.power-btn {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    background-color: transparent;
+    border-color:transparent;
+    outline: none;
+    border-radius: 45px;
+}
+
+.power-btn:hover {
+    background-color: #ffffffa1;
+}
+
+.power-img {
+    width:36px;
+    height:36px;
+}
