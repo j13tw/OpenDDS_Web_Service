@@ -57,7 +57,7 @@ class Watchdog_config():
 #        print(self.cpu_middle_load)
 #        print(self.cpu_long_load)
 #        print(self.cpu_temperature)
-        return self.cpu_short_load_status, self.cpu_short_load, self.cpu_middle_load_status, self.cpu_middle_load, self.cpu_long_load , self.cpu_long_load_status, self.cpu_temperature
+        return self.cpu_short_load_status, self.cpu_short_load, self.cpu_middle_load_status, self.cpu_middle_load, self.cpu_long_load, self.cpu_long_load_status, self.cpu_temperature
 
     def start_cpu_load_short(self):
         command = "sudo sed -i '10c max-load-1 = " + self_short_load + "' /etc/watchdog.conf"
