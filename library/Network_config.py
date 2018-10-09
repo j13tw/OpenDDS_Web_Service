@@ -15,6 +15,9 @@ class Watchdog_config():
         self.cpu_middle_load = "0"
         self.cpu_long_load = "0"
         self.cpu_temperature = "0"
+        self.cpu_short_load_status = "Enable"
+        self.cpu_middlet_load_status = "Enable"
+        self.cpu_long_load_status = "Enable"
         f = open("/etc/modules", "r")
         for x in range(1,9):
             tmp = f.readline().split("\n\r")[0].split("\n")[0]
@@ -29,57 +32,94 @@ class Watchdog_config():
 
     def watchdog_status(self):
         file = open('/etc/watchdog.conf', 'r') 
-        for x in range (1, 36):
+        for x in range (1, 37):
             line = file.readline()
 #            print(line)
             if (x == 10): 
-                self.cpu_short_load = line.split(" ")[2].split("\n")[0]
+                tmp = line.split(" ")
+                if (len(tmp[0].split("#")) == 1): self.cpu_short_load_status = "Enable"
+                else: self.cpu_short_load_status = "Disable"
+                self.cpu_short_load = tmp[len(tmp)-1].split("\n")[0]
             if (x == 11): 
-                self.cpu_middle_load = line.split(" ")[2].split("\n")[0]
+                tmp = line.split(" ")
+                if (len(tmp[0].split("#")) == 1): self.cpu_middle_load_status = "Enable"
+                else: self.cpu_middle_load_status = "Disable"
+                self.cpu_middle_load = tmp[len(tmp)-1].split("\n")[0]
             if (x == 12): 
-                self.cpu_long_load = line.split(" ")[2].split("\n")[0]
-            if (x == 35): 
-                self.cpu_temperature = line.split(" ")[2].split("\n")[0]
+                tmp = line.split(" ")
+                if (len(tmp[0].split("#")) == 1): self.cpu_long_load_status = "Enable"
+                else: self.cpu_long_load_status = "Disable"
+                self.cpu_long_load = tmp[len(tmp)-1].split("\n")[0]
+            if (x == 36): 
+                tmp = line.split(" ")
+                self.cpu_temperature = tmp[len(tmp)-1].split("\n")[0]
 #        print(self.cpu_short_load)
 #        print(self.cpu_middle_load)
 #        print(self.cpu_long_load)
 #        print(self.cpu_temperature)
-        return self.cpu_short_load, self.cpu_middle_load , self.cpu_long_load, self.cpu_temperature
+        return self.cpu_short_load_status, self.cpu_short_load, self.cpu_middle_load_status, self.cpu_middle_load, self.cpu_long_load , self.cpu_long_load_status, 
+self.cpu_temperature
+
+    def start_cpu_load_short(self):
+        command = "sudo sed -i '10c max-load-1 = " + self_short_load + "' /etc/watchdog.conf"
+        status = os.system(command)
+        if (status == 0): return "OK"
+        else: return "ERROR"
+
+    def start_cpu_load_middle(self):
+        command = "sudo sed -i '11c max-load-5 = " + self_middle_load + "' /etc/watchdog.conf"
+        status = os.system(command)
+        if (status == 0): return "OK"
+        else: return "ERROR"
+
+    def start_cpu_load_long(self):
+        command = "sudo sed -i '12c max-load-15 = " + self_long_load + "' /etc/watchdog.conf"
+        status = os.system(command)
+        if (status == 0): return "OK"
+        else: return "ERROR"
+
 
     def set_cpu_load_short(self, percent):
         command = "sudo sed -i '10c max-load-1 = " + percent + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def set_cpu_load_middle(self, percent):
         command = "sudo sed -i '11c max-load-5 = " + percent + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def set_cpu_load_long(self, percent):
         command = "sudo sed -i '12c max-load-15 = " + percent + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def set_cpu_temperature(self, temperature):
-        command = "sudo sed -i '35c max-temperature = " + temperature + "' /etc/watchdog.conf"
+        command = "sudo sed -i '36c max-temperature = " + temperature + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR" 
 
     def remove_cpu_load_short(self):
         command = "sudo sed -i '10c \#max-load-1 = " +  self.cpu_long_load  + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def remove_cpu_load_middle(self):
         command = "sudo sed -i '11c \#max-load-5 = " +  self.cpu_middle_load  + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
     def remove_cpu_load_long(self):
         command = "sudo sed -i '12c \#max-load-15 = " + self.cpu_long_load + "' /etc/watchdog.conf"
         status = os.system(command)
-        return status
+        if (status == 0): return "OK"
+        else: return "ERROR"
 
 class Gps_time():
     def __init__(self):
