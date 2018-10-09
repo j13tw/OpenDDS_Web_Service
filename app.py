@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, abort, jsonify
 from werkzeug.utils import secure_filename
-from library.Network_config import Net_config, File_search, Time_config, Gps_time, Ntp_config
+from library.Network_config import Net_config, File_search, Time_config, Gps_time, Ntp_config, Watchdog_config
 import subprocess
 import json
 import os
@@ -223,7 +223,10 @@ def sentTest():
 
 @app.route('/rpiSetting')
 def rpiSetting():
-    return render_template('rpiSetting.html')
+    nowTime = Time_config().get_now()
+    status = Watchdog_config().watchdog_status()
+    print(status)
+    return render_template('rpiSetting.html', nowTime=nowTime, ntpVal='TIME.google.com', watchDogVal1='41', watchDogVal5='42', watchDogVal15='43', watchDogValTemp='44')
 
 
 @app.route('/setRpiTime', methods=['POST'])
@@ -278,65 +281,111 @@ def setWatchDog1():
     else:
         try:
             setWatchDogVal1 = request.json['setWatchDogVal1']
-            status = Watchdog_config().set_cpu_load_short()
+            if int(setWatchDogVal1) >= 24 and int(setWatchDogVal1) <= 100:
+                status = Watchdog_config().set_cpu_load_short(setWatchDogVal1)
+                print(setWatchDogVal1, status)
+                return jsonify({'status': status})
+            else:
+                return jsonify({'status': '輸入值請在指定範圍內'})
+        except:
+            return abort(400)
+
+
+@app.route('/watchDogCancel1', methods=['POST'])
+def setWatchDogCancel1():
+    if not request.json:
+        return abort(400)
+    else:
+        try:
+            statusVal = request.json['status']
+            status = Watchdog_config().remove_cpu_load_short()
+            print(statusVal, status)
             return jsonify({'status': status})
         except:
             return abort(400)
 
 
-@app.route('/setWatchDogCancel1', methods=['POST'])
-def setWatchDogCancel1():
-    return True
-
-
 @app.route('/setWatchDog5', methods=['POST'])
 def setWatchDog5():
-    dateMethod = request.form.get('dateMethod')
-    if dateMethod == 'manual':
-        print(dateMethod)
-        # Time_config().date_set(date.split(
-        #     '-')[0], date.split('-')[1], date.split('-')[2])
-        # Time_config().time_set(time.split(':')[0], time.split(':')[1], 0)
+    if not request.json:
+        return abort(400)
+    else:
+        try:
+            setWatchDogVal5 = request.json['setWatchDogVal5']
+            if int(setWatchDogVal5) >= 20 and int(setWatchDogVal1) <= 100:
+                status = Watchdog_config().set_cpu_load_middle(setWatchDogVal5)
+                print(setWatchDogVal5, status)
+                return jsonify({'status': status})
+            else:
+                return jsonify({'status': '輸入值請在指定範圍內'})
+        except:
+            return abort(400)
 
-    return redirect(url_for('rpiSetting'))
 
-
-@app.route('/setWatchDogCancel5', methods=['POST'])
+@app.route('/watchDogCancel5', methods=['POST'])
 def setWatchDogCancel5():
-    return True
+    if not request.json:
+        return abort(400)
+    else:
+        try:
+            statusVal = request.json['status']
+            status = Watchdog_config().remove_cpu_load_middle()
+            print(statusVal, status)
+            return jsonify({'status': status})
+        except:
+            return abort(400)
 
 
 @app.route('/setWatchDog15', methods=['POST'])
 def setWatchDog15():
-    dateMethod = request.form.get('dateMethod')
-    if dateMethod == 'manual':
-        print(dateMethod)
-        # Time_config().date_set(date.split(
-        #     '-')[0], date.split('-')[1], date.split('-')[2])
-        # Time_config().time_set(time.split(':')[0], time.split(':')[1], 0)
+    if not request.json:
+        return abort(400)
+    else:
+        try:
+            setWatchDogVal15 = request.json['setWatchDogVal15']
+            if int(setWatchDogVal15) >= 20 and int(setWatchDogVal1) <= 100:
+                status = Watchdog_config().set_cpu_load_long(setWatchDogVal15)
+                print(setWatchDogVal15, status)
+                return jsonify({'status': status})
+            else:
+                return jsonify({'status': '輸入值請在指定範圍內'})
+        except:
+            return abort(400)
 
-    return redirect(url_for('rpiSetting'))
 
-
-@app.route('/setWatchDogCancel15', methods=['POST'])
+@app.route('/watchDogCancel15', methods=['POST'])
 def setWatchDogCancel15():
-    return True
+    if not request.json:
+        return abort(400)
+    else:
+        try:
+            statusVal = request.json['status']
+            status = Watchdog_config().remove_cpu_load_long()
+            print(statusVal, status)
+            return jsonify({'status': status})
+        except:
+            return abort(400)
 
 
-@app.route('/setWatchDogCPU', methods=['POST'])
-def setWatchDogCPU():
-    dateMethod = request.form.get('dateMethod')
-    if dateMethod == 'manual':
-        print(dateMethod)
-        # Time_config().date_set(date.split(
-        #     '-')[0], date.split('-')[1], date.split('-')[2])
-        # Time_config().time_set(time.split(':')[0], time.split(':')[1], 0)
+@app.route('/setWatchDogTemp', methods=['POST'])
+def setWatchDogTemp():
+    if not request.json:
+        return abort(400)
+    else:
+        try:
+            setWatchDogValTemp = request.json['setWatchDogValTemp']
+            if int(setWatchDogValTemp) >= 40 and int(setWatchDogVal1) <= 100:
+                status = Watchdog_config().set_cpu_temperature(setWatchDogValTemp)
+                print(setWatchDogValTemp, status)
+                return jsonify({'status': status})
+            else:
+                return jsonify({'status': '輸入值請在指定範圍內'})
+        except:
+            return abort(400)
 
-    return redirect(url_for('rpiSetting'))
 
-
-@app.route('/setWatchDogCancelCPU', methods=['POST'])
-def setWatchDogCancelCPU():
+@app.route('/reboot', methods=['POST'])
+def setWatchDogCancelTemp():
     return True
 
 

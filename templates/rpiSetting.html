@@ -30,7 +30,6 @@
                     $('.set-ntp-display').hide();
                 }
             });
-
             $('#setTime').on('click', function () {
                 $.ajax({
                     type: "POST",
@@ -68,7 +67,139 @@
                     }),
                     success: function (data) {
                         console.log('success');
-                        if (!alert('已更新完成')) {
+                        if (!alert('已更新狀態：' + data.status)) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert('更新失敗')
+                        return false;
+                    }
+                });
+            });
+            $("#setWatchDog5").on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "setWatchDog5",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        setWatchDogVal5: $('#setWatchDogVal5').val()
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        if (!alert('已更新狀態：' + data.status)) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert('更新失敗')
+                        return false;
+                    }
+                });
+            });
+            $("#setWatchDog15").on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "setWatchDog15",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        setWatchDogVal15: $('#setWatchDogVal15').val()
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        if (!alert('已更新狀態：' + data.status)) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert('更新失敗')
+                        return false;
+                    }
+                });
+            });
+            $("#setWatchDogTemp").on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "setWatchDogTemp",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        setWatchDogValTemp: $('#setWatchDogValTemp').val()
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        if (!alert('已更新狀態：' + data.status)) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert('更新失敗')
+                        return false;
+                    }
+                });
+            });
+            $("#watchDogCancel1").on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "watchDogCancel1",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        status: 'stop'
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        if (!alert('已更新狀態：' + data.status)) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert('更新失敗')
+                        return false;
+                    }
+                });
+            });
+            $("#watchDogCancel5").on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "watchDogCancel5",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        status: 'stop'
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        if (!alert('已更新狀態：' + data.status)) {
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        alert('更新失敗')
+                        return false;
+                    }
+                });
+            });
+            $("#watchDogCancel15").on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: "watchDogCancel15",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        status: 'stop'
+                    }),
+                    success: function (data) {
+                        console.log('success');
+                        if (!alert('已更新狀態：' + data.status)) {
                             window.location.reload(true);
                         }
                     },
@@ -89,6 +220,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">DDS</a>
         </div>
+        <button class="power-btn"><img src="/static/img/power.png" class="power-img"></button>
     </nav>
 
     <div class="container-fluid">
@@ -128,9 +260,9 @@
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
                 <h1 class="page-header">設定</h1>
-                <h2>時間設定</h2>
+                <h2>時間設定（現在時間：{{nowTime}}）</h2>
                 <div class="setTime">
-                    <div>
+                    <div><br>
                         <p class="inline">（1）對時方式：</p>
                         <select id="dateMethod" name="dateMethod">
                             <option value="manual">手動對時</option>
@@ -147,28 +279,28 @@
                     </div>
                     <div class="set-ntp-display">
                         <p class="inline">（2）NTP設定：</p>
-                        <input type="text" class="date" id="setNtpVal" name="ntp" /><br>
+                        <input type="text" class="date" id="setNtpVal" name="ntp" placeholder="{{ntpVal}}" /><br>
                     </div>
                     <input class="btn btn-primary btn-lg btn-sty" type="button" id="setTime" value="送出" />
                 </div><br>
                 <h2>Watch Dog 設定</h2>
-                <div class="setWatchDog">
-                    <p class="inline">1分鐘 (需大於等於24)：</p>
-                    <input type="number" id="setWatchDogVal1">
+                <div class="setWatchDog"><br>
+                    <p class="inline">1分鐘 (需大於等於24且小於等於100)：</p>
+                    <input type="number" id="setWatchDogVal1" placeholder="{{watchDogVal1}}">
                     <button id="watchDogCancel1">取消</button>
                     <button id="setWatchDog1">送出</button><br><br>
-                    <p class="inline">5分鐘（需大於等於20）：</p>
-                    <input type="number" id="setWatchDogVal5">
+                    <p class="inline">5分鐘（需大於等於20且小於等於100）：</p>
+                    <input type="number" id="setWatchDogVal5" placeholder="{{watchDogVal5}}">
                     <button id="watchDogCancel5">取消</button>
                     <button id="setWatchDog5">送出</button><br><br>
-                    <p class="inline">15分鐘（需大於等於20）：</p>
-                    <input type="number" id="setWatchDogVal15">
+                    <p class="inline">15分鐘（需大於等於20且小於等於100）：</p>
+                    <input type="number" id="setWatchDogVal15" placeholder="{{watchDogVal15}}">
                     <button id="watchDogCancel15">取消</button>
                     <button id="setWatchDog15">送出</button><br><br>
-                    <p class="inline">CPU溫度（需大於等於40）：</p>
-                    <input type="number" id="setWatchDogValCPU">
-                    <button id="watchDogCancelCPU">取消</button>
-                    <button id="setWatchDogCPU">送出</button><br><br>
+                    <p class="inline">CPU溫度（需大於等於40且小於等於100）：</p>
+                    <input type="number" id="setWatchDogValTemp" placeholder="{{watchDogValTemp}}">
+                    <!-- <button id="watchDogCancelTemp">取消</button> -->
+                    <button id="setWatchDogTemp">送出</button><br><br>
                 </div>
             </div>
         </div>
