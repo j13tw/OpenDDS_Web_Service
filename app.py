@@ -101,15 +101,15 @@ def createFile():
         if (data["transport_type"] != "rtps_udp" or data["transport_type"] == "rtps_udp" and data["endpoint_type"] == "default"):
             os.system("cp ./ini/default.ini ./ini/file/" +
                       data["ini_file_name"]+".ini")
-            os.system("sed -i '' s:DCPSBit=1/0:DCPSBit=" +
+            os.system("sed -i s:DCPSBit=1/0:DCPSBit=" +
                       data["DCPSBit"]+": ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' s:Scheduler=SCHED_OTHER/SCHED_RR/SCHED_FIFO:Scheduler=" +
+            os.system("sed -i s:Scheduler=SCHED_OTHER/SCHED_RR/SCHED_FIFO:Scheduler=" +
                       data["Scheduler"]+": ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' '1,8 s:TTL=1～10:TTL=" +
+            os.system("sed -i '1,8 s:TTL=1～10:TTL=" +
                       data["discovery_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' s:transport_type=rtps_udp/tcp/udp:transport_type=" +
+            os.system("sed -i s:transport_type=rtps_udp/tcp/udp:transport_type=" +
                       data["transport_type"]+": ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' '9,14 s:TTL=1～10:TTL=" +
+            os.system("sed -i '9,14 s:TTL=1～10:TTL=" +
                       data["transportConf_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
         else:
             if(data["endpoint_type"] == "reader"):
@@ -118,17 +118,17 @@ def createFile():
             elif(data["endpoint_type"] == "writer"):
                 os.system("cp ./ini/staticWriter.ini ./ini/file/" +
                           data["ini_file_name"]+".ini")
-            os.system("sed -i '' s:DCPSBit=1/0:DCPSBit=" +
+            os.system("sed -i s:DCPSBit=1/0:DCPSBit=" +
                       data["DCPSBit"]+": ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' s:Scheduler=SCHED_OTHER/SCHED_RR/SCHED_FIFO:Scheduler=" +
+            os.system("sed -i s:Scheduler=SCHED_OTHER/SCHED_RR/SCHED_FIFO:Scheduler=" +
                       data["Scheduler"]+": ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' '1,8 s:TTL=1～10:TTL=" +
+            os.system("sed -i '1,8 s:TTL=1～10:TTL=" +
                       data["discovery_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' 's:history.kind=KEEP_LAST/KEEP_ALL:history.kind=" +
+            os.system("sed -i 's:history.kind=KEEP_LAST/KEEP_ALL:history.kind=" +
                       data["history_kind"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' 's:reliability.kind=RELIABLE/BEST_EFFORT:reliability.kind=" +
+            os.system("sed -i 's:reliability.kind=RELIABLE/BEST_EFFORT:reliability.kind=" +
                       data["reliability_kind"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
-            os.system("sed -i '' '24,26 s:TTL=1～10:TTL=" +
+            os.system("sed -i '24,26 s:TTL=1～10:TTL=" +
                       data["transportConf_TTL"]+":' ./ini/file/" + data["ini_file_name"]+".ini")
         pass
     except:
