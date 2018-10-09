@@ -212,12 +212,12 @@ def logs():
 
 @app.route('/sentTest')
 def sentTest():
-    # file = File_search().ini_list()
-    # print(file)
-    fileList = ['rtps.ini']
-    # for i in range(len(file)):
-    #     if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
-    #         fileList.append(file[i])
+    file = File_search().ini_list()
+    print(file)
+    fileList = []
+    for i in range(len(file)):
+        if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
+            fileList.append(file[i])
     return render_template('sentTest.html', fileList=fileList)
 
 
