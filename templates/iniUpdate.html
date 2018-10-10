@@ -47,13 +47,9 @@
             }
         }
 
-        setInterval(() => {
-            // window.location.reload(true);
-        }, 3000);
-
         window.onload = function () {
             $('#reboot').on('click', function () {
-                if (!alert('確定要關機嗎？')) {
+                if (window.confirm('確定要關機嗎？')) {
                     $.ajax({
                         type: "POST",
                         url: "reboot",

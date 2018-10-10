@@ -392,7 +392,7 @@ def setWatchDogTemp():
 @app.route('/reboot', methods=['POST'])
 def reboot():
     try:
-        Reboot_system()
+        Reboot_system().reboot()
         return jsonify({'status': '成功'})
     except:
         return abort(400)
