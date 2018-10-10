@@ -61,6 +61,30 @@
                 $("#pingResultMsg").html("");
             });
         }
+        window.onload = function () {
+            $('#reboot').on('click', function () {
+                if (!alert('確定要關機嗎？')) {
+                    $.ajax({
+                        type: "POST",
+                        url: "reboot",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            status: 'reboot'
+                        }),
+                        success: function (data) {
+                            console.log('success');
+                            window.location.reload(true);
+                        },
+                        error: function (data) {
+                            console.log('error');
+                            alert('關機失敗')
+                            return false;
+                        }
+                    });
+                }
+            });
+        }
     </script>
 </head>
 
@@ -69,7 +93,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">DDS</a>
-            <button class="power-btn"><img src="/static/img/power.png" class="power-img"></button>
+            <button class="power-btn" id="reboot"><img src="/static/img/power.png" class="power-img"></button>
         </div>
     </nav>
 
@@ -101,7 +125,7 @@
                         <a href="logs">流量統計紀錄分析</a>
                     </li>
                     <li>
-                        <a href="sentTest">傳輸測試</a>
+                        <a href="sendTest">傳輸測試</a>
                     </li>
                     <li>
                         <a href="rpiSetting">設定</a>

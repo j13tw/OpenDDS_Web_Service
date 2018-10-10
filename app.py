@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, abort, jsonify
 from werkzeug.utils import secure_filename
-from library.Network_config import Net_config, File_search, Time_config, Gps_time, Ntp_config, Watchdog_config
+from library.Network_config import Net_config, File_search, Time_config, Gps_time, Ntp_config, Watchdog_config, Reboot_system
 import subprocess
 import json
 import os
@@ -135,7 +135,6 @@ def createFile():
         return None, 404
         pass
     if os.path.isfile("/home/pi/ini/" + data["ini_file_name"]+".ini"):
-        # return json.dumps({'error': '建檔失敗'}), 400
         return json.dumps({'success': '建檔成功'}), 200, {'ContentType': 'application/json'}
     else:
         return json.dumps({'error': '建檔失敗'}), 400
@@ -210,15 +209,15 @@ def logs():
     return render_template('logs.html')
 
 
-@app.route('/sentTest')
-def sentTest():
-    file = File_search().ini_list()
-    print(file)
+@app.route('/sendTest')
+def sendTest():
+    # file = File_search().ini_list()
+    # print(file)
     fileList = []
-    for i in range(len(file)):
-        if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
-            fileList.append(file[i])
-    return render_template('sentTest.html', fileList=fileList)
+    # for i in range(len(file)):
+    #     if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
+    #         fileList.append(file[i])
+    return render_template('sendTest.html', fileList=fileList)
 
 
 @app.route('/rpiSetting')
@@ -391,8 +390,12 @@ def setWatchDogTemp():
 
 
 @app.route('/reboot', methods=['POST'])
-def setWatchDogCancelTemp():
-    return True
+def reboot():
+    try:
+        Reboot_system()
+        return jsonify({'status': '成功'})
+    except:
+        return abort(400)
 
 
 if __name__ == '__main__':
