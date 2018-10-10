@@ -211,12 +211,12 @@ def logs():
 
 @app.route('/sendTest')
 def sendTest():
-    # file = File_search().ini_list()
-    # print(file)
+    file = File_search().ini_list()
+    print(file)
     fileList = []
-    # for i in range(len(file)):
-    #     if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
-    #         fileList.append(file[i])
+    for i in range(len(file)):
+        if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
+            fileList.append(file[i])
     return render_template('sendTest.html', fileList=fileList)
 
 
