@@ -34,13 +34,10 @@
                             status: 'reboot'
                         }),
                         success: function (data) {
-                            console.log('success');
-                            window.location.reload(true);
+                            alert('已關機');
                         },
                         error: function (data) {
-                            console.log('error');
-                            alert('關機失敗')
-                            return false;
+                            alert('已關機');
                         }
                     });
                 }
