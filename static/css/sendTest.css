@@ -103,6 +103,11 @@ h3 {
     display: inline;
 }
 
+.message-sty{
+    position: relative;
+    margin-top: 10px;
+    height: 460px;
+}
 
 /* message title */
 
@@ -133,15 +138,14 @@ p {
 }
 
 .message {
-    /* position: relative; */
     position: absolute;
+    /* position: absolute; */
     /* margin-left: 45%; */
-    height: 60%;
-    bottom: 10px;
+    height: 600px; 
     left: 1px;
-    width: calc(100% - 120px);
-    margin-left:60px;
-    margin-right: 60px;
+    /* width: calc(100% - 120px); */
+    /* margin-left:60px;
+    margin-right: 60px; */
 }
 
 .message-list {
