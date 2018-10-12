@@ -247,7 +247,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 sidebar">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 sidebar">
                 <ul class="nav nav-sidebar">
                     <li class="active">
                         <a href="#">系統設定
@@ -282,7 +282,7 @@
             </div>
             <div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-9 col-sm-offset-3 col-xs-8 col-xs-offset-4 main">
                 <h1 class="page-header">設定</h1>
-                <h2>時間設定（現在時間：{{nowTime}}）</h2>
+                <h2>時間設定（現在時間:{{nowTime}}）</h2>
                 <div class="setTime">
                     <div><br>
                         <p class="inline">（1）對時方式：</p>
@@ -303,26 +303,49 @@
                         <p class="inline">（2）NTP設定：</p>
                         <input type="text" class="date" id="setNtpVal" name="ntp" placeholder="{{ntpVal}}" /><br>
                     </div>
-                    <input class="btn btn-primary btn-lg btn-sty" type="button" id="setTime" value="送出" />
+                    <input class="btn btn-primary btn-lg btn-sty" type="button" id="setTime" value="送出" /><br><br><br>
                 </div><br>
                 <h2>Watch Dog 設定</h2>
-                <div class="setWatchDog"><br>
-                    <p class="inline">1分鐘 (需大於等於24且小於等於100)：</p>
-                    <input type="number" id="setWatchDogVal1" placeholder="{{watchDogVal1}}">
-                    <button id="watchDogCancel1">取消</button>
-                    <button id="setWatchDog1">送出</button><br><br>
-                    <p class="inline">5分鐘（需大於等於20且小於等於100）：</p>
-                    <input type="number" id="setWatchDogVal5" placeholder="{{watchDogVal5}}">
-                    <button id="watchDogCancel5">取消</button>
-                    <button id="setWatchDog5">送出</button><br><br>
-                    <p class="inline">15分鐘（需大於等於20且小於等於100）：</p>
-                    <input type="number" id="setWatchDogVal15" placeholder="{{watchDogVal15}}">
-                    <button id="watchDogCancel15">取消</button>
-                    <button id="setWatchDog15">送出</button><br><br>
-                    <p class="inline">CPU溫度（需大於等於40且小於等於100）：</p>
-                    <input type="number" id="setWatchDogValTemp" placeholder="{{watchDogValTemp}}">
-                    <!-- <button id="watchDogCancelTemp">取消</button> -->
-                    <button id="setWatchDogTemp">送出</button><br><br>
+                <div class="setWatchDog row"><br>
+                    <div class="watch-dog-sty row">
+                        <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12">
+                            <p class="inline">1分鐘 (需大於等於24且小於等於100)：</p>
+                        </div>
+                        <div class="col-lg-7 col-md-5 col-sm-12 col-xs-12 dev-text-sty">
+                            <input type="number" id="setWatchDogVal1" placeholder="{{watchDogVal1}}">
+                            <button id="watchDogCancel1">取消</button>
+                            <button id="setWatchDog1">送出</button>
+                        </div>
+                    </div><br>
+                    <div class="watch-dog-sty row">
+                        <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12">
+                            <p class="inline">5分鐘（需大於等於20且小於等於100）：</p>
+                        </div>
+                        <div class="col-lg-7 col-md-5 col-sm-12 col-xs-12 dev-text-sty">
+                            <input type="number" id="setWatchDogVal5" placeholder="{{watchDogVal5}}">
+                            <button id="watchDogCancel5">取消</button>
+                            <button id="setWatchDog5">送出</button>
+                        </div>
+                    </div><br>
+                    <div class="watch-dog-sty row">
+                        <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12">
+                            <p class="inline">15分鐘（需大於等於20且小於等於100）：</p>
+                        </div>
+                        <div class="col-lg-7 col-md-5 col-sm-12 col-xs-12 dev-text-sty">
+                            <input type="number" id="setWatchDogVal15" placeholder="{{watchDogVal15}}">
+                            <button id="watchDogCancel15">取消</button>
+                            <button id="setWatchDog15">送出</button>
+                        </div>
+                    </div><br>
+                    <div class="watch-dog-sty row">
+                        <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12">
+                            <p class="inline">CPU溫度（需大於等於40且小於等於100）：</p>
+                        </div>
+                        <div class="col-lg-7 col-md-5 col-sm-12 col-xs-12 dev-text-sty">
+                            <input type="number" id="setWatchDogValTemp" placeholder="{{watchDogValTemp}}">
+                            <button id="setWatchDogTemp">送出</button>
+                        </div>
+                    </div><br>
                 </div>
             </div>
         </div>

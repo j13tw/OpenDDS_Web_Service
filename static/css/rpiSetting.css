@@ -76,6 +76,10 @@ body {
  */
 
 .main {
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    width: auto;
     padding: 20px;
 }
 
@@ -101,7 +105,7 @@ h3 {
 p {
     font-size: 20px;
     margin-top: 10px;
-    margin-left: 66px;
+    /* margin-left: 16px; */
 }
 
 .setTime {
@@ -121,10 +125,18 @@ p {
 }
 
 .btn-sty {
-    position: relative;
-    margin-left: 90%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    position: absolute;
+    right: 10px;
+}
+
+@media (min-width: 1000px) {
+    .dev-text-sty {
+        margin-left: -36px;
+    }
+}
+
+.watch-dog-sty {
+    margin-left: 10px;
 }
 
 .setWatchDog {
