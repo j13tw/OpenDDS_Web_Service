@@ -211,20 +211,22 @@ def logs():
 
 @app.route('/sendTest')
 def sendTest():
-    file = File_search().ini_list()
-    print(file)
+    # file = File_search().ini_list()
+    # print(file)
     fileList = []
-    for i in range(len(file)):
-        if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
-            fileList.append(file[i])
+    # for i in range(len(file)):
+    #     if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
+    #         fileList.append(file[i])
     return render_template('sendTest.html', fileList=fileList)
 
 
 @app.route('/rpiSetting')
 def rpiSetting():
-    nowTime = Time_config().get_now()
-    status = Watchdog_config().watchdog_status()
-    print(status)
+    # nowTime = Time_config().get_now()
+    # status = Watchdog_config().watchdog_status()
+    nowTime = 123
+    status = [1, 2, 3, 4, 5, 6, 7]
+    # print(status)
     return render_template('rpiSetting.html', nowTime=nowTime, ntpVal='TIME.google.com', watchDogVal1=(status[0] == 'Enable' and status[1] or status[0]), watchDogVal5=(status[2] == 'Enable' and status[3] or status[2]), watchDogVal15=(status[4] == 'Enable' and status[5] or status[4]), watchDogValTemp=status[6])
 
 

@@ -15,10 +15,10 @@ body {
  */
 
 .main {
-    position: absolute;
+    /* position: absolute;
     right: 0px;
     left: 0px;
-    width: auto;
+    width: auto; */
     padding: 20px;
 }
 
