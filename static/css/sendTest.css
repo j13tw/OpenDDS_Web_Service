@@ -142,6 +142,10 @@ p {
     margin-left: 16px;
 }
 
+.set-topic-text {
+    width:76px;
+}
+
 .message {
     position: absolute;
     /* position: absolute; */
