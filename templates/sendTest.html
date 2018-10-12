@@ -90,18 +90,22 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main full-screen">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12 send-setting">
                         <h1 class="page-header">傳輸測試</h1>
                         <div>
                             <h3>publish設定：</h3><br><br>
-                            <h4 class="inline set-text-sty">(1) ini選擇：</h4>
+                            <h4 class="inline set-text-sty"> (1) ini選擇：</h4>
                             <select id="publishIni">
                                 {% for value in fileList %}
                                 <option value={{value}}>{{value}}</option>
                                 {% endfor %}
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12 send-setting">
+                        <div>
                             <h4 class="inline set-text-sty">(2) 訂閱通道設定：</h4>
                             <input class="inline" type="text" id="publishTopic">
                             <input class="inline" type="button" value="create" id="publishCreate">
@@ -109,14 +113,20 @@
                             <input class="inline" type="button" value="exit" id="publishExit">
                             <input class="inline" type="button" value="kill" id="publishKill">
                         </div><br>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12 send-setting">
                         <div>
                             <h3>subscriber設定：</h3><br><br>
-                            <h4 class="inline set-text-sty">(1) ini選擇：</h4>
+                            <h4 class="inline set-text-sty">(1) ini選擇：</h4>
                             <select id="subscriberIni">
                                 {% for value in fileList %}
                                 <option value={{value}}>{{value}}</option>
                                 {% endfor %}
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-sm-12 col-xs-12 send-setting">
+                        <div>
                             <h4 class="inline set-text-sty">(2) 訂閱通道設定：</h4>
                             <input class="inline" type="text" id="subscriberTopic">
                             <input class="inline" type="button" value="create" id="subscriberCreate">

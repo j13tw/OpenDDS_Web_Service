@@ -76,6 +76,10 @@ body {
  */
 
 .main {
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    width: auto;
     padding: 20px;
 }
 
@@ -90,10 +94,11 @@ body {
     margin-top: 0;
 }
 
-.full-screen {
+/* .full-screen {
     position: absolute;
-    height: calc(100% - 61px);
-}
+    height: calc(100%);
+    width: 100%;
+} */
 
 h3 {
     display: inline;
