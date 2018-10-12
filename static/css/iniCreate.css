@@ -88,10 +88,13 @@ body {
   display: none;
 }
 
+.btn-container{
+  position: relative;
+  widows: 100%;
+}
 #send {
-  position: fixed;
+  position: absolute;
   right: 16px;
-  bottom: 16px;
 }
 
 select {

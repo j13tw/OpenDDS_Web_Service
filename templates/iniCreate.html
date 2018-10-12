@@ -17,6 +17,7 @@
   <script src="/static/js/jquery.min.js"></script>
   <script>
     $(document).ready(function () {
+      $("#endpoint").show();
       $("#transport_type").change(function () {
         if ($(this).val() == "rtps_udp") {
           $("#endpoint").show();
