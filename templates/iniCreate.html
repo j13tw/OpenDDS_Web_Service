@@ -110,7 +110,7 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-3 col-md-2 col-sm-2 col-xs-4 sidebar">
+      <div class="col-lg-3 col-md-2 col-sm-2 col-xs-4 sidebar">
         <ul class="nav nav-sidebar">
           <li class="active">
             <a href="#">系統設定
@@ -143,13 +143,13 @@
           </li>
         </ul>
       </div>
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
+      <div class="col-lg-9 col-lg-offset-3 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-8 col-xs-offset-4 main">
         <h1 class="page-header">ini建立</h1>
         <span>ini 檔案名稱：</span>
         <input type="text" value="" id="ini_file_name">
         <h3>1、transportConf 設定</h3>
         <div class="row select-sty">
-          <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <h4>(1) transport_type</h4>
             <select name="transport_type" id="transport_type">
               <option value="rtps_udp">rtps_udp</option>
@@ -157,7 +157,7 @@
               <option value="udp">udp</option>
             </select>
           </div>
-          <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <h4>(2) TTL</h4>
             <select name="transportConf_TTL" id="transportConf_TTL">
               <option value="1">1</option>
@@ -175,14 +175,14 @@
         </div>
         <h3>2、common 設定</h3>
         <div class="row select-sty">
-          <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <h4>(1) DCPSBit</h4>
             <select name="DCPSBit" id="DCPSBit">
               <option value="1">1</option>
               <option value="0">0</option>
             </select>
           </div>
-          <div class="col-sm-3 col-md-3 col-sm-10 col-xs-8">
+          <div class="col-lg-3 col-md-3 col-sm-10 col-xs-8">
             <h4>(2) Scheduler</h4>
             <select name="Scheduler" id="Scheduler">
               <option value="SCHED_OTHER">SCHED_OTHER</option>
@@ -193,7 +193,7 @@
         </div>
         <h3>3、discovery 設定</h3>
         <div class="row select-sty">
-          <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <h4>(1) TTL</h4>
             <select name="discovery_TTL" id="discovery_TTL">
               <option value="1">1</option>
@@ -212,7 +212,7 @@
         <div id="endpoint">
           <h3>4、endpoint 設定</h3>
           <div class="row select-sty">
-            <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
               <h4>(1) type</h4>
               <select name="endpoint_type" id="endpoint_type">
                 <option value="default">default</option>
@@ -225,14 +225,14 @@
         <div id="QoS">
           <h3>5、QoS 設定</h3>
           <div class="row select-sty">
-            <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
               <h4>(1) history.kind</h4>
               <select name="history_kind" id="history_kind">
                 <option value="KEEP_LAST">KEEP_LAST</option>
                 <option value="KEEP_ALL">KEEP_ALL</option>
               </select>
             </div>
-            <div class="col-sm-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
               <h4>(2) reliability.kind</h4>
               <select name="reliability_kind" id="reliability_kind">
                 <option value="RELIABLE">RELIABLE</option>
