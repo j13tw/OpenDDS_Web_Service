@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, abort, jsonify
 from werkzeug.utils import secure_filename
 from library.Network_config import Net_config, File_search, Time_config, Gps_time, Ntp_config, Watchdog_config, Reboot_system
+from library.getLog import get, main
 import subprocess
 import json
 import os
@@ -206,14 +207,22 @@ def pings():
 
 @app.route('/logs')
 def logs():
-    return render_template('logs.html')
+    print(main())
+    data = main()
+    return render_template('logs.html', data=data)
+
+
+@app.route('/logsData', methods=['POST'])
+def logsData():
+    print(main())
+    return jsonify({'pubLogs': get(choose="pub"), 'subLogs': get(choose="sub")})
 
 
 @app.route('/sendTest')
 def sendTest():
     file = File_search().ini_list()
     print(file)
-    fileList = []
+    fileList = ['rtps.ini']
     for i in range(len(file)):
         if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
             fileList.append(file[i])

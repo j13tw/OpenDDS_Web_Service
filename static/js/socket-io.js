@@ -1,5 +1,5 @@
-// const socket = io.connect('http://10.21.20.162:9806');
-const socket = io.connect('http://10.21.20.52:9806');
+const socket = io.connect('http://10.21.20.162:9806');
+// const socket = io.connect('http://10.21.20.52:9806');
 // const socket = io.connect('http://127.0.0.1:3000');
 
 const ul_A = document.getElementById("listA");
@@ -51,13 +51,15 @@ socket.on('subscriberRecevie', function (evt) {
         listA.scrollTop = listA.scrollHeight;
     } else if (typeof (data) == 'string') {
         try {
+            console.log('1');
             let userMsg = JSON.parse(data).message;
             let userMsgID = JSON.parse(data).from;
             console.log(data, msgID)
             if (userMsgID == msgID) {
                 console.log(data);
+                console.log('2');
                 //send message from a to a
-                var li_A = document.createElement("li");
+                let li_A = document.createElement("li");
                 li_A.innerHTML = "<div class = 'message-a-to-a-sty' ><div>" + userMsg + "</div></div>";
                 ul_A.appendChild(li_A);
                 let listA = document.getElementById("listA");
@@ -65,10 +67,12 @@ socket.on('subscriberRecevie', function (evt) {
                 msgID = "";
             } else {
                 //send message from b to a
+                console.log('3');
+                console.log(userMsgID, userMsg)
                 let li_A = document.createElement("li");
-                li_A.innerHTML = "<div class = 'message-b-to-a-sty' ><img src='/static/img/B.jpg' alt='B' class='message-img' width='31px' height='31px'><div>" + 'subscriber：' + useMsg + "</div></div>"
+                li_A.innerHTML = "<div class = 'message-b-to-a-sty' ><img src='/static/img/B.jpg' alt='B' class='message-img' width='31px' height='31px'><div>" + 'subscriber接收到的資料：' + userMsg + "</div></div>"
                 ul_A.appendChild(li_A);
-                let listA = document.getElementById("listA");
+                var listA = document.getElementById("listA");
                 listA.scrollTop = listA.scrollHeight;
             }
         } catch (e) {
@@ -79,8 +83,8 @@ socket.on('subscriberRecevie', function (evt) {
 
 $(function () {
     $('#sendA').on('click', function () {
-        let message = JSON.stringify({ 'from': msgID, 'message': $('#msgA').val() });
         msgID = parseInt(Math.random() * Math.pow(10, 16)).toString();
+        let message = JSON.stringify({ 'from': msgID, 'message': $('#msgA').val() });
         socket.emit('publishSend', {
             'send': message
         });
