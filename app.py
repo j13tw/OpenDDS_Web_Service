@@ -207,14 +207,12 @@ def pings():
 
 @app.route('/logs')
 def logs():
-    print(main())
-    data = main()
-    return render_template('logs.html', data=data)
+    return render_template('logs.html', pubLogs=get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), subLogs=get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub"))
 
 
 @app.route('/logsData', methods=['POST'])
 def logsData():
-    print(main())
+    print(get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), 'subLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub")})
     return jsonify({'pubLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), 'subLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub")})
 
 
@@ -255,7 +253,7 @@ def setRpiTime():
                     '-')[0], date.split('-')[1], date.split('-')[2])
                 print('date_set', date.split('-')
                       [0], date.split('-')[1], date.split('-')[2])
-                setTimeStatus = Time_config().time_set(
+                setTimeStatus=Time_config().time_set(
                     time.split(':')[0], time.split(':')[1], '0')
                 print('time_set', time.split(':')[0], time.split(':')[1], '0')
                 if setDateStatus == 'OK' and setTimeStatus == 'OK':

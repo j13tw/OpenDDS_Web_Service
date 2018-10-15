@@ -117,7 +117,7 @@
                 $(document).ready(function () {
                     var chart1 = $.plot($("#chart1"), [
                         {
-                            data: {{ data }},
+                            data: {{ pubLogs }},
                             points: {
                                 show: true
                             },
@@ -139,7 +139,7 @@
                     });
                     var chart2 = $.plot($("#chart2"), [
                         {
-                            data: {{ data }},
+                            data: {{ subLogs }},
                             points: {
                                 show: true
                             },
