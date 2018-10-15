@@ -15,8 +15,8 @@ return list
 def main():
     timeNow = "2018-10-11"
     secNow = 1539235432
-    fileName = "/test/2018-10-11.txt"
-    return get(timeNow, secNow, fileName, choose="")
+    fileName = "/home/pi/OpenDDS_test/web/control/"
+    return get(timeNow, secNow, fileName, choose="sub")
 
 
 def get(timeNow=None, secNow=None, fileName=None, choose="pub"):
@@ -25,7 +25,7 @@ def get(timeNow=None, secNow=None, fileName=None, choose="pub"):
         secNow = int(time.time())
         # print(secNow)
         # print(timeNow)
-        fileName = choose+str(timeNow)+".txt"
+        fileName = fileName+choose+str(timeNow)+".txt"
     showLog = []
     count = 0
     # print(fileName)
