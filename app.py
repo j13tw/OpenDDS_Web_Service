@@ -212,7 +212,7 @@ def logs():
 
 @app.route('/logsData', methods=['POST'])
 def logsData():
-    print(get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), 'subLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub")})
+    print(get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub")})
     return jsonify({'pubLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), 'subLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub")})
 
 
