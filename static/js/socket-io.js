@@ -95,10 +95,24 @@ $(function () {
         // {"active":"create","cmd":"./publisher -DCPSConfigFile rtps.ini","topic":"A"}
         let ini = $('#publishIni').val();
         let topic = $('#publishTopic').val();
+        let pubSettingSave = { "type": "pub", "topic": topic, "rtps": ini }
         socket.emit('publishSend', {
             "active": "create",
             "cmd": "./publisher -DCPSConfigFile " + ini,
             "topic": topic
+        });
+        $.ajax({
+            type: "POST",
+            url: "pubSetting",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(pubSettingSave),
+            success: function (data) {
+                console.log('success');
+            },
+            error: function (data) {
+                console.log('error');
+            }
         });
         $('#publishTopic').val('');
     });
@@ -124,11 +138,25 @@ $(function () {
     $('#subscriberCreate').on('click', function () {
         let ini = $('#subscriberIni').val();
         let topic = $('#subscriberTopic').val();
+        let subSettingSave = { "type": "sub", "topic": topic, "rtps": ini }
         console.log(ini, topic);
         socket.emit('subscriberSend', {
             "active": "create",
             "cmd": "./subscriber -DCPSConfigFile " + ini,
             "topic": topic
+        });
+        $.ajax({
+            type: "POST",
+            url: "subSetting",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(subSettingSave),
+            success: function (data) {
+                console.log('success');
+            },
+            error: function (data) {
+                console.log('error');
+            }
         });
         $('#subscriberTopic').val('');
     });

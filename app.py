@@ -228,6 +228,28 @@ def sendTest():
     return render_template('sendTest.html', fileList=fileList)
 
 
+@app.route('/pubSetting', methods=['POST'])
+def pubSetting():
+    if not request.json:
+        return abort(400)
+    else:
+        print(request.json, type(request.json))
+        with open('./db/pub.json', 'w') as outfile:
+            json.dump(request.json, outfile)
+        return jsonify({'status': 'ok'})
+
+
+@app.route('/subSetting', methods=['POST'])
+def subSetting():
+    if not request.json:
+        return abort(400)
+    else:
+        print(request.json, type(request.json))
+        with open('./db/sub.json', 'w') as outfile:
+            json.dump(request.json, outfile)
+        return jsonify({'status': 'ok'})
+
+
 @app.route('/rpiSetting')
 def rpiSetting():
     nowTime = Time_config().get_now()

@@ -1,3 +1,4 @@
+
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
@@ -10,6 +11,7 @@ import os.path
 """
 return list
 """
+FilePath = "~/OpenDDS_test/web/control/log"
 
 
 def main():
@@ -20,12 +22,13 @@ def main():
 
 
 def get(timeNow=None, secNow=None, fileName=None, choose="pub"):
+    global FilePath
     if timeNow == None or secNow == None:
         timeNow = time.strftime("%Y-%m-%d")
         secNow = int(time.time())
         # print(secNow)
         # print(timeNow)
-        fileName = choose+str(timeNow)+".txt"
+        fileName = FilePath+choose+str(timeNow)+".txt"
     showLog = []
     count = 0
     # print(fileName)
