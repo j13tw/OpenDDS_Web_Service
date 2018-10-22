@@ -207,14 +207,14 @@ def pings():
 
 @app.route('/logs')
 def logs():
-    return render_template('logs.html', pubLogs=get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), subLogs=get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub"))
+    return render_template('logs.html', pubLogs=get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="pub"), subLogs=get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="sub"))
 
 
 @app.route('/logsData', methods=['POST'])
 def logsData():
-    print(get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"),
-          get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub"))
-    return jsonify({'pubLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), 'subLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub")})
+    print(get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="pub"),
+          get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="sub"))
+    return jsonify({'pubLogs': get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="pub"), 'subLogs': get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="sub")})
 
 
 @app.route('/sendTest')
