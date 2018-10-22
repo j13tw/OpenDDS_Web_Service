@@ -11,7 +11,7 @@ import os.path
 """
 return list
 """
-FilePath = "~/OpenDDS_test/web/control/log"
+FilePath = "/home/pi/OpenDDS_test/web/control/log/"
 
 
 def main():
@@ -26,12 +26,12 @@ def get(timeNow=None, secNow=None, fileName=None, choose="pub"):
     if timeNow == None or secNow == None:
         timeNow = time.strftime("%Y-%m-%d")
         secNow = int(time.time())
-        # print(secNow)
-        # print(timeNow)
+        print(secNow)
+        print(timeNow)
         fileName = FilePath+choose+str(timeNow)+".txt"
     showLog = []
     count = 0
-    # print(fileName)
+    print(fileName)
     if os.path.isfile(fileName):
         with open(fileName) as f:
             allFile = f.readlines()
@@ -41,13 +41,13 @@ def get(timeNow=None, secNow=None, fileName=None, choose="pub"):
                 if int(sRawFile[-1]) > (secNow+count*60):
                     dataLen = len(sRawFile[2:-2])
                     dataLen = len(str(sRawFile[2:-2]))
-                    # print(sRawFile[-1])
+                    print(sRawFile[-1])
                     if int(sRawFile[-1]) > (secNow+(count+1)*60) and count < 5:
                         s = int(time.time()*1000)+count*60*1000
                         showLog.append([s, dataLen])
-                        #print (s)
+                        print(s)
                         count += 1
-                        # print(count)
+                        print(count)
                     else:
                         break
     else:

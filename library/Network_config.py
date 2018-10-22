@@ -1,6 +1,7 @@
 import os, sys
 import serial
 import datetime, time
+import subprocess
 
 class Reboot_system():
     def __init__(self):
@@ -247,6 +248,119 @@ class Net_config():
             f.close()
         except:
             os.system('sudo cp ./library/Restusb.py /etc/network/Restusb.py')
+
+    def eth0_status(self):
+        command = 'ip add show dev eth0 | grep "inet" | head -1'
+        result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        eth0 = str(result.communicate()[0]).split("\\n")[0].split("b'    ")[1]
+        eth0_ip = str(eth0.split(" ")[1].split('/')[0])
+        eth0_netmask = int(eth0.split(" ")[1].split('/')[1])
+        eth0_gw = str(eth0.split(" ")[3])
+
+        if(eth0_netmask <= 8):
+            eth0_nm_end = ".0.0.0"
+            value = 128
+            count = 0
+            for x in range(0, eth0_netmask):
+                count = count + value
+                value = value / 2
+            eth0_nm = str(int(count)) + eth0_nm_end
+            
+        elif(eth0_netmask <= 16 and eth0_netmask > 8):
+            eth0_netmask = eth0_netmask - 8
+            eth0_nm_head = "255."
+            eth0_nm_end = ".0.0"
+            value = 128
+            count = 0
+            for x in range(0, eth0_netmask):
+                count = count + value
+                value = value / 2
+            eth0_nm = eth0_nm_head + str(int(count)) + eth0_nm_end
+
+        elif(eth0_netmask <= 24)and eth0_netmask > 16:
+            eth0_netmask = eth0_netmask - 16
+            eth0_nm_head = "255.255."
+            eth0_nm_end = ".0"
+            value = 128
+            count = 0
+            for x in range(0, eth0_netmask):
+                count = count + value
+                value = value / 2
+            eth0_nm = eth0_nm_head + str(int(count)) + eth0_nm_end
+
+        elif(eth0_netmask <= 32 and eth0_netmask > 24):
+            eth0_netmask = eth0_netmask - 24
+            eth0_nm_head = "255.255.255."
+            eth0_netmask = eth0_netmask
+            value = 128
+            count = 0
+            for x in range(0, eth0_netmask):
+                count = count + value
+                value = value / 2
+            eth0_nm = eth0_nm_head + str(int(count))
+
+        #print(eth0)
+        print("eth0")
+        print(eth0_ip)
+        print(eth0_nm)
+        print(eth0_gw)
+        return eth0_ip, eth0_nm, eth0_gw
+    
+    def eth1_status(self):
+        command = 'ip add show dev eth1 | grep "inet" | head -1'
+        result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        eth1 = str(result.communicate()[0]).split("\\n")[0].split("b'    ")[1]
+        eth1_ip = eth1.split(" ")[1].split('/')[0]
+        eth1_netmask = int(eth1.split(" ")[1].split('/')[1])
+        eth1_gw = str(eth1.split(" ")[3])
+
+        if(eth1_netmask <= 8):
+            eth1_nm_end = ".0.0.0"
+            value = 128
+            count = 0
+            for x in range(0, eth1_netmask):
+                count = count + value
+                value = value / 2
+            eth1_nm = str(int(count)) + eth1_nm_end
+            
+        elif(eth1_netmask <= 16 and eth1_netmask > 8):
+            eth1_netmask = eth0_netmask - 8
+            eth1_nm_head = "255."
+            eth1_nm_end = ".0.0"
+            value = 128
+            count = 0
+            for x in range(0, eth1_netmask):
+                count = count + value
+                value = value / 2
+            eth1_nm = eth1_nm_head + str(int(count)) + eth1_nm_end
+
+        elif(eth1_netmask <= 24)and eth1_netmask > 16:
+            eth1_netmask = eth1_netmask - 16
+            eth1_nm_head = "255.255."
+            eth1_nm_end = ".0"
+            value = 128
+            count = 0
+            for x in range(0, eth1_netmask):
+                count = count + value
+                value = value / 2
+            eth1_nm = eth1_nm_head + str(int(count)) + eth1_nm_end
+
+        elif(eth1_netmask <= 32 and eth1_netmask > 24):
+            eth1_netmask = eth0_netmask - 24
+            eth1_nm_head = "255.255.255."
+            value = 128
+            count = 0
+            for x in range(0, eth1_netmask):
+                count = count + value
+                value = value / 2
+            eth1_nm = eth1_nm_head + str(int(count))
+
+        #print(eth1)
+        print("eth1")
+        print(eth1_ip)
+        print(eth1_nm)
+        print(eth1_gw)
+        return eth1_ip, eth1_nm, eth1_gw
 
     def eth0_dhcp(self):
         os.system("sudo sed -i '3c iface eth0 inet dhcp' /etc/network/interfaces")

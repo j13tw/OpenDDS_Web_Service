@@ -11,7 +11,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    print(Net_config().eth0_status())
+    eth0IP = Net_config().eth0_status()[0]
+    eth0NetMask = Net_config().eth0_status()[1]
+    eth0gateway = Net_config().eth0_status()[2]
+    print(Net_config().eth1_status())
+    eth1IP = Net_config().eth1_status()[0]
+    eth1NetMask = Net_config().eth1_status()[1]
+    eth1gateway = Net_config().eth1_status()[2]
+    return render_template('index.html', eth0IP=eth0IP, eth0NetMask=eth0NetMask, eth0gateway=eth0gateway, eth1IP=eth1IP, eth1NetMask=eth1NetMask, eth1gateway=eth1gateway)
 
 
 @app.route('/ipSettingMain')
@@ -207,14 +215,15 @@ def pings():
 
 @app.route('/logs')
 def logs():
-    return render_template('logs.html', pubLogs=get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="pub"), subLogs=get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="sub"))
+    print(get(choose="pub"), get(choose="sub"), main())
+    return render_template('logs.html', pubLogs=get(choose="pub"), subLogs=get(choose="sub"))
 
 
 @app.route('/logsData', methods=['POST'])
 def logsData():
-    print(get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="pub"),
-          get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="sub"))
-    return jsonify({'pubLogs': get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="pub"), 'subLogs': get(fileName='/home/pi/OpenDDS_test/web/control/log/', choose="sub")})
+    print(get(choose="pub"),
+          get(choose="sub"))
+    return jsonify({'pubLogs': get(choose="pub"), 'subLogs': get(choose="sub")})
 
 
 @app.route('/sendTest')
