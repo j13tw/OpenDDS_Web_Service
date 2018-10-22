@@ -212,18 +212,19 @@ def logs():
 
 @app.route('/logsData', methods=['POST'])
 def logsData():
-    print(get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub")})
+    print(get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"),
+          get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub"))
     return jsonify({'pubLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="pub"), 'subLogs': get(fileName='/home/pi/OpenDDS_test/web/control/', choose="sub")})
 
 
 @app.route('/sendTest')
 def sendTest():
-    file = File_search().ini_list()
-    print(file)
-    fileList = ['rtps.ini']
-    for i in range(len(file)):
-        if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
-            fileList.append(file[i])
+    # file = File_search().ini_list()
+    # print(file)
+    fileList = []
+    # for i in range(len(file)):
+    #     if (len(file[i].split('.')) == 2 and file[i].split('.')[1] == 'ini'):
+    #         fileList.append(file[i])
     return render_template('sendTest.html', fileList=fileList)
 
 
@@ -253,7 +254,7 @@ def setRpiTime():
                     '-')[0], date.split('-')[1], date.split('-')[2])
                 print('date_set', date.split('-')
                       [0], date.split('-')[1], date.split('-')[2])
-                setTimeStatus=Time_config().time_set(
+                setTimeStatus = Time_config().time_set(
                     time.split(':')[0], time.split(':')[1], '0')
                 print('time_set', time.split(':')[0], time.split(':')[1], '0')
                 if setDateStatus == 'OK' and setTimeStatus == 'OK':

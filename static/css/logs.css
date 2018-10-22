@@ -90,6 +90,9 @@ body {
     margin-top: 0;
 }
 
+.inline {
+    display: inline;
+}
 
 /* 
     chart title
