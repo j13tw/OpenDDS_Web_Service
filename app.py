@@ -8,6 +8,8 @@ import os
 
 app = Flask(__name__)
 
+updateTime = 30000
+
 
 @app.route('/')
 def home():
@@ -215,8 +217,14 @@ def pings():
 
 @app.route('/logs')
 def logs():
-    print(get(choose="pub"), get(choose="sub"), main())
-    return render_template('logs.html', pubLogs=get(choose="pub"), subLogs=get(choose="sub"))
+    print(updateTime)
+    if updateTime == 30000:
+        status = '30秒'
+    elif updateTime == 60000:
+        status = '1分鐘'
+    elif updateTime == 300000:
+        status = '5分鐘'
+    return render_template('logs.html', pubLogs=get(choose="pub"), subLogs=get(choose="sub"), updateTime=updateTime, status=status)
 
 
 @app.route('/logsData', methods=['POST'])
@@ -224,6 +232,19 @@ def logsData():
     print(get(choose="pub"),
           get(choose="sub"))
     return jsonify({'pubLogs': get(choose="pub"), 'subLogs': get(choose="sub")})
+
+
+@app.route('/logsUpdateSetting', methods=['POST'])
+def logsUpdateSetting():
+    global updateTime
+    if not request.json:
+        return abort(400)
+    else:
+        print(updateTime)
+        print(request.json, type(request.json))
+        updateTime = request.json['updateTime']
+        print(updateTime)
+        return jsonify({'status': 'ok'})
 
 
 @app.route('/sendTest')

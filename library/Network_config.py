@@ -324,7 +324,7 @@ class Net_config():
             eth1_nm = str(int(count)) + eth1_nm_end
             
         elif(eth1_netmask <= 16 and eth1_netmask > 8):
-            eth1_netmask = eth0_netmask - 8
+            eth1_netmask = eth1_netmask - 8
             eth1_nm_head = "255."
             eth1_nm_end = ".0.0"
             value = 128
@@ -346,7 +346,7 @@ class Net_config():
             eth1_nm = eth1_nm_head + str(int(count)) + eth1_nm_end
 
         elif(eth1_netmask <= 32 and eth1_netmask > 24):
-            eth1_netmask = eth0_netmask - 24
+            eth1_netmask = eth1_netmask - 24
             eth1_nm_head = "255.255.255."
             value = 128
             count = 0
