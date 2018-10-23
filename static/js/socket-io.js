@@ -1,4 +1,4 @@
-const socket = io.connect();
+const socket = io.connect('http://10.21.20.211:9806');
 // const socket = io.connect('http://10.21.20.52:9806');
 // const socket = io.connect('http://127.0.0.1:3000');
 
