@@ -376,10 +376,12 @@ class Net_config():
         os.system("sudo sed -i '13c \\ ' /etc/network/interfaces")
         os.system("sudo sed -i '14c \\ ' /etc/network/interfaces")
         os.system("sudo sed -i '15c \\ ' /etc/network/interfaces")
-        os.system('lsusb | grep "Realtek" | cut -c16,17,18 >/tmp/usb.txt')
-        self.usb_id = open('/tmp/usb.txt')
-        self.usb_reset = 'sudo python /etc/network/Restusb.py -d ' + self.usb_id.read()
-        os.system(self.usb_reset)
+        os.system('sudo ifdown eth1')
+        os.system('sudo ifup eth1')
+#        os.system('lsusb | grep "Realtek" | cut -c16,17,18 >/tmp/usb.txt')
+#        self.usb_id = open('/tmp/usb.txt')
+#        self.usb_reset = 'sudo python /etc/network/Restusb.py -d ' + self.usb_id.read()
+#        os.system(self.usb_reset)
         os.system('sudo cp /etc/network/interfaces /etc/network/interfaces.bak')
 
     def eth0_static(self, ip, netmask, gateway):
@@ -427,6 +429,7 @@ class Net_config():
         self.usb_id = open('/tmp/usb.txt')
         self.usb_reset = 'sudo python /etc/network/Restusb.py -d ' + self.usb_id.read()
         os.system(self.usb_reset)
+        os.system('sudo cp /etc/network/interfaces /etc/network/interfaces.bak')
     
     def eth0_dual_dns(self, dns, sub_dns):
         command = "sudo sed -i '7c dns-nameserver " + dns + "' /etc/network/interfaces"
@@ -435,6 +438,7 @@ class Net_config():
         os.system(command)
         os.system('sudo ifdown eth0')
         os.system('sudo ifup eth0')
+        os.system('sudo cp /etc/network/interfaces /etc/network/interfaces.bak')
     
     def eth1_dual_dns(self, dns, sub_dns):
         command = "sudo sed -i '16c dns-nameserver " + dns + "' /etc/network/interfaces"
@@ -444,6 +448,7 @@ class Net_config():
         os.system('lsusb | grep "Realtek" | cut -c16,17,18 >/tmp/usb.txt')
         self.usb_id = open('/tmp/usb.txt')
         self.usb_reset = 'sudo python /etc/network/Restusb.py -d ' + self.usb_id.read()
+        os.system('sudo cp /etc/network/interfaces /etc/network/interfaces.bak')
 
     def eth0_auto_dns(self):
         command = "sudo sed -i '7c dns-nameserver 8.8.8.8' /etc/network/interfaces"
@@ -451,6 +456,7 @@ class Net_config():
         os.system("sudo sed -i '8c \\ ' /etc/network/interfaces")
         os.system('sudo ifdown eth0')
         os.system('sudo ifup eth0')
+        os.system('sudo cp /etc/network/interfaces /etc/network/interfaces.bak')
     
     def eth1_auto_dns(self):
         command = "sudo sed -i '16c dns-nameserver 8.8.8.8' /etc/network/interfaces"
@@ -459,3 +465,4 @@ class Net_config():
         os.system('lsusb | grep "Realtek" | cut -c16,17,18 >/tmp/usb.txt')
         self.usb_id = open('/tmp/usb.txt')
         self.usb_reset = 'sudo python /etc/network/Restusb.py -d ' + self.usb_id.read()
+        os.system('sudo cp /etc/network/interfaces /etc/network/interfaces.bak')
