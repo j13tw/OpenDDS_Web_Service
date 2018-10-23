@@ -266,7 +266,7 @@ def rpiSetting():
     print(status)
     # nowTime = 123
     # status = [1, 2, 3, 4, 5, 6, 7]
-    return render_template('rpiSetting.html', nowTime=nowTime, ntpVal='TIME.google.com', watchDogVal1=(status[0] == 'Enable' and status[1] or status[0]), watchDogVal5=(status[2] == 'Enable' and status[3] or status[2]), watchDogVal15=(status[4] == 'Enable' and status[5] or status[4]), watchDogValTemp=status[6])
+    return render_template('rpiSetting.html', nowTime=nowTime, ntpVal='time.stdtime.gov.tw', watchDogVal1=(status[0] == 'Enable' and status[1] or status[0]), watchDogVal5=(status[2] == 'Enable' and status[3] or status[2]), watchDogVal15=(status[4] == 'Enable' and status[5] or status[4]), watchDogValTemp=status[6])
 
 
 @app.route('/setRpiTime', methods=['POST'])
