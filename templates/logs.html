@@ -134,8 +134,8 @@
     <!--<script type="text/javascript" src="/static/js/flot/jquery.flot.axislabels.js"></script>-->
     <script src="/static/js/jquery.flot.min.js"></script>
     <script type="text/javascript">
-        let pubLogs = {{ pubLogs }};
-        let subLogs = {{ subLogs }};
+        let pubLogs = '{{ pubLogs }}';
+        let subLogs = '{{ subLogs }}';
         $(document).ready(function () {
             let dateUTC = function (value) {
                 return Date.UTC(new Date(value).getFullYear(), new Date(value).getMonth(), new Date(value).getDay(), new Date(value).getHours(), new Date(value).getMinutes(), new Date(value).getSeconds());
@@ -206,6 +206,12 @@
                         console.log('success');
                         let pubLogs = data.pubLogs;
                         let subLogs = data.subLogs;
+                        for (let i = 0; i < pubLogs.length; i++) {
+                            pubLogs[i][0] = dateUTC(pubLogs[i][0])
+                        }
+                        for (let i = 0; i < subLogs.length; i++) {
+                            subLogs[i][0] = dateUTC(subLogs[i][0])
+                        }
                         chart1.setData([pubLogs]);
                         chart1.setupGrid();
                         chart1.draw();
