@@ -134,8 +134,8 @@
     <!--<script type="text/javascript" src="/static/js/flot/jquery.flot.axislabels.js"></script>-->
     <script src="/static/js/jquery.flot.min.js"></script>
     <script type="text/javascript">
-        let pubLogs = '{{ pubLogs }}';
-        let subLogs = '{{ subLogs }}';
+        let pubLogs = {{ pubLogs }};
+        let subLogs = {{ subLogs }};
         $(document).ready(function () {
             let dateUTC = function (value) {
                 return Date.UTC(new Date(value).getFullYear(), new Date(value).getMonth(), new Date(value).getDay(), new Date(value).getHours(), new Date(value).getMinutes(), new Date(value).getSeconds());
