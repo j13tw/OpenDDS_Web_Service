@@ -27,10 +27,12 @@
                         dataType: "json",
                         data: JSON.stringify({ status: 'reboot' }),
                         success: function (data) {
-                            alert('已關機');
+                            console.log('success');
+                            window.location.reload(true);
                         },
                         error: function (data) {
-                            alert('已關機');
+                            console.log('error');
+                            window.location.reload(true);
                         }
                     });
                 }
