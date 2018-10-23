@@ -18,7 +18,7 @@
     <script src="/static/js/jquery.min.js"></script>
     <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="http://www.pureexample.com/js/flot/excanvas.min.js"></script><![endif]-->
     <script>
-        var updateTime = 30000;
+        var updateTime;
         window.onload = function () {
             $('#reboot').on('click', function () {
                 if (window.confirm('確定要關機嗎？')) {
@@ -225,7 +225,7 @@
                         return false;
                     }
                 });
-            }, updateTime);
+            }, updateTime || 30000);
         });
     </script>
 </body>
