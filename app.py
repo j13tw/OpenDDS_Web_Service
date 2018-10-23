@@ -167,9 +167,8 @@ def iniUpdate():
 @app.route("/upload", methods=['POST'])
 def upload():
     f = request.files['file']
-    f.save('/Users/liwensheng/Documents/python/flask_dds/ini/file/' +
-           secure_filename(f.filename))
-    return redirect(url_for('iniUpdate'))
+    f.save('/home/pi/ini/' + secure_filename(f.filename))
+    return redirect('iniUpdate')
 
 
 @app.route("/deleteFile", methods=['POST'])
